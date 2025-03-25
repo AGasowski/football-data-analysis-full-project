@@ -4,6 +4,15 @@ fichier_source = "data/Match.csv"
 df = pd.read_csv(fichier_source)
 df_selectionne = df[["id", "country_id", "league_id", "season", "match_api_id", "home_team_api_id", "away_team_api_id", "home_team_goal", "away_team_goal"]]
 
+data_team = "data/Team.csv"
+team = pd.read_csv(data_team)
+df1 = df[["home_team_api_id"]]
+df2 = team[["team_api_id", "team_long_name"]]
+team_name = pd.merge(df1, df2, left_on = 'home_team_api_id', right_on = 'team_api_id', how ='inner')
+team_name = team_name.drop_duplicates()
+
+print(team_name)
+
 # print(df.columns)
 df_selectionne.to_csv("exploration.csv", index=False)
 
