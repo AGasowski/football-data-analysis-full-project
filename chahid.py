@@ -1,6 +1,6 @@
-### Code de Chahid
+# Code de Chahid
 
-## Classement des meilleurs buteurs, passeurs carton jaune, carton rouge
+# Classement des meilleurs buteurs, passeurs carton jaune, carton rouge
 import xml.etree.ElementTree as ET
 import pandas as pd
 xml_data = """<goal>
