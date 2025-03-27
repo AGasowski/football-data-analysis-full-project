@@ -69,17 +69,17 @@ for X in L:
 
 
 meilleurs_buteurs = sorted(d.items(), key=lambda x: x[1], reverse=True)[:30]
-Classement_meilleurs_buteurs = pd.DataFrame(meilleurs_buteurs, columns=["player_api_id", "nb_buts"])
-Classement_meilleurs_buteurs = pd.read_csv(Classement_meilleurs_buteurs)
+player1["player_api_id"] = player1["player_api_id"].astype(int)
+d1 = dict(zip(player1["player_api_id"], player1["player_name"]))
+meilleurs_buteurs= [(d1.get(id), buts) for id, buts in meilleurs_buteurs]
+Classement_meilleurs_buteurs = pd.DataFrame(meilleurs_buteurs, columns=["player_name", "nb_buts"])
 
-Classement_final = pd.merge(Classement_meilleurs_buteurs, player1, on="player_api_id", how="inner")
-Classement_final= Classement_final[["nb_buts","player_name"]]
-
-
-
+print(Classement_meilleurs_buteurs) 
 
 
-print(Classement_final)
+
+
+
 
 
 '''
