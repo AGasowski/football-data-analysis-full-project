@@ -4,12 +4,13 @@ import xml.etree.ElementTree as ET
 # tous championnats confondus : on aura donc besoin des tables match et player
 
 # on importe la table match
-fichier_source1 = "data/Match.csv"
+fichier_source1 = "Projet_Info/data/Match.csv"
 match = pd.read_csv(fichier_source1)
 
 # On importe la table player
-fichier_source2 = "data/Player.csv"
+fichier_source2 = "Projet_Info/data/Player.csv"
 player = pd.read_csv(fichier_source2)
+player1= pd.read_csv(fichier_source2)
 
 # On commence d'abord a faire un classement pour la saison 2008/2009 pour la bundesliga
 
@@ -68,8 +69,18 @@ for X in L:
 
 
 meilleurs_buteurs = sorted(d.items(), key=lambda x: x[1], reverse=True)[:30]
+Classement_meilleurs_buteurs = pd.DataFrame(meilleurs_buteurs, columns=["player_api_id", "nb_buts"])
+Classement_meilleurs_buteurs = pd.read_csv(Classement_meilleurs_buteurs)
 
-print(meilleurs_buteurs)
+Classement_final = pd.merge(Classement_meilleurs_buteurs, player1, on="player_api_id", how="inner")
+Classement_final= Classement_final[["nb_buts","player_name"]]
+
+
+
+
+
+print(Classement_final)
+
 
 '''
 #Donc la le dictionnaire a les gens qui ont marqués et leurs nombres de buts
