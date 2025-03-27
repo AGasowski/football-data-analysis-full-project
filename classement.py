@@ -27,7 +27,7 @@ df_Saison_1 = df_final[df_final["season"] == "2012/2013"]
 
 leagues = df_Saison_1["league_id"].unique()
 
-classements = []
+classements = [] 
 
 for league_id in leagues:
     print(f"Traitement de la league {league_id}...")
