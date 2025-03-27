@@ -8,16 +8,25 @@ data_team = "data/Team.csv"
 team = pd.read_csv(data_team)
 df1 = df[["home_team_api_id"]]
 df2 = team[["team_api_id", "team_long_name"]]
-team_name = pd.merge(df1, df2, left_on = 'home_team_api_id', right_on = 'team_api_id', how ='inner')
-team_name = team_name.drop_duplicates()
+team_name_home = pd.merge(df1, df2, left_on = 'home_team_api_id', right_on = 'team_api_id', how ='inner')
+team_name_home = team_name_home.drop_duplicates()
+team_name_home = team_name_home.rename(columns={"team_long_name": "team_home_name"})
+print(team_name_home)
 
-print(team_name)
+df3 = df[["away_team_api_id"]]
+team_name_away = pd.merge(df3, df2, left_on = 'away_team_api_id', right_on = 'team_api_id', how ='inner')
+team_name_away = team_name_away.drop_duplicates()
+team_name_away = team_name_away.rename(columns={"team_long_name": "team_away_name"})
 
+print(team_name_away)
+
+df_final = pd.merge(team_name_home, df_selectionne, left_on = 'home_team_api_id', right_on = 'home_team_api_id', how ='inner')
+df_final = pd.merge(df_final, team_name_away,  left_on = 'away_team_api_id', right_on = 'away_team_api_id', how ='inner')
 # print(df.columns)
 df_selectionne.to_csv("exploration.csv", index=False)
 
 # print(f"Le fichier {df_selectionne} a été créé avec succès !")
-df_Saison_1 = df_selectionne[df_selectionne["season"] == "2008/2009"]
+df_Saison_1 = df_final[df_final["season"] == "2008/2009"]
 
 leagues = df_Saison_1["league_id"].unique()
 
@@ -43,8 +52,8 @@ for league_id in leagues:
 
     for index, row in df_Saison_1_league.iterrows():
         # Extraire les données du match
-        home_team = row["home_team_api_id"]
-        away_team = row["away_team_api_id"]
+        home_team = row["team_home_name"]
+        away_team = row["team_away_name"]
         home_goals = row["home_team_goal"]
         away_goals = row["away_team_goal"]
         # Déterminer les points en fonction du score
