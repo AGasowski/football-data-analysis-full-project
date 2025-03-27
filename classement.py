@@ -12,7 +12,7 @@ df_Saison_1 = df_selectionne[df_selectionne["season"] == "2008/2009"]
 
 leagues = df_Saison_1["league_id"].unique()
 
-classements = []
+classements = [] 
 
 for league_id in leagues:
     print(f"Traitement de la league {league_id}...")
