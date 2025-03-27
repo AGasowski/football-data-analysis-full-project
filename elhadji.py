@@ -4,13 +4,13 @@ import xml.etree.ElementTree as ET
 # tous championnats confondus : on aura donc besoin des tables match et player
 
 # on importe la table match
-fichier_source1 = "Projet_Info/data/Match.csv"
+fichier_source1 = "data/Match.csv"
 match = pd.read_csv(fichier_source1)
 
 # On importe la table player
-fichier_source2 = "Projet_Info/data/Player.csv"
+fichier_source2 = "data/Player.csv"
 player = pd.read_csv(fichier_source2)
-player1= pd.read_csv(fichier_source2)
+player1 = pd.read_csv(fichier_source2)
 
 # On commence d'abord a faire un classement pour la saison 2008/2009 pour la bundesliga
 
@@ -68,13 +68,12 @@ for X in L:
             d[player[i]] += 1
 
 
-meilleurs_buteurs = sorted(d.items(), key=lambda x: x[1], reverse=True)[:30]
-player1["player_api_id"] = player1["player_api_id"].astype(int)
-d1 = dict(zip(player1["player_api_id"], player1["player_name"]))
-meilleurs_buteurs= [(d1.get(id), buts) for id, buts in meilleurs_buteurs]
+player1["player_api_id"] = player1["player_api_id"].astype(str)
+d1 = dict(zip(player1["player_name"], player1["player_api_id"] ))
+meilleurs_buteurs = {name: d.get(id) for name, id in d1.items() if d.get(id) is not None}
+meilleurs_buteurs = sorted(meilleurs_buteurs.items(), key=lambda x: x[1], reverse=True)[:30]
 Classement_meilleurs_buteurs = pd.DataFrame(meilleurs_buteurs, columns=["player_name", "nb_buts"])
-
-print(Classement_meilleurs_buteurs) 
+print(Classement_meilleurs_buteurs)
 
 
 
