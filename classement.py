@@ -11,22 +11,19 @@ df2 = team[["team_api_id", "team_long_name"]]
 team_name_home = pd.merge(df1, df2, left_on = 'home_team_api_id', right_on = 'team_api_id', how ='inner')
 team_name_home = team_name_home.drop_duplicates()
 team_name_home = team_name_home.rename(columns={"team_long_name": "team_home_name"})
-print(team_name_home)
+
 
 df3 = df[["away_team_api_id"]]
 team_name_away = pd.merge(df3, df2, left_on = 'away_team_api_id', right_on = 'team_api_id', how ='inner')
 team_name_away = team_name_away.drop_duplicates()
 team_name_away = team_name_away.rename(columns={"team_long_name": "team_away_name"})
 
-print(team_name_away)
 
 df_final = pd.merge(team_name_home, df_selectionne, left_on = 'home_team_api_id', right_on = 'home_team_api_id', how ='inner')
 df_final = pd.merge(df_final, team_name_away,  left_on = 'away_team_api_id', right_on = 'away_team_api_id', how ='inner')
-# print(df.columns)
-df_selectionne.to_csv("exploration.csv", index=False)
 
 # print(f"Le fichier {df_selectionne} a été créé avec succès !")
-df_Saison_1 = df_final[df_final["season"] == "2008/2009"]
+df_Saison_1 = df_final[df_final["season"] == "2012/2013"]
 
 leagues = df_Saison_1["league_id"].unique()
 
@@ -84,4 +81,4 @@ for league_id in leagues:
 
 print("Classement pour toutes les saisons généré avec succès !")
 
-print(classements[3])
+print(classements[5])
