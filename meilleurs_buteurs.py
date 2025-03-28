@@ -1,8 +1,9 @@
 import pandas as pd
 import xml.etree.ElementTree as ET
 
-# Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va faire le top 30 des meilleus buteurs )
-# tous championnats confondus : on aura donc besoin des tables match et player
+# Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
+# faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
+# donc besoin des tables match et player
 
 # on importe la table match
 fichier_source1 = "data/Match.csv"
@@ -14,17 +15,20 @@ player = pd.read_csv(fichier_source2)
 player1 = pd.read_csv(fichier_source2)
 
 
-# On commence d'abord a faire un classement pour la saison 2008/2009 pour la bundesliga
+# On commence d'abord a faire un classement pour la saison 2008/2009 pour la
+# bundesliga
 
 # Reduisons tout de méme la table match pour garder que les match de bundesliga
-# En regardant la table league , on voit que le country id de la bundesliga vaut 7809 et donc on peut maintenant restreindre :
+# En regardant la table league , on voit que le country id de la bundesliga
+# vaut 7809 et donc on peut maintenant restreindre :
 
 
 match = match[match["goal"].notna() & (match["goal"] != "")]
 # match=match[match["country_id"] == "1729"]
 match = match[match["season"] == "2015/2016"]
 
-# On va créer une fonction qui prend en entré un fichier XML et qui la ressort en une table exploitable par python
+# On va créer une fonction qui prend en entré un fichier XML et qui la ressort
+# en une table exploitable par python
 
 
 def transforme(X):
@@ -43,15 +47,17 @@ def transforme(X):
     return df
 
 
-# la colonne goal dans la table match a des elements qui sont eux meme des tables donc on va les stocker dans une liste L
+# la colonne goal dans la table match a des elements qui sont eux meme des
+# tables donc on va les stocker dans une liste L
 L = []
 for X in match["goal"]:
     L.append(transforme(X))
 
 
-# Ainsi chaque element de la liste L correpond aux buts marqués pour un match de bundesliga .
-# Donc l'idée ici est de créer un dictionnaire donc les clés seront les id des joueurs ayant marqués
-# Et pour chaque clé , sa valeur sera le nombre de but marqué .
+# Ainsi chaque element de la liste L correpond aux buts marqués pour un match
+# de bundesliga . Donc l'idée ici est de créer un dictionnaire donc les clés
+# seront les id des joueurs ayant marqués Et pour chaque clé , sa valeur sera
+# le nombre de but marqué .
 
 """
 for X in L:
@@ -67,13 +73,15 @@ for X in L:
     if "player1" in X.columns:
         player = X["player1"].tolist()
 
-        # On parcourt les elements de la liste L , qui sont des tables de matchs
+        # On parcourt les elements de la liste L , qui sont des tables de
+        # matchs
         for i in range(len(player)):
 
             if player[i] not in d:
                 d[player[i]] = 1
             else:
-                # si le joueur est deja dans le dictionnaire , il avait donc deja marqué et on ajoute alors de 1 son nb de but
+                # si le joueur est deja dans le dictionnaire , il avait donc
+                # deja marqué et on ajoute alors de 1 son nb de but
                 d[player[i]] += 1
 
 
@@ -82,9 +90,9 @@ d1 = dict(zip(player1["player_name"], player1["player_api_id"]))
 meilleurs_buteurs = {
     name: d.get(id) for name, id in d1.items() if d.get(id) is not None
 }
-meilleurs_buteurs = sorted(meilleurs_buteurs.items(), key=lambda x: x[1], reverse=True)[
-    :30
-]
+meilleurs_buteurs = sorted(
+    meilleurs_buteurs.items(), key=lambda x: x[1], reverse=True
+)[:30]
 Classement_meilleurs_buteurs = pd.DataFrame(
     meilleurs_buteurs, columns=["player_name", "nb_buts"]
 )

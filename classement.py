@@ -24,7 +24,9 @@ team_name_home = pd.merge(
     df1, df2, left_on="home_team_api_id", right_on="team_api_id", how="inner"
 )
 team_name_home = team_name_home.drop_duplicates()
-team_name_home = team_name_home.rename(columns={"team_long_name": "team_home_name"})
+team_name_home = team_name_home.rename(
+    columns={"team_long_name": "team_home_name"}
+)
 
 
 df3 = df[["away_team_api_id"]]
@@ -32,7 +34,9 @@ team_name_away = pd.merge(
     df3, df2, left_on="away_team_api_id", right_on="team_api_id", how="inner"
 )
 team_name_away = team_name_away.drop_duplicates()
-team_name_away = team_name_away.rename(columns={"team_long_name": "team_away_name"})
+team_name_away = team_name_away.rename(
+    columns={"team_long_name": "team_away_name"}
+)
 
 
 df_final = pd.merge(
@@ -67,7 +71,9 @@ for league_id in leagues:
     stats = {}
 
     # Fonction pour mettre à jour les statistiques d'une équipe
-    def mettre_a_jour_stats(equipe, points_gagnes, buts_marques, buts_encaisse):
+    def mettre_a_jour_stats(
+        equipe, points_gagnes, buts_marques, buts_encaisse
+    ):
         if equipe not in stats:
             stats[equipe] = {"points": 0, "buts_pour": 0, "buts_contre": 0}
 
