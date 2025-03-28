@@ -17,8 +17,9 @@ player1 = pd.read_csv(fichier_source2)
 # Reduisons tout de méme la table match pour garder que les match de bundesliga
 # En regardant la table league , on voit que le country id de la bundesliga vaut 7809 et donc on peut maintenant restreindre :
 
-match = match[match["country_id"] == 7809]
 
+match = match[match["goal"].notna() & (match["goal"] != '')]
+match = match[match["season"] == "2012/2013"]
 
 # On va créer une fonction qui prend en entré un fichier XML et qui la ressort en une table exploitable par python
 
