@@ -2,7 +2,19 @@ import pandas as pd
 
 fichier_source = "Match.csv"
 df = pd.read_csv(fichier_source)
-df_selectionne = df[["id", "country_id", "league_id", "season", "match_api_id", "home_team_api_id", "away_team_api_id", "home_team_goal", "away_team_goal"]]
+df_selectionne = df[
+    [
+        "id",
+        "country_id",
+        "league_id",
+        "season",
+        "match_api_id",
+        "home_team_api_id",
+        "away_team_api_id",
+        "home_team_goal",
+        "away_team_goal",
+    ]
+]
 
 # print(df.columns)
 df_selectionne.to_csv("exploration.csv", index=False)
@@ -53,10 +65,14 @@ df_classement = pd.DataFrame.from_dict(stats, orient="index").reset_index()
 df_classement.rename(columns={"index": "team_id"}, inplace=True)
 
 # Ajouter la différence de buts
-df_classement["différence_de_buts"] = df_classement["buts_pour"] - df_classement["buts_contre"]
+df_classement["différence_de_buts"] = (
+    df_classement["buts_pour"] - df_classement["buts_contre"]
+)
 
 # Trier les équipes par nombre de points et différence de buts
-df_classement = df_classement.sort_values(by=["points", "différence_de_buts"], ascending=[False, False])
+df_classement = df_classement.sort_values(
+    by=["points", "différence_de_buts"], ascending=[False, False]
+)
 
 # Afficher le classement final
 print(df_classement)
