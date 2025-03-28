@@ -4,13 +4,15 @@ import xml.etree.ElementTree as ET
 # tous championnats confondus : on aura donc besoin des tables match et player
 
 # on importe la table match
-fichier_source1 = "data/Match.csv"
+fichier_source1 = "Projet_info/data/Match.csv"
 match = pd.read_csv(fichier_source1)
 
 # On importe la table player
-fichier_source2 = "data/Player.csv"
+fichier_source2 = "Projet_info/data/Player.csv"
 player = pd.read_csv(fichier_source2)
 player1 = pd.read_csv(fichier_source2)
+player2=pd.read_csv(fichier_source2)
+player3=pd.read_csv(fichier_source2)
 
 # On commence d'abord a faire un classement pour la saison 2008/2009 pour la bundesliga
 
@@ -18,7 +20,8 @@ player1 = pd.read_csv(fichier_source2)
 # En regardant la table league , on voit que le country id de la bundesliga vaut 7809 et donc on peut maintenant restreindre :
 
 
-match = match[match["goal"].notna() & (match["goal"] != '')]
+match = match[match["goal"].notna() & (match["goal"] != '')] 
+#match=match[match["country_id"] == "1729"]
 match = match[match["season"] == "2012/2013"]
 
 # On va créer une fonction qui prend en entré un fichier XML et qui la ressort en une table exploitable par python
@@ -55,6 +58,7 @@ for X in L:
 '''
 
 d = {}
+f = {}
 for X in L:
    if "player1" in X.columns:
       player = X['player1'].tolist()
@@ -75,6 +79,29 @@ meilleurs_buteurs = {name: d.get(id) for name, id in d1.items() if d.get(id) is 
 meilleurs_buteurs = sorted(meilleurs_buteurs.items(), key=lambda x: x[1], reverse=True)[:30]
 Classement_meilleurs_buteurs = pd.DataFrame(meilleurs_buteurs, columns=["player_name", "nb_buts"])
 print(Classement_meilleurs_buteurs)
+
+#Classement meilleur passeur 
+for X in L:
+   if "player2" in X.columns:
+      player2 = X['player2'].tolist()
+
+      # On parcourt les elements de la liste L , qui sont des tables de matchs
+      for i in range(len(player2)):
+
+         if player2[i] not in f:
+            f[player2[i]] = 1
+         else:
+            # si le joueur est deja dans le dictionnaire , il avait donc deja marqué et on ajoute alors de 1 son nb de passe
+            f[player2[i]] += 1 
+player3["player_api_id"] = player3["player_api_id"].astype(str)
+d1 = dict(zip(player3["player_name"], player3["player_api_id"] ))
+meilleurs_passeurs = {name: f.get(id) for name, id in d1.items() if f.get(id) is not None}
+meilleurs_passeurs = sorted(meilleurs_passeurs.items(), key=lambda x: x[1], reverse=True)[:30]
+Classement_meilleurs_passeurs = pd.DataFrame(meilleurs_passeurs, columns=["player_name", "nb_passes"])
+print(Classement_meilleurs_passeurs) 
+print(Classement_meilleurs_buteurs) 
+
+
 
 
 
