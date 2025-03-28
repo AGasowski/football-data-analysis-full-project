@@ -19,7 +19,7 @@ team_name_away = team_name_away.drop_duplicates()
 team_name_away = team_name_away.rename(columns={"team_long_name": "team_away_name"})
 
 
-df_final = pd.merge(team_name_home, df_selectionne, , how='ileft_on='home_team_api_id', right_on='home_team_api_id'nner')
+df_final = pd.merge(team_name_home, df_selectionne, left_on='home_team_api_id', right_on='home_team_api_id',how='inner')
 df_final = pd.merge(df_final, team_name_away,  left_on='away_team_api_id', right_on='away_team_api_id', how='inner')
 
 # print(f"Le fichier {df_selectionne} a été créé avec succès !")

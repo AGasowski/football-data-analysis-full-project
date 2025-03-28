@@ -3,18 +3,7 @@
 # Classement des meilleurs buteurs, passeurs carton jaune, carton rouge
 import xml.etree.ElementTree as ET
 import pandas as pd
-xml_data = """<goal>
-<value><comment>n</comment><stats><goals>1</goals><shoton>1</shoton></stats>
-<event_incident_typefk>406</event_incident_typefk><elapsed>51</elapsed>
-<player2>24773</player2><subtype>header</subtype><player1>38899</player1>
-<sortorder>2</sortorder><team>10194</team><id>1342832</id><n>476</n>
-<type>goal</type><goal_type>n</goal_type></value>
-<value><comment>n</comment><stats><goals>1</goals><shoton>1</shoton></stats>
-<elapsed_plus>3</elapsed_plus><event_incident_typefk>393</event_incident_typefk>
-<elapsed>90</elapsed><player2>38755</player2><subtype>shot</subtype>
-<player1>47418</player1><sortorder>2</sortorder><team>10194</team>
-<id>1343383</id><n>532</n><type>goal</type><goal_type>n</goal_type></value>
-</goal>"""
+xml_data = """<card><value><comment>y</comment><stats><ycards>1</ycards></stats><event_incident_typefk>73</event_incident_typefk><elapsed>56</elapsed><card_type>y</card_type><subtype>serious_fouls</subtype><player1>37442</player1><sortorder>5</sortorder><team>8650</team><n>327</n><type>card</type><id>377978</id></value><value><comment>y</comment><stats><ycards>1</ycards></stats><event_incident_typefk>25</event_incident_typefk><elapsed>90</elapsed><card_type>y</card_type><subtype>stall_time</subtype><player1>46621</player1><sortorder>3</sortorder><team>8650</team><n>353</n><type>card</type><id>378060</id></value></card>"""
 
 root = ET.fromstring(xml_data)
 
