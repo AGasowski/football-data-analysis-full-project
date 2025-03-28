@@ -1,3 +1,5 @@
-comment,event_incident_typefk,elapsed,card_type,subtype,player1,sortorder,team,n,type,id,stats_ycards
-y,73,56,y,serious_fouls,37442,5,8650,327,card,377978,1
-y,25,90,y,stall_time,46621,3,8650,353,card,378060,1
+comment,event_incident_typefk,coordinates,elapsed,player2,subtype,player1,sortorder,team,id,n,type,goal_type,stats_goals,stats_shoton,stats_penalties
+n,406,,9,409193,header,354491,1,6391,5164497,95,goal,n,1,1,
+n,393,,31,466143,shot,208676,2,6391,5164787,264,goal,n,1,1,
+p,20,,51,,,359188,0,9829,5165289,346,goal,p,1,,1
+n,406,,74,29590,header,30911,1,9829,5165682,520,goal,n,1,1,
