@@ -35,6 +35,6 @@ def liaison_table(A,B,i):
 
 for i in range(len(L)):
     if L[i]==a:
-       print(liaison_table(team_id,team_name,home_team[i]),liaison_table(team_id,team_name,away_team[i])) 
+       print(liaison_table(team_id,team_name,home_team[i]),liaison_table(team_id,team_name,away_team[i]),home_goal[i],away_goal[i]) 
 
 
