@@ -4,11 +4,11 @@ import xml.etree.ElementTree as ET
 # tous championnats confondus : on aura donc besoin des tables match et player
 
 # on importe la table match
-fichier_source1 = "data/Match.csv"
+fichier_source1 = "Projet_info/data/Match.csv"
 match = pd.read_csv(fichier_source1)
 
 # On importe la table player
-fichier_source2 = "data/Player.csv"
+fichier_source2 = "Projet_info/data/Player.csv"
 player = pd.read_csv(fichier_source2)
 player3=pd.read_csv(fichier_source2)
 
