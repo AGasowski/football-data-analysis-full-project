@@ -8,6 +8,8 @@ fichier_source2 = "Projet_info/data/Player.csv"
 player = pd.read_csv(fichier_source2)
 #match["home_player_Y1"]=match["home_player_Y1"].astype(int)
 #player["player_api_id"]=player["player_api_id"].astype(int)
+ 
+ # determination du dispositif qui a eu le plus de victoire:
 Away=[]
 Away.append(match['away_player_Y2'].tolist())
 Away.append(match['away_player_Y3'].tolist())
@@ -73,4 +75,15 @@ def max(d1):
    return n
 
 print(max(d)) 
+
+#On sait que c'est le 4-2-3-1 qui a eu le plus de victoire ( avec 164 victoires ), on va donc determiner le type de 4-2-3-1 .
+'''
+T={}
+T["large"]=0
+T["axial"]=0
+for in in range(len(home_goal)):
+   A=[]
+   if home_goal[i]>away_goal[i]:
+      if formation(Home,i)==[4,2,3,1]:
+'''
     
