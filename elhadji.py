@@ -29,9 +29,7 @@ match = match[match["goal"].notna() & (match["goal"] != "")]
 match = match[match["season"] == "2015/2016"]
 card1 = match[match["card"].notna() & (match["card"] != "")]
 # On va créer une fonction qui prend en entré un fichier XML et qui la ressort
-# en une table exploitable par python
-
-
+# en une table exploitable par python 
 def transforme(X):
     root = ET.fromstring(X)
     data = []
