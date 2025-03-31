@@ -172,9 +172,9 @@ print(Classement_meilleurs_jaunes)
 
 
 """
-#Donc la le dictionnaire a les gens qui ont marqués et leurs nombres de buts
-#on va ainsi faire le lien avec la table player pour avoir le lien avec le nom
-des joeurs ( bien sur que le classement viendra apres ) # Je m'interesse a la
+#Donc la le dictionnaire a les gens qui ont marqués et leurs nombres de buts on
+va ainsi faire le lien avec la table player pour avoir le lien avec le nom des
+joueurs ( bien sur que le classement viendra apres ) # Je m'interesse a la
 table player et je vais garder que les colonnes : player_api_id et player_name
 player=player[["player_api_id","player_name"]] #Ainsi je veux que les joueurs
 qui ont marqué dans ma table donc je dois utiliser mon dictionnaire player =
