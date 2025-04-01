@@ -1,10 +1,10 @@
 import pandas as pd
 
-fichier_source = "Projet_info/data/Match.csv"
+fichier_source = "data/Match.csv"
 match = pd.read_csv(fichier_source)
 match = match[match["season"] == "2015/2016"]
 match = match[match["league_id"] == 1729]
-fichier_source2 = "Projet_info/data/Player.csv"
+fichier_source2 = "data/Player.csv"
 player = pd.read_csv(fichier_source2)
 # match["home_player_Y1"]=match["home_player_Y1"].astype(int)
 # player["player_api_id"]=player["player_api_id"].astype(int)
