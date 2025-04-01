@@ -193,8 +193,8 @@ df_meilleur_11[["prenom", "nom"]] = df_meilleur_11["player_name"].str.rsplit(
 # Positionnement des joueurs sur un schéma de terrain en 4-4-2
 positions = {
     "GK": (5, 1),
-    "DD": (1, 3),
-    "DG": (9, 3),
+    "DD": (9, 3),
+    "DG": (1, 3),
     "DCD": (3.6, 3),
     "DCG": (6.4, 3),
     "MDC1": (3, 5),
