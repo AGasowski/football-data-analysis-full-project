@@ -1,9 +1,6 @@
 import pandas as pd
 import xml.etree.ElementTree as ET
 
-# Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
-# faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
-# donc besoin des tables match et player
 
 # on importe la table match
 fichier_source1 = "data/Match.csv"
@@ -15,22 +12,13 @@ player = pd.read_csv(fichier_source2)
 player1 = pd.read_csv(fichier_source2)
 
 
-# On commence d'abord a faire un classement pour la saison 2008/2009 pour la
-# bundesliga
-
-# Reduisons tout de méme la table match pour garder que les match de bundesliga
-# En regardant la table league , on voit que le country id de la bundesliga
-# vaut 7809 et donc on peut maintenant restreindre :
-
-
 match = match[match["goal"].notna() & (match["goal"] != "")]
 # match=match[match["country_id"] == "1729"]
 match = match[match["season"] == "2015/2016"]
 
+
 # On va créer une fonction qui prend en entré un fichier XML et qui la ressort
 # en une table exploitable par python
-
-
 def transforme(X):
     root = ET.fromstring(X)
     data = []

@@ -1,10 +1,6 @@
 import pandas as pd
 import xml.etree.ElementTree as ET
 
-# Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
-# faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
-# donc besoin des tables match et player
-
 # on importe la table match
 fichier_source1 = "data/Match.csv"
 match = pd.read_csv(fichier_source1)
@@ -14,15 +10,12 @@ fichier_source2 = "data/Player.csv"
 player = pd.read_csv(fichier_source2)
 player1 = pd.read_csv(fichier_source2)
 
-
 match = match[match["goal"].notna() & (match["goal"] != "")]
 # match=match[match["country_id"] == "1729"]
 match = match[match["season"] == "2015/2016"]
 
+
 # On va créer une fonction qui prend en entré un fichier XML et qui la ressort
-# en une table exploitable par python
-
-
 def transforme(X):
     root = ET.fromstring(X)
     data = []
@@ -39,17 +32,10 @@ def transforme(X):
     return df
 
 
-# la colonne goal dans la table match a des elements qui sont eux meme des
-# tables donc on va les stocker dans une liste L
 L = []
 for X in match["goal"]:
     L.append(transforme(X))
 
-
-# Ainsi chaque element de la liste L correpond aux buts marqués pour un match
-# de bundesliga . Donc l'idée ici est de créer un dictionnaire donc les clés
-# seront les id des joueurs ayant marqués Et pour chaque clé , sa valeur sera
-# le nombre de but marqué .
 
 """
 for X in L:
