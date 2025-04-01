@@ -1,15 +1,16 @@
 import csv
+import tkinter as tk
+from tkinter import ttk
 from collections import defaultdict
 
 # Chargement des noms des équipes
 team_names = {}
-
 with open("data/Team.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
         team_id = int(row["team_api_id"])
         team_name = row["team_long_name"]
-        team_names[team_id] = team_name  # Associer ID à nom
+        team_names[team_id] = team_name
 
 # Dictionnaires pour stocker les statistiques des buts
 goals_home = defaultdict(
@@ -39,7 +40,6 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
 
 # Calcul des moyennes et différences
 team_performance = []
-
 for team in goals_home.keys():
     home_avg = (
         goals_home[team][0] / goals_home[team][1]
@@ -52,29 +52,44 @@ for team in goals_home.keys():
         else 0
     )
     diff = away_avg - home_avg  # Différence entre extérieur et domicile
-
     team_performance.append((team, home_avg, away_avg, diff))
 
 # Classement des équipes par ordre décroissant de différence
 team_performance.sort(key=lambda x: x[3], reverse=True)
 
-# Affichage des 10 meilleures équipes
-print(
-    "Classement des équipes avec la plus grande différence de buts marqués à "
-    "l'extérieur vs domicile (année 2014) :"
-)
-print("-" * 100)
-print(
-    f"{'Rang':<5}{'Équipe':<30}{'Moy. Buts Dom.':<18}{'Moy. Buts Ext.':<18}"
-    f"{'Différence':<12}"
-)
-print("-" * 100)
+# Création de la fenêtre Tkinter
+root = tk.Tk()
+root.title("Classement des équipes (2014)")
+root.geometry("600x400")
 
+# Création du tableau
+columns = ("Rang", "Équipe", "Moy. Buts Dom.", "Moy. Buts Ext.", "Différence")
+tree = ttk.Treeview(root, columns=columns, show="headings")
+
+# Définition des en-têtes de colonnes
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, anchor="center")
+
+# Remplissage du tableau
 for rank, (team_id, home_avg, away_avg, diff) in enumerate(
     team_performance[:10], start=1
-):  # Top 10
-    team_name = team_names.get(team_id, "Inconnu")  # Récupérer le nom
-    print(
-        f"{rank:<5}{team_name:<30}{home_avg:<18.2f}{away_avg:<18.2f}"
-        f"{diff:<12.2f}"
+):
+    team_name = team_names.get(team_id, "Inconnu")
+    tree.insert(
+        "",
+        "end",
+        values=(
+            rank,
+            team_name,
+            f"{home_avg:.2f}",
+            f"{away_avg:.2f}",
+            f"{diff:.2f}",
+        ),
     )
+
+# Placement du tableau dans la fenêtre
+tree.pack(expand=True, fill="both")
+
+# Lancer l'application Tkinter
+root.mainloop()

@@ -19,8 +19,7 @@ team_id = team["team_api_id"].tolist()
 
 L = []
 for i in range(len(home_goal)):
-    L.append(abs(home_goal[i] - away_goal[i]))
-
+    L.append(abs(home_goal[i]-away_goal[i]))
 
 def max(M):
     cpt = 0
@@ -40,10 +39,5 @@ def liaison_table(A, B, i):
 
 
 for i in range(len(L)):
-    if L[i] == a:
-        print(
-            liaison_table(team_id, team_name, home_team[i]),
-            liaison_table(team_id, team_name, away_team[i]),
-            home_goal[i],
-            away_goal[i],
-        )
+    if L[i]==a:
+       print(liaison_table(team_id,team_name,home_team[i]),liaison_table(team_id,team_name,away_team[i]),home_goal[i],away_goal[i])

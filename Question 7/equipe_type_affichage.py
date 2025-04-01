@@ -199,8 +199,8 @@ positions = {
     "DCG": (6.4, 3),
     "MDC1": (3, 5),
     "MDC2": (7, 5),
-    "AD": (1, 7),
-    "AG": (9, 7),
+    "AD": (9, 7),
+    "AG": (1, 7),
     "BU1": (4, 9),
     "BU2": (6, 9),
 }
@@ -217,8 +217,8 @@ ax.set_facecolor("green")
 # Tracer les lignes du terrain en blanc
 for line in [
     ([0, 10], [5, 5]),  # Ligne du milieu
-    ([2.5, 7.5], [9, 9]),  # Surface adverse
-    ([2.5, 7.5], [1, 1]),  # Surface gardien
+    ([2.5, 7.5], [8, 8]),  # Surface adverse
+    ([2.5, 7.5], [2, 2]),  # Surface gardien
     ([0, 0], [0, 10]),  # Bord gauche
     ([10, 10], [0, 10]),  # Bord droit
     ([0, 10], [10, 10]),  # Ligne de but haute

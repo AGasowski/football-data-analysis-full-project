@@ -82,7 +82,7 @@ def max(d1):
     return n
 
 
-print(max(d))
+print(d)
 
 # On sait que c'est le 4-2-3-1 qui a eu le plus de victoire ( avec 164
 # victoires ), on va donc determiner le type de 4-2-3-1 .
