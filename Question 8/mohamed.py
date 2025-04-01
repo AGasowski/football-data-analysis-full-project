@@ -54,7 +54,6 @@ d2={}
 for i in range(len(id_teams)):
     d2[id_teams[i]] = name_team[i]
 
-'''
-nom_equipe = d2[8121]
+nom_equipe = d2[minimum(d)]
 
-print(f"L'équipe qui a encaissé le moins de buts est : {nom_equipe}")'''
+print(f"L'équipe qui a encaissé le moins de buts est : {nom_equipe}")
