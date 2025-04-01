@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches  # Importation de patches
 
 # Charger le fichier CSV
 df_stats = pd.read_csv("data/Player_Attributes.csv")
@@ -218,7 +219,11 @@ ax.set_facecolor("green")
 for line in [
     ([0, 10], [5, 5]),  # Ligne du milieu
     ([2.5, 7.5], [8, 8]),  # Surface adverse
+    ([7.5, 7.5], [8, 10]),  # Surface adverse côté droit
+    ([2.5, 2.5], [8, 10]),  # Surface adverse côté gauche
     ([2.5, 7.5], [2, 2]),  # Surface gardien
+    ([7.5, 7.5], [0, 2]),  # Surface gardien côté droit
+    ([2.5, 2.5], [0, 2]),  # Surface gardien côté gauche
     ([0, 0], [0, 10]),  # Bord gauche
     ([10, 10], [0, 10]),  # Bord droit
     ([0, 10], [10, 10]),  # Ligne de but haute
@@ -226,13 +231,34 @@ for line in [
 ]:
     plt.plot(line[0], line[1], color="white", linewidth=2)
 
+# Ajouter un cercle blanc au milieu
+centre_cercle = plt.Circle((5, 5), 1.3, color="white", fill=False, linewidth=2)
+ax.add_patch(centre_cercle)
+
+# Ajouter un arc de cercle aux surfaces
+arc_centre1 = patches.Arc(
+    (5, 8),
+    1.2,
+    1.2,
+    angle=180,
+    theta1=0,
+    theta2=180,
+    color="white",
+    linewidth=2,
+)
+ax.add_patch(arc_centre1)
+arc_centre2 = patches.Arc(
+    (5, 2), 1.2, 1.2, angle=0, theta1=0, theta2=180, color="white", linewidth=2
+)
+ax.add_patch(arc_centre2)
+
 # Affichage des joueurs
 for _, row in df_meilleur_11.iterrows():
     poste = row["Poste"]
     x, y = positions[poste]
 
     ax.scatter(
-        x, y, s=600, color="blue", edgecolors="white", linewidth=2
+        x, y, s=600, color="blue", edgecolors="white", linewidth=2, zorder=4
     )  # Point du joueur
     ax.text(
         x,
