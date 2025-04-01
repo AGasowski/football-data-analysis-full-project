@@ -1,9 +1,9 @@
 import pandas as pd
 
-fichier_source = "Projet_info/data/Match.csv"
+fichier_source = "data/Match.csv"
 match = pd.read_csv(fichier_source)
 match = match[match["season"] == "2014/2015"]
-data_team = "Projet_info/data/Team.csv"
+data_team = "data/Team.csv"
 team = pd.read_csv(data_team)
 
 match["home_team_api_id"] = match["home_team_api_id"].astype(int)
@@ -20,7 +20,7 @@ team_id=team['team_api_id'].tolist()
 L=[]
 for i in range(len(home_goal)):
     L.append(abs(home_goal[i]-away_goal[i]))
-   
+
 def max(M):
     cpt=0
     for i in range(len(M)):
@@ -35,6 +35,4 @@ def liaison_table(A,B,i):
 
 for i in range(len(L)):
     if L[i]==a:
-       print(liaison_table(team_id,team_name,home_team[i]),liaison_table(team_id,team_name,away_team[i]),home_goal[i],away_goal[i]) 
-
-
+       print(liaison_table(team_id,team_name,home_team[i]),liaison_table(team_id,team_name,away_team[i]),home_goal[i],away_goal[i])
