@@ -1,5 +1,0 @@
-comment,event_incident_typefk,coordinates,elapsed,player2,subtype,player1,sortorder,team,id,n,type,goal_type,stats_goals,stats_shoton,stats_penalties
-n,406,,9,409193,header,354491,1,6391,5164497,95,goal,n,1,1,
-n,393,,31,466143,shot,208676,2,6391,5164787,264,goal,n,1,1,
-p,20,,51,,,359188,0,9829,5165289,346,goal,p,1,,1
-n,406,,74,29590,header,30911,1,9829,5165682,520,goal,n,1,1,

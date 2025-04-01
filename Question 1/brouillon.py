@@ -17,19 +17,22 @@ away_goal=match['away_team_goal'].tolist()
 
 d={}
 for i in range(len(home_id)):
-        d[home_id[i]] = 0
+        d[home_id[i]]=0
 for i in range(len(away_id)):
         if away_id[i] not in d:
-                d[away_id[i]]=0
+                d[away_id[i]]=[0,0]
 for i in range(len(home_id)):
         if home_goal[i] > away_goal[i]:
-                d[home_id[i]]+=3
+                d[home_id[i]][0]+=3
+                d[home_id[i]][1]+=home_goal[i]-away_goal[i]
+                d[away_id[i]][1]+=away_goal[i]-home_goal[i]
         if away_goal[i] > home_goal[i]:
-                d[away_id[i]]+=3
+                d[away_id[i]][0]+=3
+                d[away_id[i]][1]+=away_goal[i]-home_goal[i]
+                d[home_id[i]][1]+=home_goal[i]-away_goal[i]
         if home_goal[i] == away_goal[i]:
                 d[home_id[i]]+=1
                 d[away_id[i]]+=1
-
 d1={}
 team_id=team['team_api_id'].tolist()
 team_name=team['team_long_name'].tolist()
@@ -42,7 +45,7 @@ def liaison_table(A,B,e):
 for e in d:
         d1[liaison_table(team_id,team_name,e)] = d[e]
 #print(d1)
-classement1 = sorted(
+classement1= sorted(
     d1.items(), key=lambda x: x[1], reverse=True
 )
 Classement = pd.DataFrame(classement1, columns=["equipe", "points"])
