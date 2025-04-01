@@ -49,7 +49,13 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
 ranking = []
 for team_id, data in stats.items():
     ranking.append(
-        (team_names[team_id], data["points"], data["scored"], data["conceded"], data["scored"] - data["conceded"])
+        (
+            team_names[team_id],
+            data["points"],
+            data["scored"],
+            data["conceded"],
+            data["scored"] - data["conceded"],
+        )
     )
 
 # Tri du classement : d'abord par points, puis par différence de buts, puis par buts marqués
@@ -57,7 +63,11 @@ ranking.sort(key=lambda x: (x[1], x[4], x[2]), reverse=True)
 
 # Affichage du classement
 print("Classement de la saison 2014/2015 :")
-print("{:<25} {:<10} {:<10} {:<10} {:<10}".format("Équipe", "Points", "Marqués", "Encaissés", "Différence"))
+print(
+    "{:<25} {:<10} {:<10} {:<10} {:<10}".format(
+        "Équipe", "Points", "Marqués", "Encaissés", "Différence"
+    )
+)
 for team, points, scored, conceded, diff in ranking:
     print(f"{team:<25} {points:<10} {scored:<10} {conceded:<10} {diff:<10}")
 
@@ -87,7 +97,14 @@ for team, points, scored, conceded, diff in ranking:
 tree.pack()
 
 # Bouton de fermeture
-button = tk.Button(root, text="Fermer", command=root.quit, bg="#E74C3C", fg="white", font=("Arial", 12, "bold"))
+button = tk.Button(
+    root,
+    text="Fermer",
+    command=root.quit,
+    bg="#E74C3C",
+    fg="white",
+    font=("Arial", 12, "bold"),
+)
 button.pack(pady=10)
 
 # Lancement de l'interface graphique
