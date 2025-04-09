@@ -12,4 +12,14 @@ les atouts que chaque poste doit avoir.
 3- En 2014, quelle équipe a inscrit la plus grande proportion de ses buts lors
 de matchs à l'extérieur ?
 
+
+Elhadji FALL 
+
+4- Quel(s) est(sont) le(s) match(s) avec la plus grande différence de buts dans le jeu de données?
+
+5-  Quelle est la formation qui a eu le plus de victoire ? 
+
+6- Quel est le match avec le plus faible ratio tir/ buts ? 
+
+
  
