@@ -1,0 +1,15 @@
+Projet traitement de données
+
+Alexandre GASOWSKI
+METTEZ VOS PRENOMS
+
+1- Quel est la date du jour où il y a eu le plus de matchs nuls entre 2008 entre
+2016.
+
+2- Quelles est l'équipe type des joueurs en 442, en prenant en considérations
+les atouts que chaque poste doit avoir.
+
+ 3- En 2014, quelle équipe a inscrit la plus grande proportion de ses buts lors
+ de matchs à l'extérieur ?"
+
+ 
