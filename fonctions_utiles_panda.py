@@ -43,8 +43,8 @@ def fusionner(df1, df2, col1, col2):
     )
 
 
-def choix_saison(saison):
-    match = match[match["season"] == "2014/2015"]
+def select_saison(df, saison):
+    return df[df["season"] == saison]
 
 
 def transforme(X):
@@ -95,3 +95,7 @@ def transforme(X):
     # Convertir en DataFrame
     df = pd.DataFrame(data)
     return df
+
+
+def convertir_int(df, col):
+    return df[col].astype(int)
