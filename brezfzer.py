@@ -24,5 +24,21 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
         but_exterieur=row["away_team_goal"]
         match[match_id] =[id_domicile,id_exterieur,but_domicile,but_exterieur,tir_cadre]
 
-print(match)
+final={}
+for equipe in team_names:
+    for matchs in match :
+        if equipe == match[matchs][0]:
+            if teams_name[equipe] not in final:
+                final[team_names[equipe]] = [(match[matchs][2]+match[matchs][3])/match[matchs][4]]
+            final[team_names[equipe]].append((match[matchs][2]+match[matchs][3])/match[matchs][4])
+def moyenne(L):
+    cpt=0
+    for i in range(len(L)):
+        cpt+=L[i]/len(L)
+    return cpt
+for e in final :
+    final[e]==moyenne(final[e])
+
+
+print(final)
 
