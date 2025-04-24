@@ -139,3 +139,22 @@ def max(df, col):
 
 def select(df, col1, val, col2):
     return df[df[col1] == val][col2]
+
+
+def id_en_nom(match, team):
+    match["home_team_api_id"] = (
+        match["home_team_api_id"]
+        .map(team.set_index("team_api_id")["team_long_name"])
+        .fillna(match["home_team_api_id"])
+    )
+    match["away_team_api_id"] = (
+        match["away_team_api_id"]
+        .map(team.set_index("team_api_id")["team_long_name"])
+        .fillna(match["away_team_api_id"])
+    )
+    match.rename(columns={"home_team_api_id": "home_team"}, inplace=True)
+    match.rename(columns={"away_team_api_id": "away_team"}, inplace=True)
+
+
+def afficher(resultat):
+    print(resultat.to_string(index=False))
