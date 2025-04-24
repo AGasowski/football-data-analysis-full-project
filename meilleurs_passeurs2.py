@@ -52,7 +52,7 @@ for X in L:
                 f[player2[i]] += 1
 
 
-convertir_str(player3, "player_api_id")
+player3["player_api_id"] = player3["player_api_id"].astype(str)
 d2 = dict(zip(player3["player_name"], player3["player_api_id"]))
 meilleurs_passeurs = {
     name: f.get(id) for name, id in d2.items() if f.get(id) is not None
