@@ -60,3 +60,7 @@ def generer_classement(stats, noms_equipes):
         )
     classement.sort(key=lambda x: (x[1], x[4], x[2]), reverse=True)
     return classement
+
+
+def convertir_str(df, col):
+    return df[col].astype(str)

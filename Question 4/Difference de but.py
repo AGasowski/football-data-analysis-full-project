@@ -1,36 +1,32 @@
-import pandas as pd
-import fonctions_utiles_panda
-from fonctions_utiles_panda import lire_csv, select_saison
+from fonctions_utiles_panda import (
+    lire_csv,
+    select_saison,
+    convertir_int,
+    convertir_list,
+    calcul_liste,
+    diff_abs,
+)
 
 match = lire_csv("data/Match.csv")
-match = select_saison("2014/2015")
+match = select_saison(match, "2014/2015")
 team = lire_csv("data/Team.csv")
 
-match["home_team_api_id"] = match["home_team_api_id"].astype(int)
-match["away_team_api_id"] = match["away_team_api_id"].astype(int)
-team["team_api_id"] = team["team_api_id"].astype(int)
-
-home_goal = match["home_team_goal"].tolist()
-away_goal = match["away_team_goal"].tolist()
-home_team = match["home_team_api_id"].tolist()
-away_team = match["away_team_api_id"].tolist()
-team_name = team["team_long_name"].tolist()
-team_id = team["team_api_id"].tolist()
-
-L = []
-for i in range(len(home_goal)):
-    L.append(abs(home_goal[i] - away_goal[i]))
+convertir_int(match, "home_team_api_id")
+convertir_int(match, "away_team_api_id")
+convertir_int(team, "team_api_id")
 
 
-def max(M):
-    cpt = 0
-    for i in range(len(M)):
-        if M[i] >= cpt:
-            cpt = M[i]
-    return cpt
+home_goal = convertir_list(match, "home_team_goal")
+away_goal = convertir_list(match, "away_team_goal")
+home_team = convertir_list(match, "home_team_api_id")
+away_team = convertir_list(match, "away_team_api_id")
+team_name = convertir_list(team, "team_long_name")
+team_id = convertir_list(team, "team_api_id")
+
+Ecart = calcul_liste([home_goal, away_goal], diff_abs)
 
 
-a = max(L)
+ecart_max = max(Ecart)
 
 
 def liaison_table(A, B, i):
@@ -39,8 +35,8 @@ def liaison_table(A, B, i):
             return B[j]
 
 
-for i in range(len(L)):
-    if L[i] == a:
+for i in range(len(Ecart)):
+    if Ecart[i] == ecart_max:
         print(
             liaison_table(team_id, team_name, home_team[i]),
             liaison_table(team_id, team_name, away_team[i]),

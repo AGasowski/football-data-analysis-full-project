@@ -1,5 +1,5 @@
 import pandas as pd
-import xml.etree.ElementTree as ET
+from fonctions_utiles_panda import transforme
 
 # Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
 # faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
@@ -20,25 +20,6 @@ match = match[match["goal"].notna() & (match["goal"] != "")]
 # match=match[match["country_id"] == "1729"]
 match = match[match["season"] == "2015/2016"]
 card1 = match[match["card"].notna() & (match["card"] != "")]
-# On va créer une fonction qui prend en entré un fichier XML et qui la ressort
-# en une table exploitable par python
-
-
-def transforme(X):
-    root = ET.fromstring(X)
-    data = []
-    for value in root.findall("value"):
-        entry = {
-            child.tag: child.text for child in value if child.tag != "stats"
-        }  # Exclure stats pour l'instant
-        stats = value.find("stats")  # Extraire les stats
-        if stats is not None:
-            entry.update({f"stats_{child.tag}": child.text for child in stats})
-            data.append(entry)
-    # Convertir en DataFrame
-    df = pd.DataFrame(data)
-    return df
-
 
 # la colonne goal dans la table match a des elements qui sont eux meme des
 # tables donc on va les stocker dans une liste L
