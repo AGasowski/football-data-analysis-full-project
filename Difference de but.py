@@ -1,9 +1,7 @@
-import pandas as pd
-import fonctions_utiles_panda
 from fonctions_utiles_panda import lire_csv, select_saison
 
 match = lire_csv("data/Match.csv")
-match = select_saison("2014/2015")
+match = select_saison(match, "2014/2015")
 team = lire_csv("data/Team.csv")
 
 match["home_team_api_id"] = match["home_team_api_id"].astype(int)
