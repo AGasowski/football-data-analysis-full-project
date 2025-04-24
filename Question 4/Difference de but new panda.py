@@ -1,15 +1,15 @@
 from fonctions_utiles_panda import (
     lire_csv,
-    select_saison,
+    select_all,
     diff_abs,
-    max,
+    max_col,
     select,
     id_en_nom,
     afficher,
 )
 
 match = lire_csv("data/Match.csv")
-match = select_saison(match, "2014/2015")
+match = select_all(match, "season", "2014/2015")
 team = lire_csv("data/Team.csv")
 
 id_en_nom(match, team)
@@ -20,7 +20,7 @@ afficher(
     select(
         match,
         "ecart",
-        max(match, "ecart"),
+        max_col(match, "ecart"),
         [
             "home_team",
             "home_team_goal",

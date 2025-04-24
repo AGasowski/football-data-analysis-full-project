@@ -1,7 +1,6 @@
 from fonctions_utiles_panda import (
     lire_csv,
     convertir_date,
-    date_francais,
     select_all,
     nb_occurences,
     max_serie,

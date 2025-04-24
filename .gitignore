@@ -1,3 +1,4 @@
 data/
 buts_match.csv
 exploration.csv
+__pycache__/

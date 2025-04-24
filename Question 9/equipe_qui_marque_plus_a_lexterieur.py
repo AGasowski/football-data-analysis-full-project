@@ -18,7 +18,7 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
         match_date = row["season"]
-        if match_date == "2013/2014":
+        if match_date == "2014/2015":
             home_team = int(row["home_team_api_id"])
             away_team = int(row["away_team_api_id"])
             home_goals = int(row["home_team_goal"])

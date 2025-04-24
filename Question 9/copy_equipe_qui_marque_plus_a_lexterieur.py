@@ -1,5 +1,8 @@
-import csv
-from fonctions_utiles_panda import lire_csv_en_dict, creer_dict
+from fonctions_utiles_panda import (
+    lire_csv_en_dict,
+    creer_dict,
+    compter_buts_matchs,
+)
 
 
 team_names = lire_csv_en_dict(
@@ -24,7 +27,12 @@ matchs = lire_csv_en_dict(
     "away_team_goal",
 )
 
-print(matchs)
+
+matchs = {k: v for k, v in matchs.items() if v[0] == "2014/2015"}
+
+compter_buts_matchs(matchs, goals_home, 1, 3)
+compter_buts_matchs(matchs, goals_away, 2, 4)
+
 
 # Calcul des moyennes et différences
 team_performance = []
@@ -46,6 +54,8 @@ for team in goals_home.keys():
 
 # Classement des équipes par ordre décroissant de différence
 team_performance.sort(key=lambda x: x[3], reverse=True)
+
+print(team_performance)
 
 # Affichage des 10 meilleures équipes
 print(
