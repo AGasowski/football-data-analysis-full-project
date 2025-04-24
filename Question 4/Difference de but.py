@@ -25,7 +25,7 @@ team_id = convertir_list(team, "team_api_id")
 
 Ecart = calcul_liste([home_goal, away_goal], diff_abs)
 
-
+match["home_team_api_id"].mean()
 ecart_max = max(Ecart)
 
 

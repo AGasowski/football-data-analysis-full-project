@@ -129,13 +129,13 @@ def calcul_liste(liste_variables, fonction_calcul):
     return liste_resultats
 
 
-def diff_abs(a, b):
-    return abs(a - b)
+def diff_abs(df, a, b):
+    return abs(df[a] - df[b])
 
 
-def max(L):
-    cpt = 0
-    for i in range(len(L)):
-        if L[i] >= cpt:
-            cpt = L[i]
-    return cpt
+def max(df, col):
+    return df[col].max()
+
+
+def select(df, col1, val, col2):
+    return df[df[col1] == val][col2]
