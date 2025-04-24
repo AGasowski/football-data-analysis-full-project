@@ -14,22 +14,17 @@ goals_away = creer_dict(2)
 
 # Lecture du fichier des matchs et filtrage pour l'année 2014
 
-with open("data/Match.csv", mode="r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        match_date = row["season"]
-        if match_date == "2013/2014":
-            home_team = int(row["home_team_api_id"])
-            away_team = int(row["away_team_api_id"])
-            home_goals = int(row["home_team_goal"])
-            away_goals = int(row["away_team_goal"])
+matchs = lire_csv_en_dict(
+    "data/Match.csv",
+    "id",
+    "season",
+    "home_team_api_id",
+    "away_team_api_id",
+    "home_team_goal",
+    "away_team_goal",
+)
 
-            # Mise à jour des statistiques
-            goals_home[home_team][0] += home_goals
-            goals_home[home_team][1] += 1
-
-            goals_away[away_team][0] += away_goals
-            goals_away[away_team][1] += 1
+print(matchs)
 
 # Calcul des moyennes et différences
 team_performance = []

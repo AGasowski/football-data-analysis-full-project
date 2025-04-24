@@ -16,16 +16,16 @@ id_en_nom(match, team)
 
 match["ecart"] = diff_abs(match, "home_team_goal", "away_team_goal")
 
-scores = select(
-    match,
-    "ecart",
-    max(match, "ecart"),
-    [
-        "home_team",
-        "home_team_goal",
-        "away_team_goal",
-        "away_team",
-    ],
+afficher(
+    select(
+        match,
+        "ecart",
+        max(match, "ecart"),
+        [
+            "home_team",
+            "home_team_goal",
+            "away_team_goal",
+            "away_team",
+        ],
+    )
 )
-
-afficher(scores)

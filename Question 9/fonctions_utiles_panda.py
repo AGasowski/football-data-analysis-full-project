@@ -2,10 +2,48 @@ import pandas as pd
 import locale
 import platform
 import xml.etree.ElementTree as ET
+import csv
+from collections import defaultdict
 
 
 def lire_csv(chemin):
     return pd.read_csv(chemin)
+
+
+# def lire_team_sans_pd(chemin):
+#    team_names = {}
+#    with open(chemin, mode="r", encoding="utf-8") as file:
+#        reader = csv.DictReader(file)
+#        for row in reader:
+#            team_id = int(row["team_api_id"])
+#            team_name = row["team_long_name"]
+#            team_names[team_id] = team_name  # Associer ID à nom
+#    return team_names
+
+
+def lire_csv_en_dict(chemin, cle_id, *noms_champs):
+    """
+    Lit un fichier CSV et retourne un dictionnaire :
+    - La clé est la valeur de la colonne `cle_id`.
+    - La valeur est soit :
+        - un seul champ (si un seul nom est donné)
+        - un tuple de champs (si plusieurs noms sont donnés)
+    """
+    data_dict = {}
+    with open(chemin, mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            identifiant = int(row[cle_id])
+            valeurs = tuple(row[nom] for nom in noms_champs)
+            if len(valeurs) == 1:
+                valeurs = valeurs[0]  # Si un seul champ, pas besoin de tuple
+            data_dict[identifiant] = valeurs
+    return data_dict
+
+
+def creer_dict(nb_val):
+    dict = defaultdict(lambda: [0] * nb_val)
+    return dict
 
 
 def convertir_date(df):
