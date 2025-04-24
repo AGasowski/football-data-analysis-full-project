@@ -28,7 +28,7 @@ final={}
 for equipe in team_names:
     for matchs in match :
         if equipe == match[matchs][0]:
-            if teams_name[equipe] not in final:
+            if team_names[equipe] not in final:
                 final[team_names[equipe]] = [(match[matchs][2]+match[matchs][3])/match[matchs][4]]
             final[team_names[equipe]].append((match[matchs][2]+match[matchs][3])/match[matchs][4])
 def moyenne(L):
