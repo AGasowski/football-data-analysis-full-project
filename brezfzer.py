@@ -1,11 +1,11 @@
 import csv
 from collections import defaultdict
 import tkinter as tk
-from tkinter import ttk 
+from tkinter import ttk
 
 # Dictionnaire pour stocker les noms des équipes
 team_names = {}
-match={}
+match = {}
 # Chargement des noms des équipes
 with open("data/Team.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
@@ -17,28 +17,47 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
         match_id = int(row["match_api_id"])
-        tir_cadre = (row["shoton"])
-        id_domicile=int(row["home_team_api_id"])
-        id_exterieur=int(row["away_team_api_id"])
-        but_domicile=(row["home_team_goal"])
-        but_exterieur=row["away_team_goal"]
-        match[match_id] =[id_domicile,id_exterieur,but_domicile,but_exterieur,tir_cadre]
+        tir_cadre = row["shoton"]
+        id_domicile = int(row["home_team_api_id"])
+        id_exterieur = int(row["away_team_api_id"])
+        but_domicile = row["home_team_goal"]
+        but_exterieur = row["away_team_goal"]
+        match[match_id] = [
+            id_domicile,
+            id_exterieur,
+            but_domicile,
+            but_exterieur,
+            tir_cadre,
+        ]
 
-final={}
+final = {}
 for equipe in team_names:
-    for matchs in match :
+    for matchs in match:
         if equipe == match[matchs][0]:
             if team_names[equipe] not in final:
+<<<<<<< HEAD
                 final[team_names[equipe]] = [(match[matchs][2]+match[matchs][3])/match[matchs][4]]
             final[team_names[equipe]].append((match[matchs][2]+match[matchs][3])/match[matchs][4])
+=======
+                final[team_names[equipe]] = [
+                    (int(match[matchs][2]) + int(match[matchs][3]))
+                    / int(match[matchs][4])
+                ]
+            final[team_names[equipe]].append(
+                (match[matchs][2] + match[matchs][3]) / match[matchs][4]
+            )
+
+
+>>>>>>> 1e60fc84c1fe9322714184871d32e80c0f638f9a
 def moyenne(L):
-    cpt=0
+    cpt = 0
     for i in range(len(L)):
-        cpt+=L[i]/len(L)
+        cpt += L[i] / len(L)
     return cpt
-for e in final :
-    final[e]==moyenne(final[e])
+
+
+for e in final:
+    final[e] == moyenne(final[e])
 
 
 print(final)
-
