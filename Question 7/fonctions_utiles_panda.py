@@ -10,6 +10,7 @@ def lire_csv(chemin):
 
 def convertir_date(df):
     df["date"] = pd.to_datetime(df["date"])
+    date_francais()
     return df
 
 
@@ -108,7 +109,7 @@ def diff_abs(df, a, b):
     return abs(df[a] - df[b])
 
 
-def max(df, col):
+def max_col(df, col):
     return df[col].max()
 
 
@@ -137,3 +138,15 @@ def afficher(resultat):
 
 def select_all(df, col, val):
     return df[df[col] == val]
+
+
+def nb_occurences(df, col):
+    return df.groupby(col).size()
+
+
+def max_serie(df):
+    return df.idxmax(), df.max()
+
+
+def date_format(date):
+    return date.strftime("%A %d %B %Y")
