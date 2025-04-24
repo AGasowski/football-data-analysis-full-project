@@ -3,6 +3,8 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
+# ----------------------------- ÉQUIPES ET CLASSEMENT -----------------------------
+
 
 def charger_noms_equipes(chemin_fichier):
     """Charge les noms des équipes à partir d’un fichier CSV."""
@@ -62,5 +64,63 @@ def generer_classement(stats, noms_equipes):
     return classement
 
 
-def convertir_str(df, col):
-    return df[col].astype(str)
+# ----------------------------- TRANSFORMATION XML -----------------------------
+
+
+def transforme_xml_vers_dataframe(xml_string):
+    """
+    Transforme une chaîne XML contenant des infos de match (colonne 'goal') en DataFrame.
+    """
+    try:
+        root = ET.fromstring(xml_string)
+    except ET.ParseError:
+        return pd.DataFrame()  # Retourne un DataFrame vide en cas d’erreur
+
+    data = []
+    for value in root.findall("value"):
+        entry = {child.tag: child.text for child in value if child.tag != "stats"}
+        stats = value.find("stats")
+        if stats is not None:
+            entry.update({f"stats_{child.tag}": child.text for child in stats})
+        data.append(entry)
+    return pd.DataFrame(data)
+
+
+def top_joueurs_par_stat(chemin_match, chemin_joueurs, saison, colonne, top_n=30):
+    """
+    Retourne le top N des joueurs selon une statistique donnée (but ou passe).
+
+    Args:
+        chemin_match (str): Chemin vers le fichier Match.csv
+        chemin_joueurs (str): Chemin vers le fichier Player.csv
+        saison (str): Saison au format "YYYY/YYYY"
+        colonne (str): "player1" pour les buteurs, "player2" pour les passeurs
+        top_n (int): Nombre de joueurs à afficher
+
+    Returns:
+        DataFrame: Classement des joueurs
+    """
+    match = pd.read_csv(chemin_match)
+    joueurs = pd.read_csv(chemin_joueurs)
+
+    match = match[match["goal"].notna() & (match["goal"] != "")]
+    match = match[match["season"] == saison]
+
+    liste_actions = [transforme_xml_vers_dataframe(x) for x in match["goal"]]
+    compteur = defaultdict(int)
+
+    for df in liste_actions:
+        if colonne in df.columns:
+            for pid in df[colonne]:
+                compteur[pid] += 1
+
+    joueurs["player_api_id"] = joueurs["player_api_id"].astype(str)
+    mapping_noms = dict(zip(joueurs["player_api_id"], joueurs["player_name"]))
+
+    classement = [
+        (mapping_noms.get(str(pid), f"ID {pid}"), nb) for pid, nb in compteur.items()
+    ]
+    classement = sorted(classement, key=lambda x: x[1], reverse=True)[:top_n]
+
+    nom_colonne = "Buts marqués" if colonne == "player1" else "Passes décisives"
+    return pd.DataFrame(classement, columns=["Nom du joueur", nom_colonne])

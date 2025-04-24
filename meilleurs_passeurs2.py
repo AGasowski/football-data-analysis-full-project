@@ -1,5 +1,6 @@
 import pandas as pd
 from fonctions_utiles_panda import transforme
+from Fonction_utile import convertir_str
 
 # Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
 # faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
