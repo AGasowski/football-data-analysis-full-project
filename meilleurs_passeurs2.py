@@ -1,6 +1,6 @@
 import pandas as pd
 from fonctions_utiles_panda import transforme
-from Fonction_utile import con
+from Fonction_utile import convertir_str
 
 # Classement des meilleurs buteurs dans toute l'europe ( allez disons qu'on va
 # faire le top 30 des meilleus buteurs ) tous championnats confondus : on aura
@@ -52,7 +52,7 @@ for X in L:
                 f[player2[i]] += 1
 
 
-player3["player_api_id"] = player3["player_api_id"].astype(str)
+convertir_str(player3, "player_api_id")
 d2 = dict(zip(player3["player_name"], player3["player_api_id"]))
 meilleurs_passeurs = {
     name: f.get(id) for name, id in d2.items() if f.get(id) is not None
