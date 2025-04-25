@@ -1,7 +1,12 @@
-from fonctions_utiles_panda import (
+from fonctions_communes import (
     lire_csv_en_dict,
     creer_dict,
     compter_buts_matchs,
+    filtre_dic,
+    cles_dic,
+    div_dic,
+    trier_liste_tuples,
+    name_team_dic,
 )
 
 
@@ -10,13 +15,12 @@ team_names = lire_csv_en_dict(
 )
 
 # Dictionnaires pour stocker les statistiques des buts
+# {team_id: [total_buts, nb_matchs]}
 goals_home = creer_dict(2)
-# {team_id: [total_buts_domicile, nb_matchs_domicile]}
 goals_away = creer_dict(2)
-# {team_id: [total_buts_exterieur, nb_matchs_exterieur]}
+
 
 # Lecture du fichier des matchs et filtrage pour l'année 2014
-
 matchs = lire_csv_en_dict(
     "data/Match.csv",
     "id",
@@ -27,40 +31,28 @@ matchs = lire_csv_en_dict(
     "away_team_goal",
 )
 
-
-matchs = {k: v for k, v in matchs.items() if v[0] == "2014/2015"}
+matchs = filtre_dic(matchs, 0, "2014/2015")
 
 compter_buts_matchs(matchs, goals_home, 1, 3)
 compter_buts_matchs(matchs, goals_away, 2, 4)
 
 
 # Calcul des moyennes et différences
-team_performance = []
+classement = []
 
-for team in goals_home.keys():
-    home_avg = (
-        goals_home[team][0] / goals_home[team][1]
-        if goals_home[team][1] > 0
-        else 0
-    )
-    away_avg = (
-        goals_away[team][0] / goals_away[team][1]
-        if goals_away[team][1] > 0
-        else 0
-    )
-    diff = away_avg - home_avg  # Différence entre extérieur et domicile
-
-    team_performance.append((team, home_avg, away_avg, diff))
+for team in cles_dic(goals_home):
+    home_avg = div_dic(goals_home, team, 0, 1)
+    away_avg = div_dic(goals_away, team, 0, 1)
+    classement.append((team, home_avg, away_avg, away_avg - home_avg))
 
 # Classement des équipes par ordre décroissant de différence
-team_performance.sort(key=lambda x: x[3], reverse=True)
+trier_liste_tuples(classement, 3)
 
-print(team_performance)
 
 # Affichage des 10 meilleures équipes
 print(
     "Classement des équipes avec la plus grande différence de buts marqués à "
-    "l'extérieur vs domicile (année 2014) :"
+    "l'extérieur vs domicile:"
 )
 print("-" * 100)
 print(
@@ -70,9 +62,9 @@ print(
 print("-" * 100)
 
 for rank, (team_id, home_avg, away_avg, diff) in enumerate(
-    team_performance[:10], start=1
+    classement[:10], start=1
 ):  # Top 10
-    team_name = team_names.get(team_id, "Inconnu")  # Récupérer le nom
+    team_name = name_team_dic(team_names, team_id)  # Récupérer le nom
     print(
         f"{rank:<5}{team_name:<30}{home_avg:<18.2f}{away_avg:<18.2f}"
         f"{diff:<12.2f}"

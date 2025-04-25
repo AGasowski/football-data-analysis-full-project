@@ -1,4 +1,4 @@
-from fonctions_utiles_panda import (
+from fonctions_communes import (
     lire_csv,
     select_all,
     diff_abs,
