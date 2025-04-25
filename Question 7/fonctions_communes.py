@@ -378,26 +378,81 @@ def creer_dict(nb_val):
 
 
 def name_team_dic(team_names, team_id):
+    """
+    Retourne le nom d'une équipe à partir de son identifiant.
+
+    Paramètres : - team_names (dict) : Dictionnaire associant les identifiants
+    d'équipes à leurs noms. - team_id (int ou str) : Identifiant de l'équipe
+    recherchée.
+
+    Retour : - str : Nom de l'équipe correspondant à l'identifiant, ou
+    "Inconnu" si l'identifiant n'est pas trouvé.
+    """
     team_name = team_names.get(team_id, "Inconnu")
     return team_name
 
 
 def cles_dic(dic):
+    """
+    Retourne les clés d'un dictionnaire.
+
+    Paramètres : - dic (dict) : Dictionnaire dont on veut obtenir les clés.
+
+    Retour : - dict_keys : Objet contenant les clés du dictionnaire.
+    """
     return dic.keys()
 
 
 def filtre_dic(dic, ind_col, val_col):
+    """
+    Filtre un dictionnaire pour ne garder que les éléments dont une certaine
+    valeur correspond à un critère donné.
+
+    Paramètres : - dic (dict) : Dictionnaire à filtrer. Les valeurs sont
+    supposées être des séquences ou des listes. - ind_col (int) : Index dans la
+    valeur à tester. - val_col (any) : Valeur recherchée à la position ind_col.
+
+    Retour : - dict : Dictionnaire filtré ne contenant que les éléments
+    répondant au critère.
+    """
     dic = {k: v for k, v in dic.items() if v[ind_col] == val_col}
     return dic
 
 
-def div_dic(dic, id, ind_val1, ind_val2):
-    div = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
-    return div
+def ratio_dic(dic, id, ind_val1, ind_val2):
+    """
+    Calcule le ratio entre deux valeurs d'une entrée du dictionnaire,
+    identifiée par une clé.
+
+    Paramètres : - dic (dict) : Dictionnaire contenant les données. Les valeurs
+    sont des séquences (ex. : listes). - id (hashable) : Clé de l'entrée pour
+    laquelle on veut effectuer l'opération. - ind_val1 (int) : Index de la
+    valeur à utiliser en numérateur. - ind_val2 (int) : Index de la valeur à
+    utiliser en dénominateur.
+
+    Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
+    division par zéro).
+    """
+    ratio = (
+        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    )
+    return ratio
 
 
 # Fonctions pour la manipulation de listes
 def trier_liste_tuples(L, ind):
+    """
+    Trie une liste de tuples (ou listes) en place selon l'élément à une
+    position donnée.
+
+    Paramètres : - L (list) : Liste de tuples ou de listes à trier. - ind (int)
+    : Index de l'élément dans les tuples à utiliser pour le tri.
+
+    Effet de bord : - La liste L est triée en place par ordre décroissant selon
+    l'élément à l'indice ind.
+
+    Retour : - Aucun (le tri est fait en place).
+    """
     L.sort(key=lambda x: x[ind], reverse=True)
 
 

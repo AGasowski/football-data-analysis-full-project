@@ -1,8 +1,9 @@
 import pandas as pd
+from fonctions_communes import lire_csv
 
 # Charger le fichier CSV
-df_stats = pd.read_csv("data/Player_Attributes.csv")
-df_noms = pd.read_csv("data/Player.csv")
+df_stats = lire_csv("data/Player_Attributes.csv")
+df_noms = lire_csv("data/Player.csv")
 
 # Liste des joueurs déjà sélectionnés pour éviter les doublons
 joueurs_selectionnes = set()

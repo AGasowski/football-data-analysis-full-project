@@ -4,7 +4,7 @@ from fonctions_communes import (
     compter_buts_matchs,
     filtre_dic,
     cles_dic,
-    div_dic,
+    ratio_dic,
     trier_liste_tuples,
     name_team_dic,
 )
@@ -41,8 +41,8 @@ compter_buts_matchs(matchs, goals_away, 2, 4)
 classement = []
 
 for team in cles_dic(goals_home):
-    home_avg = div_dic(goals_home, team, 0, 1)
-    away_avg = div_dic(goals_away, team, 0, 1)
+    home_avg = ratio_dic(goals_home, team, 0, 1)
+    away_avg = ratio_dic(goals_away, team, 0, 1)
     classement.append((team, home_avg, away_avg, away_avg - home_avg))
 
 # Classement des équipes par ordre décroissant de différence
