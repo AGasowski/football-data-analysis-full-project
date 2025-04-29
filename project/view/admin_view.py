@@ -19,7 +19,8 @@ class AdminView(AbstractView):
         answers = prompt(self.questions)
         user = User(answers["question age"])
         print(
-            f"Oh vous êtes admin et avez {user.age} ans, notre application n'est pas terminée revenez plus tard"
+            f"Oh vous êtes admin et avez {user.age} ans, notre application "
+            f"n'est pas terminée revenez plus tard"
         )
         from project.view.accueil_view import AccueilView
 
