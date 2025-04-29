@@ -62,12 +62,26 @@ def formation(L, h):
         if L[i][h] != C:
             formation1.append(j)
             j = 1
-            C = L[i][h]
+            C = L[i][h] 
         else:
             j = j + 1
     formation1.append(j)
     return formation1
 
+def formation(L):
+
+    formation1 = []
+    C = L[0]
+    j = 0
+    for i in range(len(L)):
+        if L[i] != C:
+            formation1.append(j)
+            j = 1
+            C = L[i] 
+        else:
+            j = j + 1
+    formation1.append(j)
+    return formation1
 
 d = {}
 for i in range(
