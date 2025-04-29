@@ -568,3 +568,7 @@ def trier_dict(data, cles, reverse=True):
             reverse=reverse,
         )
     )
+
+
+def moyenne(L):
+    return sum(L) / len(L)
