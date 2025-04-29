@@ -10,6 +10,7 @@ from fonctions_communes import (
 
 match = lire_csv("data/Match.csv")
 match = select_all(match, "season", "2014/2015")
+team = lire_csv("data/Team.csv") 
 
 id_en_nom(match, team)
 
@@ -20,11 +21,10 @@ afficher(
         match,
         "ecart",
         max_col(match, "ecart"),
-        [
+        
             "home_team",
             "home_team_goal",
             "away_team_goal",
-            "away_team",
-        ],
+            "away_team"
     )
 )  

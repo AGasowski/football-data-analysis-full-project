@@ -538,3 +538,47 @@ def transforme(X):
     # Convertir en DataFrame
     df = pd.DataFrame(data)
     return df
+
+def formation(L):
+    """
+    Détermine la formation tactique d'une équipe à partir des abscisses des joueurs.
+
+    Paramètres:
+    -----------
+    L : list of int or float
+        Liste triée des abscisses (coordonnées X) des 11 joueurs d’une équipe sur le terrain.
+        Chaque valeur représente la position horizontale d’un joueur. Les joueurs sont                      
+        triés dans l’ordre croissant de leur abscisse pour un traitement correct.
+
+    Retourne:
+    ---------
+    list of int
+        Une liste contenant le nombre de joueurs présents à chaque position horizontale unique.
+        Cela correspond à une décomposition de la formation tactique.
+
+    Exemples:
+    ---------
+    ```python
+    abscisses = [2, 2, 2, 2, 4, 4, 6, 6, 6, 8, 10]
+    formation(abscisses)
+    ```
+
+    Résultat :
+    ```python
+    [4, 2, 3, 1, 1]
+    ```
+    Ce qui signifie : 4 joueurs sur la première ligne (souvent la défense),
+    2 sur la suivante, 3 au milieu, etc.
+    """
+    formation1 = []
+    C = L[0]
+    j = 0
+    for i in range(len(L)):
+        if L[i] != C:
+            formation1.append(j)
+            j = 1
+            C = L[i]
+        else:
+            j += 1
+    formation1.append(j)
+    return formation1
