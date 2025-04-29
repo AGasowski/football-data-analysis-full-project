@@ -14,7 +14,9 @@ class AccueilView(AbstractView):
                 "choices": [
                     "S'identifier en tant qu'admin",
                     "S'identifier en tant qu'utilisateur",
-                    "Lancer la question 1",
+                    "Lancer la question 6",
+                    "Lancer la question 7",
+                    "Lancer la question 9",
                     "Quitter l'appli",
                 ],
             }
@@ -45,6 +47,14 @@ class AccueilView(AbstractView):
             from project.controller.Q7_equipe_type_affichage import run_q7
 
             run_q7()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 9":
+            from project.controller.Q9_equipe_but_exterieur import (
+                run_q9,
+            )
+
+            run_q9()
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Quitter l'appli":

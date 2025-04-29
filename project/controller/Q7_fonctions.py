@@ -5,8 +5,9 @@ import pandas as pd
 
 def choix_criteres():
     """
-    Retourne un dictionnaire associant chaque poste de football à une liste de critères (caractéristiques)
-    nécessaires pour évaluer les joueurs à ce poste.
+    Retourne un dictionnaire associant chaque poste de football à une liste de
+    critères (caractéristiques) nécessaires pour évaluer les joueurs à ce
+    poste.
 
     Retourne
     -------
@@ -141,7 +142,8 @@ def choix_criteres():
 
 def nom_prenom(df):
     """
-    Sépare le champ "player_name" d'un DataFrame en deux colonnes "prenom" et "nom".
+    Sépare le champ "player_name" d'un DataFrame en deux colonnes "prenom" et
+    "nom".
 
     Paramètres
     ----------
@@ -171,7 +173,8 @@ def list_en_df(L, *cols):
     Retourne
     -------
     pd.DataFrame
-        DataFrame avec deux colonnes correspondant aux clés et valeurs du dictionnaire.
+        DataFrame avec deux colonnes correspondant aux clés et valeurs du
+        dictionnaire.
     """
     if len(cols) != 2:
         raise ValueError("Tu dois fournir exactement deux noms de colonnes.")
@@ -208,7 +211,8 @@ def filtrer_par_pied(df, poste):
 
 def calcul_scores_postes(df, dic):
     """
-    Calcule un score total par poste pour chaque joueur à partir des critères définis.
+    Calcule un score total par poste pour chaque joueur à partir des critères
+    définis.
 
     Paramètres
     ----------
@@ -257,12 +261,14 @@ def trouver_joueur_poste(df_stats, poste, joueurs_selectionnes):
 
 def terrain(df_meilleur_11):
     """
-    Affiche une représentation graphique d'un terrain de football avec les joueurs placés en formation 4-4-2.
+    Affiche une représentation graphique d'un terrain de football avec les
+    joueurs placés en formation 4-4-2.
 
     Paramètres
     ----------
     df_meilleur_11 : pd.DataFrame
-        DataFrame contenant les colonnes 'Poste', 'nom', 'prenom' pour chaque joueur sélectionné.
+        DataFrame contenant les colonnes 'Poste', 'nom', 'prenom' pour chaque
+        joueur sélectionné.
 
     Retourne
     -------
