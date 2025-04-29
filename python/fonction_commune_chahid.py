@@ -572,7 +572,7 @@ def moyenne(L):
     return sum(L) / len(L)
 
 
-def get_poids_joueurs(player_df, player_api_id):
+def get_taille_joueurs(player_df, player_api_id):
     """
     Récupère le poids d'un joueur en fonction de son ID.
 
@@ -590,3 +590,32 @@ def get_poids_joueurs(player_df, player_api_id):
         return player_row["weight"].values[0]  # Retourne le poids du joueur
     else:
         return None  # Si le joueur n'est pas trouvé, on retourne None
+
+
+def get_scorers_by_subtype(goals_df_list, subtype):
+    """
+    Renvoie la liste des joueurs ayant marqué un but d'un certain type (ex : 'header').
+
+    Paramètres :
+    - goals_df_list (list) : Liste de DataFrames représentant les buts (résultats de transforme()).
+    - subtype (str) : Le type de but recherché (ex : 'header').
+
+    Retour :
+    - list : Liste des IDs des joueurs ayant marqué avec le subtype donné.
+    """
+    scorers = []
+
+    for goal_df in goals_df_list:
+        # Vérifie que c'est bien un DataFrame
+        if isinstance(goal_df, pd.DataFrame):
+            if "player1" in goal_df.columns and subtype in goal_df.columns:
+                # Extraction des colonnes
+                player_ids = convertir_list(goal_df, "player1")
+                subtypes = convertir_list(goal_df, subtype)
+
+                # Recherche des joueurs ayant marqué du type voulu
+                for pid, sub in zip(player_ids, subtypes):
+                    if sub == subtype_str and pid not in scorers:
+                        scorers.append(int(pid))
+
+    return scorers
