@@ -21,11 +21,10 @@ afficher(
         match,
         "ecart",
         max_col(match, "ecart"),
-        [
+        
             "home_team",
             "home_team_goal",
             "away_team_goal",
-            "away_team",
-        ],
+            "away_team"
     )
 )  
