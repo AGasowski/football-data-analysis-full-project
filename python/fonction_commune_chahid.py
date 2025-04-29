@@ -434,7 +434,9 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    ratio = (
+        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    )
     return ratio
 
 
@@ -538,7 +540,7 @@ def transforme(X):
     return df
 
 
-def trier_dict(data, clés, reverse=True):
+def trier_dict(data, cles, reverse=True):
     """
     Trie un dictionnaire selon une ou plusieurs clés internes.
 
@@ -562,7 +564,7 @@ def trier_dict(data, clés, reverse=True):
     return dict(
         sorted(
             data.items(),
-            key=lambda item: tuple(item[1][key] for key in clés),
+            key=lambda item: tuple(item[1][key] for key in cles),
             reverse=reverse,
         )
     )
