@@ -45,6 +45,7 @@ with open("data/Match.csv", mode="r", encoding="utf-8") as file:
                 stats[home_id]["points"] += 1
                 stats[away_id]["points"] += 1
 
+
 # Génération du classement
 ranking = []
 for team_id, data in stats.items():
