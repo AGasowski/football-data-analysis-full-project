@@ -608,14 +608,70 @@ def get_scorers_by_subtype(goals_df_list, subtype):
     for goal_df in goals_df_list:
         # Vérifie que c'est bien un DataFrame
         if isinstance(goal_df, pd.DataFrame):
-            if "player1" in goal_df.columns and subtype in goal_df.columns:
+            if "player1" in goal_df.columns and "subtype" in goal_df.columns:
                 # Extraction des colonnes
                 player_ids = convertir_list(goal_df, "player1")
-                subtypes = convertir_list(goal_df, subtype)
+                subtypes = convertir_list(goal_df, "subtype")
 
                 # Recherche des joueurs ayant marqué du type voulu
                 for pid, sub in zip(player_ids, subtypes):
-                    if sub == subtype_str and pid not in scorers:
+                    if sub == subtype and pid not in scorers:
                         scorers.append(int(pid))
 
     return scorers
+
+
+def compter_actions_par_joueur(goal_dfs, colonne):
+    """
+    Compte le nombre d'occurrences d'une action (but, passe, etc.) par joueur.
+
+    Paramètres :
+    - goal_dfs (list) : Liste de DataFrames (résultat de transforme()).
+    - colonne (str) : Le nom de la colonne où figure l'identifiant du joueur (ex : 'player1' ou 'assist').
+
+    Retour :
+    - dict : Dictionnaire {player_id: count}
+    """
+    compteur = {}
+
+    for df in goal_dfs:
+        if isinstance(df, pd.DataFrame) and colonne in df.columns:
+            player_ids = convertir_list(df, colonne)
+            for pid in player_ids:
+                try:
+                    pid = int(pid)
+                    compteur[pid] = compteur.get(pid, 0) + 1
+                except ValueError:
+                    continue  # ignore les valeurs non convertibles
+
+    return compteur
+
+
+def trier_joueurs_par_actions(compteur, player_df, top_n=10):
+    """
+    Trie les joueurs selon leur nombre d'actions (but, passe, etc.) et ajoute leur nom.
+
+    Paramètres :
+    - compteur (dict) : Dictionnaire {player_id: count}
+    - player_df (DataFrame) : Table des joueurs (doit contenir player_api_id et player_name)
+    - top_n (int) : Nombre de joueurs à afficher (default = 10)
+
+    Retour :
+    - DataFrame : Classement des joueurs
+    """
+    # Convertir le dictionnaire en DataFrame
+    data = [{"player_api_id": pid, "nb_actions": nb} for pid, nb in compteur.items()]
+    df = pd.DataFrame(data)
+
+    # Utiliser la fonction fusionner pour ajouter les noms des joueurs
+    fusion = fusionner(
+        df,
+        player_df[["player_api_id", "player_name"]],
+        "player_api_id",
+        "player_api_id",
+    )
+
+    # Trier par nombre d’actions décroissant
+    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(drop=True)
+
+    return result.head(top_n)

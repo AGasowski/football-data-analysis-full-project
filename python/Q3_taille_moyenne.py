@@ -5,7 +5,6 @@ match = lire_csv("data/Match.csv")
 
 # On importe la table player
 player = lire_csv("data/Player.csv")
-player1 = lire_csv("data/Player.csv")
 
 match = match[match["goal"].notna() & (match["goal"] != "")]
 # match=match[match["country_id"] == "1729"]
@@ -16,10 +15,8 @@ goals_transformed = [transforme(goal_str) for goal_str in match["goal"]]
 convertir_int(player, "player_api_id")
 convertir_int(player, "height")
 
-
 header_scorers = get_scorers_by_subtype(goals_transformed, "header")
 
-print(header_scorers)
 header_heights = []
 for pid in header_scorers:
     if get_taille_joueurs(player, pid) is not None:
