@@ -6,11 +6,10 @@ from fonctions_communes import (
     select,
     id_en_nom,
     afficher,
-)
+)  
 
 match = lire_csv("data/Match.csv")
 match = select_all(match, "season", "2014/2015")
-team = lire_csv("data/Team.csv")
 
 id_en_nom(match, team)
 
@@ -28,4 +27,4 @@ afficher(
             "away_team",
         ],
     )
-)
+)  
