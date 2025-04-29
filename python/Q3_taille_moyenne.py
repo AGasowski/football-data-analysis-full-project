@@ -6,7 +6,7 @@ fichier_source1 = "data/Match.csv"
 match = pd.read_csv(fichier_source1)
 
 # On importe la table player
-fichier_source2 = "data/Player.csv"
+fichier_source2 = "data/Player.csv" 
 player = pd.read_csv(fichier_source2)
 player1 = pd.read_csv(fichier_source2)
 
