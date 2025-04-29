@@ -1,6 +1,12 @@
-import pandas as pd
-from fonctions_communes import lire_csv
-from Q7_fonctions import terrain, choix_criteres
+from fonctions_communes import lire_csv, fusionner
+from Q7_fonctions import (
+    terrain,
+    choix_criteres,
+    nom_prenom,
+    list_en_df,
+    trouver_joueur_poste,
+    calcul_scores_postes,
+)
 
 # Charger le fichier CSV
 df_stats = lire_csv("data/Player_Attributes.csv")
@@ -14,48 +20,24 @@ postes_criteres = choix_criteres()
 
 # Calculer tous les scores en une seule fois pour éviter les erreurs de colonne
 # manquante
-for poste, criteres in postes_criteres.items():
-    df_stats[poste + "_score"] = df_stats[criteres].sum(axis=1)
+df_stats = calcul_scores_postes(df_stats, postes_criteres)
 
 # Sélection des meilleurs joueurs par poste
 meilleur_11 = {}
 
-for poste, criteres in postes_criteres.items():
-    # Appliquer un filtre selon le poste
-    if poste in ["DD", "DCD", "AD"]:
-        df_selection = df_stats[
-            df_stats["preferred_foot"].str.lower() == "right"
-        ]
-    elif poste in ["DG", "DCG", "AG"]:
-        df_selection = df_stats[
-            df_stats["preferred_foot"].str.lower() == "left"
-        ]
-    else:
-        df_selection = df_stats
+for poste in postes_criteres:
+    joueur = trouver_joueur_poste(df_stats, poste, joueurs_selectionnes)
+    if joueur is not None:
+        meilleur_11[poste] = joueur
+        joueurs_selectionnes.add(joueur)
 
-    # Trier par score et exclure les joueurs déjà sélectionnés
-    df_selection = df_selection.sort_values(
-        by=poste + "_score", ascending=False
-    )
-
-    # Trouver le premier joueur disponible
-    for _, row in df_selection.iterrows():
-        joueur_id = row["player_api_id"]
-        if joueur_id not in joueurs_selectionnes:
-            meilleur_11[poste] = joueur_id
-            joueurs_selectionnes.add(
-                joueur_id
-            )  # Ajouter aux joueurs sélectionnés
-            break  # Sortir dès qu'on a trouvé un joueur valide
 
 # Convertir en DataFrame pour fusionner avec les noms
-df_meilleur_11 = pd.DataFrame(
-    list(meilleur_11.items()), columns=["Poste", "player_api_id"]
-)
+df_meilleur_11 = list_en_df(meilleur_11, "Poste", "player_api_id")
 
 # Joindre avec le fichier des noms
-df_meilleur_11 = df_meilleur_11.merge(
-    df_noms[["player_api_id", "player_name"]], on="player_api_id", how="left"
+df_meilleur_11 = fusionner(
+    df_meilleur_11, df_noms, "player_api_id", "player_api_id"
 )
 
 # Affichage de l'équipe
@@ -65,8 +47,8 @@ for _, row in df_meilleur_11.iterrows():
 
 
 # Séparer le nom complet en prénom et nom
-df_meilleur_11[["prenom", "nom"]] = df_meilleur_11["player_name"].str.rsplit(
-    " ", n=1, expand=True
-)
+df_meilleur_11 = nom_prenom(df_meilleur_11)
 
+
+# Afficher l'équipe sur le terrain
 terrain(df_meilleur_11)
