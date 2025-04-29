@@ -444,8 +444,8 @@ def trier_liste_tuples(L, ind):
     Trie une liste de tuples (ou listes) en place selon l'élément à une
     position donnée.
 
-    Paramètres : - L (list) : Liste de tuples ou de listes à trier. - ind (int)
-    : Index de l'élément dans les tuples à utiliser pour le tri.
+    Paramètres : - L (list) : Liste de tuples ou de listes à trier.
+    - ind (int) : Index de l'élément dans les tuples à utiliser pour le tri.
 
     Effet de bord : - La liste L est triée en place par ordre décroissant selon
     l'élément à l'indice ind.
