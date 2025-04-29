@@ -9,7 +9,7 @@ from project.controller.fonctions_communes import (
 
 
 def run_q6():
-    print("== Résolution de la question 7 ==")
+    print("== Résolution de la question 6 ==")
 
     # Charger les données
     match = lire_csv("data/Match.csv")
