@@ -434,9 +434,7 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = (
-        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
-    )
+    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
     return ratio
 
 
@@ -572,3 +570,23 @@ def trier_dict(data, cles, reverse=True):
 
 def moyenne(L):
     return sum(L) / len(L)
+
+
+def get_poids_joueurs(player_df, player_api_id):
+    """
+    Récupère le poids d'un joueur en fonction de son ID.
+
+    Paramètres :
+    player_df (DataFrame) : Le DataFrame contenant les informations sur les joueurs.
+    player_api_id (int) : L'ID du joueur pour lequel on veut obtenir le poids.
+
+    Retour :
+    float ou None : Le poids du joueur si trouvé, sinon None.
+    """
+    # Recherche du joueur dans le DataFrame en fonction de son player_api_id
+    player_row = player_df[player_df["player_api_id"] == player_api_id]
+
+    if not player_row.empty:
+        return player_row["weight"].values[0]  # Retourne le poids du joueur
+    else:
+        return None  # Si le joueur n'est pas trouvé, on retourne None

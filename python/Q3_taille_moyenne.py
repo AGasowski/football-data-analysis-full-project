@@ -17,29 +17,25 @@ convertir_int(player, "player_api_id")
 convertir_int(player, "height")
 
 
-header_scorers = set()
+header_scorers = []
 for goal_df in goals_transformed:
     # Vérification que 'goal_df' est bien un DataFrame
     if isinstance(goal_df, pd.DataFrame):
         # Vérification des colonnes 'player1' et 'subtype'
         if "player1" in goal_df.columns and "subtype" in goal_df.columns:
             # Extraction des colonnes 'player1' et 'subtype'
-            table_player1 = goal_df["player1"].tolist()
-            subtype = goal_df["subtype"].tolist()
+            table_player1 = convertir_list(goal_df, "player1")
+            subtype = convertir_list(goal_df, "subtype")
 
             # On parcourt les éléments pour trouver les buteurs de la tête
             for player_id, sub in zip(table_player1, subtype):
                 if sub == "header":
-                    header_scorers.add(int(player_id))
+                    header_scorers.append(int(player_id))
 
-
-# Construction d'une liste des tailles des joueurs concernés
-player_id_to_height = dict(zip(player["player_api_id"], player["height"]))
-header_heights = [
-    player_id_to_height[pid]
-    for pid in header_scorers
-    if pid in player_id_to_height and player_id_to_height[pid] is not None
-]
+header_heights = []
+for pid in header_scorers:
+    if get_poids_joueurs(player, pid) is not None:
+        header_heights.append(get_poids_joueurs(player, pid))
 
 print(moyenne(header_heights))
 
