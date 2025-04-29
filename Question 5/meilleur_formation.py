@@ -1,4 +1,18 @@
-import pandas as pd
+from fonctions_communes import (
+    lire_csv,
+    select_all,
+    diff_abs,
+    max_col,
+    select,
+    id_en_nom,
+    afficher,
+) 
+
+match = lire_csv("data/Match.csv")
+match = select_all(match, "season", "2014/2015")
+team = lire_csv("data/Team.csv")
+
+import pandas as pd 
 
 fichier_source = "data/Match.csv"
 match = pd.read_csv(fichier_source)
