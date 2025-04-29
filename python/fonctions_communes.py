@@ -388,8 +388,11 @@ def name_team_dic(team_names, team_id):
     Retour : - str : Nom de l'équipe correspondant à l'identifiant, ou
     "Inconnu" si l'identifiant n'est pas trouvé.
     """
-    team_name = team_names.get(team_id, "Inconnu")
-    return team_name
+    try:
+        team_id = int(team_id)
+    except ValueError:
+        return "Inconnu"
+    return team_names.get(team_id, "Inconnu")
 
 
 def cles_dic(dic):
@@ -433,9 +436,7 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = (
-        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
-    )
+    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
     return ratio
 
 
