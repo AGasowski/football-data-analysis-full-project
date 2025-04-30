@@ -1,32 +1,28 @@
-from project.src.fonctions_communes import (
-    lire_csv,
-    select_all,
-    diff_abs,
-    max_col,
-    select,
-    id_en_nom,
+from project.src.fonctions.data_loader import charger_csv
+from project.src.fonctions.manipulations import filtrer_df, id_en_nom
+from project.src.fonctions.statistiques import resume_colonne
+from project.src.fonctions.utils import (
     afficher,
 )
 
 
 def run_q4(saison):
     print("== Résolution de la question 4 ==")
-    match = lire_csv("data/Match.csv")
-    match = select_all(match, "season", saison)
-    team = lire_csv("data/Team.csv")
+    match = charger_csv("data/Match.csv")
+    match = filtrer_df(match, "season", saison)
+    team = charger_csv("data/Team.csv")
 
     id_en_nom(match, team)
 
-    match["ecart"] = diff_abs(match, "home_team_goal", "away_team_goal")
+    match["ecart"] = resume_colonne(
+        match, "home_team_goal", "away_team_goal", "diff_abs"
+    )
 
     afficher(
-        select(
+        filtrer_df(
             match,
             "ecart",
-            max_col(match, "ecart"),
-            "home_team",
-            "home_team_goal",
-            "away_team_goal",
-            "away_team",
+            resume_colonne(match, "ecart", None, "max"),
+            ["home_team", "home_team_goal", "away_team_goal", "away_team"],
         )
     )
