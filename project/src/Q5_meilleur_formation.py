@@ -62,4 +62,6 @@ def run_q5(saison):
             else:
                 d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 
-    print(cle_maximale(d))
+classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
+for rang, (formation, nb_occurrences) in enumerate(classement, start=1):
+    print(f"{rang}.  {formation} - {nb_occurrences} fois")
