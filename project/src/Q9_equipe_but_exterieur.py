@@ -1,4 +1,4 @@
-from project.controller.fonctions_communes import (
+from project.src.fonctions_communes import (
     lire_csv_en_dict,
     creer_dict,
     compter_buts_matchs,

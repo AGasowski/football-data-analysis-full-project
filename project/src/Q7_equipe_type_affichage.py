@@ -1,5 +1,5 @@
-from project.controller.fonctions_communes import lire_csv, fusionner
-from project.controller.Q7_fonctions import (
+from project.src.fonctions_communes import lire_csv, fusionner
+from project.src.Q7_fonctions import (
     terrain,
     choix_criteres,
     nom_prenom,

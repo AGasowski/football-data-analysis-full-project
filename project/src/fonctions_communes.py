@@ -582,3 +582,447 @@ def formation(L):
             j += 1
     formation1.append(j)
     return formation1
+
+
+def saison_equipe(matchs):
+    """
+    Calcule les statistiques des équipes à partir d'un dictionnaire de matchs.
+
+    Paramètre : - matchs (dict) : Dictionnaire des matchs filtrés, où chaque
+    valeur contient :
+                      [season, league_id, home_team_api_id, away_team_api_id,
+                      home_team_goal, away_team_goal]
+
+    Retour : - stats (dict) : Dictionnaire associant chaque équipe à une liste
+    de 3 éléments :
+                     [points, buts marqués (BM), buts encaissés (BE)]
+    """
+    stats = creer_dict(3)
+    for match_id, match in matchs.items():
+        home_team_id = match[2]
+        away_team_id = match[3]
+        home_goals = int(match[4])
+        away_goals = int(match[5])
+
+        for team_id in [home_team_id, away_team_id]:
+            if team_id not in stats:
+                stats[team_id] = [
+                    0,
+                    0,
+                    0,
+                ]  # [points, goals_scored, goals_conceded]
+
+        stats[home_team_id][1] += home_goals
+        stats[home_team_id][2] += away_goals
+        stats[away_team_id][1] += away_goals
+        stats[away_team_id][2] += home_goals
+
+        if home_goals > away_goals:
+            stats[home_team_id][0] += 3
+        elif home_goals < away_goals:
+            stats[away_team_id][0] += 3
+        else:
+            stats[home_team_id][0] += 1
+            stats[away_team_id][0] += 1
+    return stats
+
+
+# Fonctions El Hadji
+
+
+def fusionner_colonnes_en_listes(df, colonnes):
+    """
+    Fusionne les valeurs de plusieurs colonnes sélectionnées d’un DataFrame
+    ligne par ligne.
+
+    Paramètres:
+    -----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les données d’entrée.
+
+    colonnes : list of str
+        Liste des noms de colonnes du DataFrame à fusionner. Les colonnes
+        doivent exister dans le DataFrame. Chaque ligne des colonnes
+        sélectionnées sera transformée en une liste.
+
+    Retourne:
+    ---------
+    list of list
+        Une liste de listes, où chaque sous-liste contient les valeurs d’une
+        ligne pour les colonnes spécifiées.
+    """
+    if not all(col in df.columns for col in colonnes):
+        raise ValueError(
+            "Une ou plusieurs colonnes spécifiées n'existent pas dans le "
+            "DataFrame."
+        )
+
+    return df[colonnes].apply(lambda row: list(row), axis=1).tolist()
+
+
+def cle_maximale(D):
+    """
+    Renvoie la clé associée à la plus grande valeur dans un dictionnaire.
+
+    Paramètres
+    ----------
+    D : dict
+        Dictionnaire dont les valeurs sont comparables (int, float, etc.).
+
+    Retourne
+    --------
+    key
+        La clé correspondant à la valeur maximale dans le dictionnaire.
+
+    Lève
+    -----
+    ValueError
+        Si le dictionnaire est vide.
+    """
+    if not D:
+        raise ValueError("Le dictionnaire est vide.")
+
+    return max(D, key=D.get)
+
+
+def cle_minimale(D):
+    """
+    Renvoie la clé associée à la plus petite valeur dans un dictionnaire.
+
+    Paramètres
+    ----------
+    D : dict
+        Dictionnaire dont les valeurs sont comparables (int, float, etc.).
+
+    Retourne
+    --------
+    key
+        La clé correspondant à la valeur maximale dans le dictionnaire.
+
+    Lève
+    -----
+    ValueError
+        Si le dictionnaire est vide.
+    """
+    if not D:
+        raise ValueError("Le dictionnaire est vide.")
+
+    return min(D, key=D.get)
+
+
+def moyenne_liste(L):
+    """
+    Calcule la moyenne des éléments d'une liste de nombres.
+
+    Paramètres
+    ----------
+    L : list of int or float
+        Liste contenant des valeurs numériques.
+
+    Retourne
+    --------
+    float
+        La moyenne arithmétique des éléments de la liste.
+
+    Lève
+    -----
+    ValueError
+        Si la liste est vide.
+    """
+    if not L:
+        raise ValueError("La liste est vide.")
+
+    return sum(L) / len(L)
+
+
+def appliquer_fonction_aux_valeurs(d, f):
+    """
+    Applique une fonction à chaque valeur d’un dictionnaire et renvoie un
+    nouveau dictionnaire.
+
+    Paramètres
+    ----------
+    d : dict
+        Dictionnaire dont les valeurs seront transformées.
+
+    f : callable
+        Fonction à appliquer à chaque valeur du dictionnaire.
+
+    Retourne
+    --------
+    dict
+        Nouveau dictionnaire avec les mêmes clés et les valeurs transformées
+        par la fonction.
+    """
+    return {k: f(v) for k, v in d.items()}
+
+
+def element_min_colonne(df, col_b, col_a):
+    """
+    Renvoie l'élément de la colonne 'col_a' où la valeur correspondante dans la
+    colonne 'col_b' est minimale.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les colonnes spécifiées.
+
+    col_b : str
+        Le nom de la colonne dans le DataFrame où la valeur minimale sera
+        recherchée.
+
+    col_a : str
+        Le nom de la colonne dans le DataFrame dont l'élément sera renvoyé pour
+        la ligne où la valeur de 'col_b' est minimale.
+
+    Retourne
+    -------
+    element : type de l'élément dans 'col_a'
+        L'élément de la colonne 'col_a' correspondant à la ligne où la colonne
+        'col_b' a la valeur minimale. Si plusieurs éléments ont la même valeur
+        minimale dans 'col_b', l'élément de la première ligne est retourné.
+
+    Exemple
+    -------
+    >>> df = pd.DataFrame({'A': [10, 20, 30, 40], 'B': [5, 2, 9, 1]})
+    >>> element_min_colonne(df, 'B', 'A')
+    40
+
+    L'exemple ci-dessus retourne '40' car la valeur minimale de la colonne 'B'
+    est '1', et l'élément correspondant de la colonne 'A' à cet index est '40'.
+    """
+    # Trouver l'index de la valeur minimale dans la colonne spécifiée 'col_b'
+    idx_min = df[col_b].idxmin()
+    # Retourner l'élément correspondant dans la colonne spécifiée 'col_a'
+    return df.loc[idx_min, col_a]
+
+
+def data_to_dict(df, col_a, col_b):
+    """
+    Crée un dictionnaire à partir de deux colonnes d'un DataFrame où chaque
+    élément de la première colonne devient une clé et l'élément correspondant
+    de la seconde colonne devient la valeur associée.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les colonnes spécifiées.
+
+    col_a : str
+        Le nom de la colonne dont les éléments seront utilisés comme clés dans
+        le dictionnaire.
+
+    col_b : str
+        Le nom de la colonne dont les éléments seront utilisés comme valeurs
+        dans le dictionnaire.
+
+    Retourne
+    -------
+    dict
+        Un dictionnaire où les clés sont les éléments de la colonne `col_a` et
+        les valeurs sont les éléments correspondants de la colonne `col_b`.
+
+    Exemple
+    -------
+    >>> df = pd.DataFrame({'A': ['a', 'b', 'c', 'd'], 'B': [1, 2, 3, 4]})
+    >>> creer_dictionnaire(df, 'A', 'B')
+    {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+    L'exemple ci-dessus retourne un dictionnaire où les éléments de la colonne
+    'A' sont utilisés comme clés et ceux de la colonne 'B' comme valeurs.
+    """
+    # Crée le dictionnaire à partir des colonnes A et B
+    return dict(zip(df[col_a], df[col_b]))
+
+
+def moyenne_par_colonne(df, col_1, col_2):
+    """
+    Crée un dictionnaire où chaque clé est un identifiant (col_1) et la valeur
+    est la moyenne des valeurs de la colonne (col_2) associées à cet
+    identifiant.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        DataFrame contenant les colonnes spécifiées.
+
+    col_1 : str
+        Nom de la colonne représentant les identifiants (par exemple, 'id').
+
+    col_2 : str
+        Nom de la colonne représentant les valeurs à agréger (par exemple,
+        'ratio').
+
+    Retourne
+    -------
+    dict
+        Un dictionnaire où chaque clé est un identifiant et chaque valeur est
+        la moyenne des valeurs associées à cet identifiant dans la colonne
+        `col_2`.
+    """
+    # Calcul de la moyenne des valeurs dans col_2 pour chaque identifiant dans
+    # col_1
+    moyenne_values = df.groupby(col_1)[col_2].mean().to_dict()
+
+    return moyenne_values
+
+
+# Fonctions Chahid
+
+
+def trier_dict(data, cles, reverse=True):
+    """
+    Trie un dictionnaire selon une ou plusieurs clés internes.
+
+    Paramètres
+    ----------
+    dict : dict
+        Dictionnaire dont les valeurs sont elles-mêmes des dictionnaires
+        contenant les clés de tri. Par exemple : {"PSG": {"points": 80,
+        "goal_diff": 45}, ...}
+    clés : list of str
+        Liste des clés internes servant à trier les éléments du dictionnaire.
+        Le tri se fait dans l’ordre des clés fournies (de la plus prioritaire à
+        la moins prioritaire).
+    reverse : bool, optional
+        Si True (par défaut), effectue un tri décroissant. Si False, le tri est
+        croissant.
+
+    Retourne
+    -------
+    dict
+        Nouveau dictionnaire trié selon les critères donnés, avec les paires
+        clé/valeur dans l’ordre défini.
+    """
+    return dict(
+        sorted(
+            data.items(),
+            key=lambda item: tuple(item[1][key] for key in cles),
+            reverse=reverse,
+        )
+    )
+
+
+def moyenne(L):
+    return sum(L) / len(L)
+
+
+def get_taille_joueurs(player_df, player_api_id):
+    """
+    Récupère le poids d'un joueur en fonction de son ID.
+
+    Paramètres : player_df (DataFrame) : Le DataFrame contenant les
+    informations sur les joueurs. player_api_id (int) : L'ID du joueur pour
+    lequel on veut obtenir le poids.
+
+    Retour : float ou None : Le poids du joueur si trouvé, sinon None.
+    """
+    # Recherche du joueur dans le DataFrame en fonction de son player_api_id
+    player_row = player_df[player_df["player_api_id"] == player_api_id]
+
+    if not player_row.empty:
+        return player_row["weight"].values[0]  # Retourne le poids du joueur
+    else:
+        return None  # Si le joueur n'est pas trouvé, on retourne None
+
+
+def get_scorers_by_subtype(goals_df_list, subtype):
+    """
+    Renvoie la liste des joueurs ayant marqué un but d'un certain type (ex :
+    'header').
+
+    Paramètres : - goals_df_list (list) : Liste de DataFrames représentant les
+    buts (résultats de transforme()). - subtype (str) : Le type de but
+    recherché (ex : 'header').
+
+    Retour : - list : Liste des IDs des joueurs ayant marqué avec le subtype
+    donné.
+    """
+    scorers = []
+
+    for goal_df in goals_df_list:
+        # Vérifie que c'est bien un DataFrame
+        if isinstance(goal_df, pd.DataFrame):
+            if "player1" in goal_df.columns and "subtype" in goal_df.columns:
+                # Extraction des colonnes
+                player_ids = convertir_list(goal_df, "player1")
+                subtypes = convertir_list(goal_df, "subtype")
+
+                # Recherche des joueurs ayant marqué du type voulu
+                for pid, sub in zip(player_ids, subtypes):
+                    if sub == subtype and pid not in scorers:
+                        scorers.append(int(pid))
+
+    return scorers
+
+
+def compter_actions_par_joueur(goal_dfs, colonne):
+    """
+    Compte le nombre d'occurrences d'une action (but, passe, etc.) par joueur.
+
+    Paramètres : - goal_dfs (list) : Liste de DataFrames (résultat de
+    transforme()). - colonne (str) : Le nom de la colonne où figure
+    l'identifiant du joueur (ex : 'player1' ou 'assist').
+
+    Retour : - dict : Dictionnaire {player_id: count}
+    """
+    compteur = {}
+
+    for df in goal_dfs:
+        if isinstance(df, pd.DataFrame) and colonne in df.columns:
+            player_ids = convertir_list(df, colonne)
+            for pid in player_ids:
+                try:
+                    pid = int(pid)
+                    compteur[pid] = compteur.get(pid, 0) + 1
+                except ValueError:
+                    continue  # ignore les valeurs non convertibles
+
+    return compteur
+
+
+def trier_joueurs_par_actions(compteur, player_df, top_n=10):
+    """
+    Trie les joueurs selon leur nombre d'actions (but, passe, etc.) et ajoute
+    leur nom.
+
+    Paramètres : - compteur (dict) : Dictionnaire {player_id: count} -
+    player_df (DataFrame) : Table des joueurs (doit contenir player_api_id et
+    player_name) - top_n (int) : Nombre de joueurs à afficher (default = 10)
+
+    Retour : - DataFrame : Classement des joueurs
+    """
+    # Convertir le dictionnaire en DataFrame
+    data = [
+        {"player_api_id": pid, "nb_actions": nb}
+        for pid, nb in compteur.items()
+    ]
+    df = pd.DataFrame(data)
+
+    # Utiliser la fonction fusionner pour ajouter les noms des joueurs
+    fusion = fusionner(
+        df,
+        player_df[["player_api_id", "player_name"]],
+        "player_api_id",
+        "player_api_id",
+    )
+
+    # Trier par nombre d’actions décroissant
+    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(
+        drop=True
+    )
+
+    return result.head(top_n)
+
+
+def filtre_cartons(card, type_carton):
+    carton = []
+    for df in card:
+        if isinstance(df, pd.DataFrame):
+            if "card_type" in df.columns:
+                try:
+                    filtered = select_all(df, "card_type", type_carton)
+                    carton.append(filtered)
+                except KeyError:
+                    pass  # Sécurité en cas d'erreur imprévue
+    return carton

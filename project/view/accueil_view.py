@@ -37,22 +37,44 @@ class AccueilView(AbstractView):
 
             next_view = UserView()
 
+        elif answers["Menu principal"] == "Lancer la question 1":
+            from project.src.Q1_classement_PL import run_q1
+
+            run_q1()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 3":
+            from project.src.Q3_taille_moyenne import run_q3
+
+            run_q3()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 4":
+            from project.src.Q4_diff_buts_max import run_q4
+
+            run_q4()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 5":
+            from project.src.Q5_meilleur_formation import run_q5
+
+            run_q5()
+            next_view = AccueilView()  # On revient au menu
+
         elif answers["Menu principal"] == "Lancer la question 6":
-            from project.controller.Q6_jour_matchs_nuls import run_q6
+            from project.src.Q6_jour_matchs_nuls import run_q6
 
             run_q6()
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 7":
-            from project.controller.Q7_equipe_type_affichage import run_q7
+            from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7()
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 9":
-            from project.controller.Q9_equipe_but_exterieur import (
-                run_q9,
-            )
+            from project.src.Q9_equipe_but_exterieur import run_q9
 
             run_q9()
             next_view = AccueilView()  # On revient au menu
