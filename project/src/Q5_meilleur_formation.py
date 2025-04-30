@@ -45,7 +45,7 @@ def run_q5(saison):
             "away_player_Y10",
             "away_player_Y11",
         ],
-    )
+    ) 
     match["ecart"] = diff_abs(match, "home_team_goal", "away_team_goal")
     diff_but = convertir_list(match, "ecart")
 
