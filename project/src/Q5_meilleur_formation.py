@@ -64,4 +64,4 @@ def run_q5(saison):
 
     classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
     for rang, (formation, nb_occurrences) in enumerate(classement, start=1):
-    print(f"{rang}.  {formation} - {nb_occurrences} fois")
+        print(f"{rang}.  {formation} - {nb_occurrences} fois")
