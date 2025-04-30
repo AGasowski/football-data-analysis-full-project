@@ -14,6 +14,11 @@ class AccueilView(AbstractView):
                 "choices": [
                     "S'identifier en tant qu'admin",
                     "S'identifier en tant qu'utilisateur",
+                    "Lancer la question 1",
+                    "Lancer la question 2",
+                    "Lancer la question 3",
+                    "Lancer la question 4",
+                    "Lancer la question 5",
                     "Lancer la question 6",
                     "Lancer la question 7",
                     "Lancer la question 9",
@@ -38,6 +43,12 @@ class AccueilView(AbstractView):
             next_view = UserView()
 
         elif answers["Menu principal"] == "Lancer la question 1":
+            from project.src.Q1_classement_PL import run_q1
+
+            run_q1()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 2":
             from project.src.Q1_classement_PL import run_q1
 
             run_q1()

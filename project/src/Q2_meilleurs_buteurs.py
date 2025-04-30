@@ -1,4 +1,4 @@
-from fonctions_communes import (
+from project.src.fonctions_communes import (
     lire_csv,
     transforme,
     compter_actions_par_joueur,
