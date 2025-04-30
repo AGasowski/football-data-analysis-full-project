@@ -7,7 +7,7 @@ from project.src.fonctions_communes import (
 )
 
 
-def run_q1():
+def run_q1(saison):
     print("== Résolution de la question 1 ==")
 
     team_names = lire_csv_en_dict(
@@ -29,7 +29,7 @@ def run_q1():
     # {team_id: [point, scored, conceded]}
     stats = creer_dict(3)
 
-    matchs = filtre_dic(matchs, 0, "2014/2015")
+    matchs = filtre_dic(matchs, 0, saison)
     matchs = filtre_dic(matchs, 1, "1729")
 
     stats = saison_equipe(matchs)

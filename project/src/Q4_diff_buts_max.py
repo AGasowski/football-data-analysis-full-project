@@ -9,10 +9,10 @@ from project.src.fonctions_communes import (
 )
 
 
-def run_q4():
+def run_q4(saison):
     print("== Résolution de la question 4 ==")
     match = lire_csv("data/Match.csv")
-    match = select_all(match, "season", "2014/2015")
+    match = select_all(match, "season", saison)
     team = lire_csv("data/Team.csv")
 
     id_en_nom(match, team)

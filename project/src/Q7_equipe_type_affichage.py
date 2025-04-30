@@ -1,4 +1,9 @@
-from project.src.fonctions_communes import lire_csv, fusionner
+from project.src.fonctions_communes import (
+    lire_csv,
+    fusionner,
+    convertir_date,
+    select_all,
+)
 from project.src.Q7_fonctions import (
     terrain,
     choix_criteres,
@@ -6,15 +11,22 @@ from project.src.Q7_fonctions import (
     list_en_df,
     trouver_joueur_poste,
     calcul_scores_postes,
+    get_saison,
 )
 
 
-def run_q7():
+def run_q7(saison):
     print("== Résolution de la question 7 ==")
 
     # Charger le fichier CSV
     df_stats = lire_csv("data/Player_Attributes.csv")
     df_noms = lire_csv("data/Player.csv")
+
+    df_stats = convertir_date(df_stats)
+
+    if saison != "0":
+        df_stats = get_saison(df_stats)
+        df_stats = select_all(df_stats, "saison", saison)
 
     # Liste des joueurs déjà sélectionnés pour éviter les doublons
     joueurs_selectionnes = set()

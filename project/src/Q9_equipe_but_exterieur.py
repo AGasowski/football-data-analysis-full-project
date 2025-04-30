@@ -10,7 +10,7 @@ from project.src.fonctions_communes import (
 )
 
 
-def run_q9():
+def run_q9(saison):
     print("== Résolution de la question 9 ==")
 
     team_names = lire_csv_en_dict(
@@ -33,7 +33,7 @@ def run_q9():
         "away_team_goal",
     )
 
-    matchs = filtre_dic(matchs, 0, "2014/2015")
+    matchs = filtre_dic(matchs, 0, saison)
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)

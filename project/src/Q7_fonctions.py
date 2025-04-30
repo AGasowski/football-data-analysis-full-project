@@ -143,7 +143,8 @@ def choix_criteres():
 def nom_prenom(df):
     """
     Sépare le champ "player_name" d'un DataFrame en deux colonnes "prenom" et
-    "nom".
+    "nom". Si le nom ne contient qu'un seul mot, il est mis dans 'nom' et
+    'prenom' est vide.
 
     Paramètres
     ----------
@@ -155,7 +156,15 @@ def nom_prenom(df):
     pd.DataFrame
         DataFrame avec les colonnes 'prenom' et 'nom' ajoutées.
     """
-    df[["prenom", "nom"]] = df["player_name"].str.rsplit(" ", n=1, expand=True)
+
+    def separer_nom_prenom(nom_complet):
+        parties = nom_complet.strip().split()
+        if len(parties) == 1:
+            return pd.Series(["", parties[0]])  # prenom vide, nom = mot unique
+        else:
+            return pd.Series([" ".join(parties[:-1]), parties[-1]])
+
+    df[["prenom", "nom"]] = df["player_name"].apply(separer_nom_prenom)
     return df
 
 
@@ -378,3 +387,15 @@ def terrain(df_meilleur_11):
 
     plt.title("Formation 4-4-2", fontsize=14, color="black", fontweight="bold")
     plt.show()
+
+
+def get_saison(df):
+    def saison_par_date(date):
+        annee = date.year
+        if date.month >= 8:
+            return f"{annee}/{annee + 1}"
+        else:
+            return f"{annee - 1}/{annee}"
+
+    df["saison"] = df["date"].apply(saison_par_date)
+    return df
