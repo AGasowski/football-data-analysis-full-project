@@ -388,8 +388,11 @@ def name_team_dic(team_names, team_id):
     Retour : - str : Nom de l'équipe correspondant à l'identifiant, ou
     "Inconnu" si l'identifiant n'est pas trouvé.
     """
-    team_name = team_names.get(team_id, "Inconnu")
-    return team_name
+    try:
+        team_id = int(team_id)
+    except ValueError:
+        return "Inconnu"
+    return team_names.get(team_id, "Inconnu")
 
 
 def cles_dic(dic):
@@ -433,9 +436,7 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = (
-        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
-    )
+    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
     return ratio
 
 
@@ -546,7 +547,7 @@ def formation(L):
     -----------
     L : list of int or float
         Liste triée des abscisses (coordonnées X) des 11 joueurs d’une équipe sur le terrain.
-        Chaque valeur représente la position horizontale d’un joueur. Les joueurs sont                      
+        Chaque valeur représente la position horizontale d’un joueur. Les joueurs sont
         triés dans l’ordre croissant de leur abscisse pour un traitement correct.
 
     Retourne:
@@ -581,3 +582,39 @@ def formation(L):
             j += 1
     formation1.append(j)
     return formation1
+
+def saison_equipe(matchs):
+    """
+    Calcule les statistiques des équipes à partir d'un dictionnaire de matchs.
+
+    Paramètre :
+    - matchs (dict) : Dictionnaire des matchs filtrés, où chaque valeur contient :
+                      [season, league_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal]
+
+    Retour :
+    - stats (dict) : Dictionnaire associant chaque équipe à une liste de 3 éléments :
+                     [points, buts marqués (BM), buts encaissés (BE)]
+    """
+    stats = creer_dict(3)
+    for match_id, match in matchs.items():
+    home_team_id = match[2]
+    away_team_id = match[3]
+    home_goals = int(match[4])
+    away_goals = int(match[5])
+
+    for team_id in [home_team_id, away_team_id]:
+        if team_id not in stats:
+            stats[team_id] = [0, 0, 0]  # [points, goals_scored, goals_conceded]
+
+    stats[home_team_id][1] += home_goals
+    stats[home_team_id][2] += away_goals
+    stats[away_team_id][1] += away_goals
+    stats[away_team_id][2] += home_goals
+
+    if home_goals > away_goals:
+        stats[home_team_id][0] += 3
+    elif home_goals < away_goals:
+        stats[away_team_id][0] += 3
+    else:
+        stats[home_team_id][0] += 1
+        stats[away_team_id][0] += 1

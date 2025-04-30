@@ -1,35 +1,34 @@
-from fonction_commune_chahid import *
+from fonctions_communes import *
 
-Team = lire_csv("data/Team.csv")
-Match = lire_csv("data/Match.csv")
+team_names = lire_csv_en_dict("data/Team.csv", "team_api_id", ("team_long_name"))
 
-id_en_nom(Match, Team)
+# Lecture du fichier des matchs et filtrage pour l'année 2014
+matchs = lire_csv_en_dict(
+    "data/Match.csv",
+    "id",
+    "season",
+    "league_id",
+    "home_team_api_id",
+    "away_team_api_id",
+    "home_team_goal",
+    "away_team_goal",
+)
 
-stats = creer_dict_2(["point", "scored", "conceded"])
 
-for index, row in Match.iterrows():
-    league_id = row["league_id"]
-    season = row["season"]
+# {team_id: [point, scored, conceded]}
+stats = creer_dict(3)
 
-    if league_id == 1729 and season == "2014/2015":
-        home_team = row["home_team"]
-        away_team = row["away_team"]
-        home_goals = row["home_team_goal"]
-        away_goals = row["away_team_goal"]
+matchs = filtre_dic(matchs, 0, "2014/2015")
+matchs = filtre_dic(matchs, 1, "1729")
 
-        # Mise à jour des buts marqués et encaissés
-        stats[home_team]["scored"] += home_goals
-        stats[home_team]["conceded"] += away_goals
-        stats[away_team]["scored"] += away_goals
-        stats[away_team]["conceded"] += home_goals
+saison_equipe(matchs)
 
-        # Attribution des points
-        if home_goals > away_goals:  # Victoire équipe à domicile
-            stats[home_team]["point"] += 3
-        elif home_goals < away_goals:  # Victoire équipe à l'extérieur
-            stats[away_team]["point"] += 3
-        else:  # Match nul
-            stats[home_team]["point"] += 1
-            stats[away_team]["point"] += 1
+classement = sorted(stats.items(), key=lambda x: x[1][0], reverse=True)
 
-stats = trier_dict(stats, ["point"], True)
+# En-tête
+print(f"{'Équipe':<30} {'Pts':<5} {'BM':<5} {'BE':<5}")
+
+# Affichage
+for team_id, (points, scored, conceded) in classement:
+    nom = name_team_dic(team_names, team_id)
+    print(f"{nom:<30} {points:<5} {scored:<5} {conceded:<5}")

@@ -357,25 +357,24 @@ def max_serie(df):
     return df.idxmax(), df.max()
 
 
-def creer_dict_2(cles):
+# Fonctions pour la manipulation de dictionnaires
+def creer_dict(nb_val):
     """
-    Crée un dictionnaire avec des clés dynamiques et un dictionnaire de zéros
-    comme valeur par défaut pour chaque entrée.
+    Crée un dictionnaire avec des listes de zéros de longueur nb_val comme
+    valeur par défaut.
 
     Paramètres
     ----------
     nb_val : int
-        (Non utilisé ici, gardé si besoin dans le futur)
-    cles : list
-        Liste des clés à utiliser dans chaque valeur par défaut.
+        Nombre d'éléments par défaut dans la liste associée à chaque clé.
 
     Retourne
     -------
     defaultdict
-        Dictionnaire avec, pour chaque nouvelle clé, un sous-dictionnaire contenant
-        les clés de `cles` initialisées à zéro.
+        Dictionnaire avec des listes de zéros comme valeur par défaut.
     """
-    return defaultdict(lambda: {cle: 0 for cle in cles})
+    dict = defaultdict(lambda: [0] * nb_val)
+    return dict
 
 
 def name_team_dic(team_names, team_id):
@@ -389,8 +388,11 @@ def name_team_dic(team_names, team_id):
     Retour : - str : Nom de l'équipe correspondant à l'identifiant, ou
     "Inconnu" si l'identifiant n'est pas trouvé.
     """
-    team_name = team_names.get(team_id, "Inconnu")
-    return team_name
+    try:
+        team_id = int(team_id)
+    except ValueError:
+        return "Inconnu"
+    return team_names.get(team_id, "Inconnu")
 
 
 def cles_dic(dic):
@@ -434,7 +436,9 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    ratio = (
+        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    )
     return ratio
 
 
@@ -444,8 +448,8 @@ def trier_liste_tuples(L, ind):
     Trie une liste de tuples (ou listes) en place selon l'élément à une
     position donnée.
 
-    Paramètres : - L (list) : Liste de tuples ou de listes à trier.
-    - ind (int) : Index de l'élément dans les tuples à utiliser pour le tri.
+    Paramètres : - L (list) : Liste de tuples ou de listes à trier. - ind (int)
+    : Index de l'élément dans les tuples à utiliser pour le tri.
 
     Effet de bord : - La liste L est triée en place par ordre décroissant selon
     l'élément à l'indice ind.
@@ -538,140 +542,43 @@ def transforme(X):
     return df
 
 
-def trier_dict(data, cles, reverse=True):
+def formation(L):
     """
-    Trie un dictionnaire selon une ou plusieurs clés internes.
+    Détermine la formation tactique d'une équipe à partir des abscisses des
+    joueurs.
 
-    Paramètres
-    ----------
-    dict : dict
-        Dictionnaire dont les valeurs sont elles-mêmes des dictionnaires contenant
-        les clés de tri. Par exemple : {"PSG": {"points": 80, "goal_diff": 45}, ...}
-    clés : list of str
-        Liste des clés internes servant à trier les éléments du dictionnaire.
-        Le tri se fait dans l’ordre des clés fournies (de la plus prioritaire à la moins prioritaire).
-    reverse : bool, optional
-        Si True (par défaut), effectue un tri décroissant. Si False, le tri est croissant.
+    Paramètres:
+    -----------
+    L : list of int or float
+        Liste triée des abscisses (coordonnées X) des 11 joueurs d’une équipe
+        sur le terrain. Chaque valeur représente la position horizontale d’un
+        joueur. Les joueurs sont triés dans l’ordre croissant de leur abscisse
+        pour un traitement correct.
 
-    Retourne
-    -------
-    dict
-        Nouveau dictionnaire trié selon les critères donnés, avec les paires clé/valeur
-        dans l’ordre défini.
+    Retourne:
+    ---------
+    list of int
+        Une liste contenant le nombre de joueurs présents à chaque position
+        horizontale unique. Cela correspond à une décomposition de la formation
+        tactique.
+
+    Exemples:
+    ---------
+    ```python abscisses = [2, 2, 2, 2, 4, 4, 6, 6, 6, 8, 10]
+    formation(abscisses) ```
+
+    Résultat : ```python [4, 2, 3, 1, 1] ``` Ce qui signifie : 4 joueurs sur la
+    première ligne (souvent la défense), 2 sur la suivante, 3 au milieu, etc.
     """
-    return dict(
-        sorted(
-            data.items(),
-            key=lambda item: tuple(item[1][key] for key in cles),
-            reverse=reverse,
-        )
-    )
-
-
-def moyenne(L):
-    return sum(L) / len(L)
-
-
-def get_taille_joueurs(player_df, player_api_id):
-    """
-    Récupère le poids d'un joueur en fonction de son ID.
-
-    Paramètres :
-    player_df (DataFrame) : Le DataFrame contenant les informations sur les joueurs.
-    player_api_id (int) : L'ID du joueur pour lequel on veut obtenir le poids.
-
-    Retour :
-    float ou None : Le poids du joueur si trouvé, sinon None.
-    """
-    # Recherche du joueur dans le DataFrame en fonction de son player_api_id
-    player_row = player_df[player_df["player_api_id"] == player_api_id]
-
-    if not player_row.empty:
-        return player_row["weight"].values[0]  # Retourne le poids du joueur
-    else:
-        return None  # Si le joueur n'est pas trouvé, on retourne None
-
-
-def get_scorers_by_subtype(goals_df_list, subtype):
-    """
-    Renvoie la liste des joueurs ayant marqué un but d'un certain type (ex : 'header').
-
-    Paramètres :
-    - goals_df_list (list) : Liste de DataFrames représentant les buts (résultats de transforme()).
-    - subtype (str) : Le type de but recherché (ex : 'header').
-
-    Retour :
-    - list : Liste des IDs des joueurs ayant marqué avec le subtype donné.
-    """
-    scorers = []
-
-    for goal_df in goals_df_list:
-        # Vérifie que c'est bien un DataFrame
-        if isinstance(goal_df, pd.DataFrame):
-            if "player1" in goal_df.columns and "subtype" in goal_df.columns:
-                # Extraction des colonnes
-                player_ids = convertir_list(goal_df, "player1")
-                subtypes = convertir_list(goal_df, "subtype")
-
-                # Recherche des joueurs ayant marqué du type voulu
-                for pid, sub in zip(player_ids, subtypes):
-                    if sub == subtype and pid not in scorers:
-                        scorers.append(int(pid))
-
-    return scorers
-
-
-def compter_actions_par_joueur(goal_dfs, colonne):
-    """
-    Compte le nombre d'occurrences d'une action (but, passe, etc.) par joueur.
-
-    Paramètres :
-    - goal_dfs (list) : Liste de DataFrames (résultat de transforme()).
-    - colonne (str) : Le nom de la colonne où figure l'identifiant du joueur (ex : 'player1' ou 'assist').
-
-    Retour :
-    - dict : Dictionnaire {player_id: count}
-    """
-    compteur = {}
-
-    for df in goal_dfs:
-        if isinstance(df, pd.DataFrame) and colonne in df.columns:
-            player_ids = convertir_list(df, colonne)
-            for pid in player_ids:
-                try:
-                    pid = int(pid)
-                    compteur[pid] = compteur.get(pid, 0) + 1
-                except ValueError:
-                    continue  # ignore les valeurs non convertibles
-
-    return compteur
-
-
-def trier_joueurs_par_actions(compteur, player_df, top_n=10):
-    """
-    Trie les joueurs selon leur nombre d'actions (but, passe, etc.) et ajoute leur nom.
-
-    Paramètres :
-    - compteur (dict) : Dictionnaire {player_id: count}
-    - player_df (DataFrame) : Table des joueurs (doit contenir player_api_id et player_name)
-    - top_n (int) : Nombre de joueurs à afficher (default = 10)
-
-    Retour :
-    - DataFrame : Classement des joueurs
-    """
-    # Convertir le dictionnaire en DataFrame
-    data = [{"player_api_id": pid, "nb_actions": nb} for pid, nb in compteur.items()]
-    df = pd.DataFrame(data)
-
-    # Utiliser la fonction fusionner pour ajouter les noms des joueurs
-    fusion = fusionner(
-        df,
-        player_df[["player_api_id", "player_name"]],
-        "player_api_id",
-        "player_api_id",
-    )
-
-    # Trier par nombre d’actions décroissant
-    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(drop=True)
-
-    return result.head(top_n)
+    formation1 = []
+    C = L[0]
+    j = 0
+    for i in range(len(L)):
+        if L[i] != C:
+            formation1.append(j)
+            j = 1
+            C = L[i]
+        else:
+            j += 1
+    formation1.append(j)
+    return formation1
