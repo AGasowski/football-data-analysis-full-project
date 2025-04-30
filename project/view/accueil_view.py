@@ -22,6 +22,7 @@ class AccueilView(AbstractView):
                     "Lancer la question 6",
                     "Lancer la question 7",
                     "Lancer la question 9",
+                    "Lancer la question 11",
                     "Quitter l'appli",
                 ],
             }
@@ -87,6 +88,12 @@ class AccueilView(AbstractView):
             from project.src.Q9_equipe_but_exterieur import run_q9
 
             run_q9()
+            next_view = AccueilView()  # On revient au menu
+
+        elif answers["Menu principal"] == "Lancer la question 11":
+            from project.src.Q11_pire_ratio_tirs import run_q11
+
+            run_q11()
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Quitter l'appli":
