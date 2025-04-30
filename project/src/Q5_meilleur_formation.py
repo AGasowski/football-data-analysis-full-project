@@ -63,5 +63,5 @@ def run_q5(saison):
                 d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 
     classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
-    for rang, (formation, nb_occurrences) in enumerate(classement, start=1):
-        print(f"{rang}.  {formation} - {nb_occurrences} fois")
+    for rang, (formation1, nb_occurrences) in enumerate(classement, start=1):
+        print(f"{rang}.  {formation1} - {nb_occurrences} fois")
