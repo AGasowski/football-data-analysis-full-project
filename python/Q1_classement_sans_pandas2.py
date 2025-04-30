@@ -21,7 +21,7 @@ stats = creer_dict(3)
 matchs = filtre_dic(matchs, 0, "2014/2015")
 matchs = filtre_dic(matchs, 1, "1729")
 
-saison_equipe(matchs)
+stats = saison_equipe(matchs)
 
 classement = sorted(stats.items(), key=lambda x: x[1][0], reverse=True)
 

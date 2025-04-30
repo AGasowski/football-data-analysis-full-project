@@ -539,6 +539,7 @@ def transforme(X):
     df = pd.DataFrame(data)
     return df
 
+
 def formation(L):
     """
     Détermine la formation tactique d'une équipe à partir des abscisses des joueurs.
@@ -583,6 +584,7 @@ def formation(L):
     formation1.append(j)
     return formation1
 
+
 def saison_equipe(matchs):
     """
     Calcule les statistiques des équipes à partir d'un dictionnaire de matchs.
@@ -597,24 +599,25 @@ def saison_equipe(matchs):
     """
     stats = creer_dict(3)
     for match_id, match in matchs.items():
-    home_team_id = match[2]
-    away_team_id = match[3]
-    home_goals = int(match[4])
-    away_goals = int(match[5])
+        home_team_id = match[2]
+        away_team_id = match[3]
+        home_goals = int(match[4])
+        away_goals = int(match[5])
 
-    for team_id in [home_team_id, away_team_id]:
-        if team_id not in stats:
-            stats[team_id] = [0, 0, 0]  # [points, goals_scored, goals_conceded]
+        for team_id in [home_team_id, away_team_id]:
+            if team_id not in stats:
+                stats[team_id] = [0, 0, 0]  # [points, goals_scored, goals_conceded]
 
-    stats[home_team_id][1] += home_goals
-    stats[home_team_id][2] += away_goals
-    stats[away_team_id][1] += away_goals
-    stats[away_team_id][2] += home_goals
+        stats[home_team_id][1] += home_goals
+        stats[home_team_id][2] += away_goals
+        stats[away_team_id][1] += away_goals
+        stats[away_team_id][2] += home_goals
 
-    if home_goals > away_goals:
-        stats[home_team_id][0] += 3
-    elif home_goals < away_goals:
-        stats[away_team_id][0] += 3
-    else:
-        stats[home_team_id][0] += 1
-        stats[away_team_id][0] += 1
+        if home_goals > away_goals:
+            stats[home_team_id][0] += 3
+        elif home_goals < away_goals:
+            stats[away_team_id][0] += 3
+        else:
+            stats[home_team_id][0] += 1
+            stats[away_team_id][0] += 1
+    return stats
