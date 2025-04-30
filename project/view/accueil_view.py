@@ -49,10 +49,9 @@ class AccueilView(AbstractView):
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 2":
-            from project.src.Q1_classement_PL import run_q1
+            from project.view.q2_view import Q2View
 
-            run_q1()
-            next_view = AccueilView()  # On revient au menu
+            next_view = Q2View()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 3":
             from project.src.Q3_taille_moyenne import run_q3
