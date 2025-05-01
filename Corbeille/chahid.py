@@ -23,5 +23,6 @@ for value in root.findall("value"):
 df = pd.DataFrame(data)
 
 # Afficher le résultat
-print(df["subtype"])
+print(df["team"])
 df.to_csv("buts_match.csv", index=False, sep=",")
+tra
