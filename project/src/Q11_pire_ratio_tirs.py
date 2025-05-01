@@ -3,19 +3,22 @@ from project.src.fonctions.manipulations import (
     filtrer_df,
     name_team_dic,
     cle_extreme,
+    id_championnat,
 )
 from project.src.fonctions.statistiques import (
     calculer_moyenne,
 )
 
 
-def run_q11(saison):
+def run_q11(saison, championnat):
     print("== Résolution de la question 11 ==")
 
     match = charger_csv("data/Match.csv")
-    if saison != 0:
+    if saison != "0":
         match = filtrer_df(match, "season", saison)
-    match = filtrer_df(match, "league_id", 21518)
+    id_champ = id_championnat(championnat)
+    if championnat != 0:
+        match = filtrer_df(match, "league_id", int(id_champ))
     match = filtrer_df(
         match,
         None,

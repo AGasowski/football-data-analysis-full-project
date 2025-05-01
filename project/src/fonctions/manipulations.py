@@ -72,6 +72,31 @@ def id_en_nom(match, team):
     match.rename(columns={"away_team_api_id": "away_team"}, inplace=True)
 
 
+def id_championnat(nom):
+    if nom == "Tous les championnats réunis":
+        return 0
+    elif nom == "Ligue 1 (France)":
+        return 4769
+    elif nom == "Premier League (Angleterre)":
+        return 1729
+    elif nom == "Bundesliga (Allemagne)":
+        return 7809
+    elif nom == "Serie A (Italie)":
+        return 10257
+    elif nom == "Liga BBVA (Espagne)":
+        return 21518
+    elif nom == "Eredivisie (Pays-Bas)":
+        return 13274
+    elif nom == "Liga ZON Sagres (Portugal)":
+        return 17642
+    elif nom == "Ekstraklasa (Pologne)":
+        return 15722
+    elif nom == "Jupiler League (Belgique)":
+        return 1
+    elif nom == "Super League (Suisse)":
+        return 24558
+
+
 # Gestion de dictionnaires
 def creer_dict(nb_val):
     """
