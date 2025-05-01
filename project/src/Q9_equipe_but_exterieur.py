@@ -36,7 +36,8 @@ def run_q9(saison):
         "away_team_goal",
     )
 
-    matchs = filtre_dic(matchs, 0, saison)
+    if saison != 0:
+        matchs = filtre_dic(matchs, 0, saison)
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)

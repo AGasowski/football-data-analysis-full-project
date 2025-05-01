@@ -14,7 +14,8 @@ def run_q5(saison):
     print("== Résolution de la question 5 ==")
 
     match = charger_csv("data/Match.csv")
-    match = filtrer_df(match, "season", saison)
+    if saison != 0:
+        match = filtrer_df(match, "season", saison)
     match = filtrer_df(match, "league_id", 21518)
 
     Coordonée_home_joueur = fusionner_colonnes_en_listes(

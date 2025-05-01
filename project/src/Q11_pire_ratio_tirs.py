@@ -13,7 +13,8 @@ def run_q11(saison):
     print("== Résolution de la question 11 ==")
 
     match = charger_csv("data/Match.csv")
-    match = filtrer_df(match, "season", saison)
+    if saison != 0:
+        match = filtrer_df(match, "season", saison)
     match = filtrer_df(match, "league_id", 21518)
     match = filtrer_df(
         match,
@@ -26,7 +27,7 @@ def run_q11(saison):
 
     match["but"] = match["home_team_goal"] + match["away_team_goal"]
     match["tir_cadre"] = match["shoton"].map(
-        lambda x: len(x) if x not in [""] and len(x) > 0 else 1
+        lambda x: (len(x) if isinstance(x, (list, str)) and x != "" else 1)
     )
     match["ratio"] = match["but"] / match["tir_cadre"]
     d = calculer_moyenne(match, "home_team_api_id", "ratio")

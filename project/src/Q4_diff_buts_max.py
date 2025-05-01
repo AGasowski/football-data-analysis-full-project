@@ -9,7 +9,8 @@ from project.src.fonctions.utils import (
 def run_q4(saison):
     print("== Résolution de la question 4 ==")
     match = charger_csv("data/Match.csv")
-    match = filtrer_df(match, "season", saison)
+    if saison != 0:
+        match = filtrer_df(match, "season", saison)
     team = charger_csv("data/Team.csv")
 
     id_en_nom(match, team)
