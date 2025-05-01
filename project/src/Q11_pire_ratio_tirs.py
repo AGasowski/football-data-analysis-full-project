@@ -1,32 +1,35 @@
-from project.src.fonctions_communes import (
-    lire_csv,
-    select_all,
-    select_colonnes,
+from project.src.fonctions.data_loader import charger_csv, data_to_dict
+from project.src.fonctions.manipulations import (
+    filtrer_df,
     name_team_dic,
-    data_to_dict,
-    moyenne_par_colonne,
-    cle_minimale,
+    cle_extreme,
+)
+from project.src.fonctions.statistiques import (
+    calculer_moyenne,
 )
 
 
 def run_q11(saison):
     print("== Résolution de la question 11 ==")
 
-    match = lire_csv("data/Match.csv")
-    match = select_all(match, "season", saison)
-    match = select_all(match, "league_id", 21518)
-    match = select_colonnes(
+    match = charger_csv("data/Match.csv")
+    if saison != 0:
+        match = filtrer_df(match, "season", saison)
+    match = filtrer_df(match, "league_id", 21518)
+    match = filtrer_df(
         match,
+        None,
+        None,
         ["home_team_api_id", "home_team_goal", "away_team_goal", "shoton"],
     )
-    team = lire_csv("data/Team.csv")
-    team = select_colonnes(team, ["team_api_id", "team_long_name"])
+    team = charger_csv("data/Team.csv")
+    team = filtrer_df(team, None, None, ["team_api_id", "team_long_name"])
 
     match["but"] = match["home_team_goal"] + match["away_team_goal"]
     match["tir_cadre"] = match["shoton"].map(
-        lambda x: len(x) if x not in [""] and len(x) > 0 else 1
+        lambda x: (len(x) if isinstance(x, (list, str)) and x != "" else 1)
     )
     match["ratio"] = match["but"] / match["tir_cadre"]
-    d = moyenne_par_colonne(match, "home_team_api_id", "ratio")
+    d = calculer_moyenne(match, "home_team_api_id", "ratio")
     team_names = data_to_dict(team, "team_api_id", "team_long_name")
-    print(name_team_dic(team_names, cle_minimale(d)))
+    print(name_team_dic(team_names, cle_extreme(d, "min")))

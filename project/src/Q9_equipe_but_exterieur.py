@@ -1,20 +1,22 @@
-from project.src.fonctions_communes import (
-    lire_csv_en_dict,
+from project.src.fonctions.data_loader import charger_csv
+from project.src.fonctions.manipulations import (
     creer_dict,
-    compter_buts_matchs,
     filtre_dic,
     cles_dic,
     ratio_dic,
-    trier_liste_tuples,
     name_team_dic,
+)
+from project.src.fonctions.statistiques import compter_buts_matchs
+from project.src.fonctions.utils import (
+    trier,
 )
 
 
 def run_q9(saison):
     print("== Résolution de la question 9 ==")
 
-    team_names = lire_csv_en_dict(
-        "data/Team.csv", "team_api_id", ("team_long_name")
+    team_names = charger_csv(
+        "data/Team.csv", "dict", "team_api_id", ("team_long_name")
     )
 
     # Dictionnaires pour stocker les statistiques des buts {team_id:
@@ -23,8 +25,9 @@ def run_q9(saison):
     goals_away = creer_dict(2)
 
     # Lecture du fichier des matchs et filtrage pour l'année 2014
-    matchs = lire_csv_en_dict(
+    matchs = charger_csv(
         "data/Match.csv",
+        "dict",
         "id",
         "season",
         "home_team_api_id",
@@ -33,7 +36,8 @@ def run_q9(saison):
         "away_team_goal",
     )
 
-    matchs = filtre_dic(matchs, 0, saison)
+    if saison != 0:
+        matchs = filtre_dic(matchs, 0, saison)
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)
@@ -47,7 +51,7 @@ def run_q9(saison):
         classement.append((team, home_avg, away_avg, away_avg - home_avg))
 
     # Classement des équipes par ordre décroissant de différence
-    trier_liste_tuples(classement, 3)
+    trier(classement, 3, "liste")
 
     # Affichage des 10 meilleures équipes
     print(

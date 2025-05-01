@@ -1,8 +1,9 @@
-from project.src.fonctions_communes import (
-    lire_csv,
-    transforme,
+from project.src.fonctions.data_loader import charger_csv, transforme
+from project.src.fonctions.statistiques import (
     compter_actions_par_joueur,
     trier_joueurs_par_actions,
+)
+from project.src.fonctions.utils import (
     filtre_cartons,
 )
 
@@ -11,8 +12,8 @@ def run_q2b(saison):
     print("== Résolution de la question 2 ==")
 
     # Charger les données
-    match = lire_csv("data/Match.csv")
-    player = lire_csv("data/Player.csv")
+    match = charger_csv("data/Match.csv")
+    player = charger_csv("data/Player.csv")
 
     # Filtrer le championnat et la saison souhaités
     match = match[(match["goal"].notna()) & (match["goal"] != "")]
@@ -27,5 +28,5 @@ def run_q2b(saison):
 
     # Étape 2 : utiliser la fonction générique
     rouges_par_joueur = compter_actions_par_joueur(carton_rouge_dfs, "player1")
-    top_rouges = trier_joueurs_par_actions(rouges_par_joueur, player, top_n=10)
+    top_rouges = trier_joueurs_par_actions(rouges_par_joueur, player, 10)
     print(top_rouges)

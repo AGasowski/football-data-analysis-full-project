@@ -1,6 +1,138 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches  # Importation de patches
-import pandas as pd
+from project.src.fonctions.manipulations import filtrer_df
+
+# Fonctions plus spécifiques
+
+
+# Affichage et tri
+def afficher(resultat):
+    """
+    Affiche un DataFrame sans les index, sous forme de texte.
+
+    Paramètres
+    ----------
+    resultat : pandas.DataFrame
+        Le DataFrame à afficher.
+
+    Retourne
+    -------
+    None
+    """
+    print(resultat.to_string(index=False))
+
+
+def trier(data, par=None, type_data="liste", reverse=True):
+    """
+    Trie une liste, un dictionnaire ou un DataFrame.
+
+    Paramètres:
+    -----------
+    data : list, dict ou pd.DataFrame
+        Données à trier.
+    par : int, str ou list
+        Clé ou index de tri.
+    type_data : str ("liste", "dict", "dataframe")
+        Type de données à trier.
+    reverse : bool, optional
+        Tri décroissant (True par défaut).
+
+    Retour:
+    -------
+    Tri en place ou nouveau dictionnaire/DataFrame trié.
+    """
+    if type_data == "liste":
+        data.sort(key=lambda x: x[par], reverse=reverse)
+    elif type_data == "dict":
+        return dict(
+            sorted(
+                data.items(),
+                key=lambda item: tuple(item[1][k] for k in par),
+                reverse=reverse,
+            )
+        )
+    elif type_data == "dataframe":
+        return data.sort_values(by=par, ascending=not reverse)
+    else:
+        raise ValueError("Type de donnée non supporté pour le tri")
+
+
+# Spécifique au football
+def formation(L):
+    """
+    Détermine la formation tactique d'une équipe à partir des abscisses des
+    joueurs.
+
+    Paramètres:
+    -----------
+    L : list of int or float
+        Liste triée des abscisses (coordonnées X) des 11 joueurs d’une équipe
+        sur le terrain. Chaque valeur représente la position horizontale d’un
+        joueur. Les joueurs sont triés dans l’ordre croissant de leur abscisse
+        pour un traitement correct.
+
+    Retourne:
+    ---------
+    list of int
+        Une liste contenant le nombre de joueurs présents à chaque position
+        horizontale unique. Cela correspond à une décomposition de la formation
+        tactique.
+
+    Exemples:
+    ---------
+    ```python abscisses = [2, 2, 2, 2, 4, 4, 6, 6, 6, 8, 10]
+    formation(abscisses) ```
+
+    Résultat : ```python [4, 2, 3, 1, 1] ``` Ce qui signifie : 4 joueurs sur la
+    première ligne (souvent la défense), 2 sur la suivante, 3 au milieu, etc.
+    """
+    formation1 = []
+    C = L[0]
+    j = 0
+    for i in range(len(L)):
+        if L[i] != C:
+            formation1.append(j)
+            j = 1
+            C = L[i]
+        else:
+            j += 1
+    formation1.append(j)
+    return formation1
+
+
+def get_taille_joueurs(player_df, player_api_id):
+    """
+    Récupère la taille d'un joueur en fonction de son ID.
+
+    Paramètres : player_df (DataFrame) : Le DataFrame contenant les
+    informations sur les joueurs. player_api_id (int) : L'ID du joueur pour
+    lequel on veut obtenir la taille.
+
+    Retour : float ou None : La taille du joueur si trouvé, sinon None.
+    """
+    player_row = player_df[player_df["player_api_id"] == player_api_id]
+
+    if not player_row.empty:
+        return player_row["height"].values[0]
+    else:
+        return None
+
+
+def filtre_cartons(card, type_carton):
+    carton = []
+    for df in card:
+        if isinstance(df, pd.DataFrame):
+            if "card_type" in df.columns:
+                try:
+                    filtered = filtrer_df(df, "card_type", type_carton)
+                    carton.append(filtered)
+                except KeyError:
+                    pass  # Sécurité en cas d'erreur imprévue
+    return carton
+
+
+# Spécifique Q7
 
 
 def choix_criteres():
