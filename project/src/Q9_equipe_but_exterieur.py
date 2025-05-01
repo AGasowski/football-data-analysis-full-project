@@ -5,6 +5,7 @@ from project.src.fonctions.manipulations import (
     cles_dic,
     ratio_dic,
     name_team_dic,
+    id_championnat,
 )
 from project.src.fonctions.statistiques import compter_buts_matchs
 from project.src.fonctions.utils import (
@@ -12,7 +13,7 @@ from project.src.fonctions.utils import (
 )
 
 
-def run_q9(saison):
+def run_q9(saison, championnat):
     print("== Résolution de la question 9 ==")
 
     team_names = charger_csv(
@@ -34,10 +35,13 @@ def run_q9(saison):
         "away_team_api_id",
         "home_team_goal",
         "away_team_goal",
+        "league_id",
     )
-
-    if saison != 0:
+    if saison != "0":
         matchs = filtre_dic(matchs, 0, saison)
+    id_champ = id_championnat(championnat)
+    if id_champ != 0:
+        matchs = filtre_dic(matchs, 5, str(id_champ))
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)

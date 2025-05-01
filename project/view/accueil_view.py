@@ -31,10 +31,10 @@ class AccueilView(AbstractView):
             {
                 "type": "list",
                 "name": "question saison",
-                "message": """Pour quelle saison souhaitez-vous répondre à la
-                           question ?""",
+                "message": "Pour quelle saison souhaitez-vous répondre à la "
+                + "question ?",
                 "choices": [
-                    "Toutes les saisons",
+                    "Toutes les saisons réunies",
                     "2008/2009",
                     "2009/2010",
                     "2010/2011",
@@ -50,8 +50,8 @@ class AccueilView(AbstractView):
             {
                 "type": "list",
                 "name": "question saison",
-                "message": """Pour quelle saison souhaitez-vous répondre à la
-                           question ?""",
+                "message": "Pour quelle saison souhaitez-vous répondre à la "
+                + "question ?",
                 "choices": [
                     "2008/2009",
                     "2009/2010",
@@ -68,9 +68,10 @@ class AccueilView(AbstractView):
             {
                 "type": "list",
                 "name": "question championnat",
-                "message": """Pour quel championnat souhaitez-vous répondre à la
-                           question ?""",
+                "message": "Pour quel championnat souhaitez-vous répondre "
+                + "à la question ?",
                 "choices": [
+                    "Tous les championnats réunis",
                     "Ligue 1 (France)",
                     "Premier League (Angleterre)",
                     "Bundesliga (Allemagne)",
@@ -114,16 +115,20 @@ class AccueilView(AbstractView):
             next_view = Q2View()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 3":
+            saison = prompt(self.question_saison)["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.Q3_taille_moyenne import run_q3
 
-            run_q3()
+            run_q3(saison, champ)
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 4":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            if saison == "Toutes les saisons":
-                saison = 0
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
             from project.src.Q4_diff_buts_max import run_q4
 
             run_q4(saison)
@@ -132,8 +137,8 @@ class AccueilView(AbstractView):
         elif answers["Menu principal"] == "Lancer la question 5":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            if saison == "Toutes les saisons":
-                saison = 0
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
             from project.src.Q5_meilleur_formation import run_q5
 
             run_q5(saison)
@@ -151,23 +156,23 @@ class AccueilView(AbstractView):
             next_view = Q7View()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 9":
-            answersaison = prompt(self.question_saison)
-            saison = answersaison["question saison"]
-            if saison == "Toutes les saisons":
-                saison = 0
+            saison = prompt(self.question_saison)["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.Q9_equipe_but_exterieur import run_q9
 
-            run_q9(saison)
+            run_q9(saison, champ)
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 11":
-            answersaison = prompt(self.question_saison)
-            saison = answersaison["question saison"]
-            if saison == "Toutes les saisons":
-                saison = 0
+            saison = prompt(self.question_saison)["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.Q11_pire_ratio_tirs import run_q11
 
-            run_q11(saison)
+            run_q11(saison, champ)
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Quitter l'appli":

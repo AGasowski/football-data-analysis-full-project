@@ -10,9 +10,10 @@ from project.src.fonctions.statistiques import (
 from project.src.fonctions.utils import (
     get_taille_joueurs,
 )
+from project.src.fonctions.manipulations import id_championnat, filtrer_df
 
 
-def run_q3():
+def run_q3(saison, championnat):
     print("== Résolution de la question 3 ==")
 
     # On importe la table match
@@ -22,8 +23,12 @@ def run_q3():
     player = charger_csv("data/Player.csv")
 
     match = match[match["goal"].notna() & (match["goal"] != "")]
-    # match=match[match["country_id"] == "1729"]
-    match = match[match["season"] == "2015/2016"]
+
+    if saison != "0":
+        match = filtrer_df(match, "season", saison)
+    id_champ = id_championnat(championnat)
+    if championnat != 0:
+        match = filtrer_df(match, "league_id", int(id_champ))
 
     goals_transformed = [transforme(goal_str) for goal_str in match["goal"]]
 
