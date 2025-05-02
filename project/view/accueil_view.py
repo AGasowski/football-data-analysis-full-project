@@ -126,7 +126,7 @@ class AccueilView(AbstractView):
             champ = prompt(self.question_championnat_unique)[
                 "question championnat"
             ]
-            from project.src.Q1_classement_PL import run_q1
+            from project.src.q1_classement import run_q1
 
             run_q1(saison, champ)
             next_view = AccueilView()  # On revient au menu
@@ -136,7 +136,7 @@ class AccueilView(AbstractView):
             saison = answersaison["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            from project.src.Q2_diff_buts_max import run_q2
+            from project.src.q2_diff_buts_max import run_q2
 
             run_q2(saison)
             next_view = AccueilView()  # On revient au menu
@@ -146,7 +146,7 @@ class AccueilView(AbstractView):
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             champ = prompt(self.question_championnat)["question championnat"]
-            from project.src.Q3_taille_moyenne import run_q3
+            from project.src.q3_taille_moyenne import run_q3
 
             run_q3(saison, champ)
             next_view = AccueilView()  # On revient au menu
@@ -167,7 +167,7 @@ class AccueilView(AbstractView):
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 6":
-            from project.src.Q6_jour_matchs_nuls import run_q6
+            from project.src.q6_jour_matchs_nuls import run_q6
 
             run_q6()
             next_view = AccueilView()  # On revient au menu
@@ -182,7 +182,7 @@ class AccueilView(AbstractView):
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             champ = prompt(self.question_championnat)["question championnat"]
-            from project.src.Q9_equipe_but_exterieur import run_q9
+            from project.src.q9_equipe_but_exterieur import run_q9
 
             run_q9(saison, champ)
             next_view = AccueilView()  # On revient au menu
@@ -192,7 +192,7 @@ class AccueilView(AbstractView):
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             champ = prompt(self.question_championnat)["question championnat"]
-            from project.src.Q11_pire_ratio_tirs import run_q11
+            from project.src.q11_pire_ratio_tirs import run_q11
 
             run_q11(saison, champ)
             next_view = AccueilView()  # On revient au menu

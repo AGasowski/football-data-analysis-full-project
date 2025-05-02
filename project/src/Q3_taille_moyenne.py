@@ -1,3 +1,8 @@
+"""
+Script pour analyser les buteurs sur coups de tête dans un championnat et une
+saison donnés. Calcule la taille moyenne des joueurs ayant marqué de la tête.
+"""
+
 from project.src.fonctions.data_loader import (
     charger_csv,
     transforme,
@@ -14,6 +19,16 @@ from project.src.fonctions.manipulations import id_championnat, filtrer_df
 
 
 def run_q3(saison, championnat):
+    """
+    Calcule et affiche la taille moyenne des joueurs ayant marqué de la tête
+    pour un championnat et une saison donnés.
+
+    Args:
+        saison (str): Saison ciblée, ex. "2014/2015". Si "0", toutes les
+        saisons sont prises en compte.
+
+        championnat (str): Nom du championnat ciblé.
+    """
     print("== Résolution de la question 3 ==")
 
     # On importe la table match

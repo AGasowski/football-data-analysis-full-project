@@ -1,3 +1,8 @@
+"""
+Script pour générer le classement d'un championnat donné pour une saison
+spécifique, en analysant les données de matchs à partir de fichiers CSV.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.manipulations import (
     creer_dict,
@@ -11,6 +16,13 @@ from project.src.fonctions.statistiques import (
 
 
 def run_q1(saison, championnat):
+    """
+    Affiche le classement d'un championnat donné pour une saison spécifique.
+
+    Args:
+        saison (str): Saison sous forme de chaîne, ex. "2014/2015"
+        championnat (str): Nom du championnat, ex. "England Premier League"
+    """
     print("== Résolution de la question 1 ==")
 
     team_names = charger_csv(
