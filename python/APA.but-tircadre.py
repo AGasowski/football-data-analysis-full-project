@@ -1,41 +1,39 @@
-
 from fonction_commune_chahid import *
 
 # Charger les données
 match = lire_csv("data/Match.csv")
-player = lire_csv("data/Player.csv") 
-team =lire_csv("data/Team.csv")
+player = lire_csv("data/Player.csv")
+team = lire_csv("data/Team.csv")
 match = match[(match["goal"].notna()) & (match["goal"] != "")]
 match = match[(match["shoton"].notna()) & (match["shoton"] != "")]
 goals_transformed = [transforme(g) for g in match["goal"]]
-shots_transformed=[transforme(s) for s in match["shoton"]] 
-d={}
-for goal in (goals_transformed):
+shots_transformed = [transforme(s) for s in match["shoton"]]
+d = {}
+for goal in goals_transformed:
     if ("team" in goal.columns) and ("player1" in goal.columns):
         colonne_team = [g for g in goal["team"]]
         colonne_player1 = [g for g in goal["player1"]]
         for i in range(len(colonne_team)):
-            if colonne_team[i]not in d:
-                d[str(colonne_team[i])]=[]
+            if colonne_team[i] not in d:
+                d[str(colonne_team[i])] = []
             d[str(colonne_team[i])].append(colonne_player1[i])
 for e in d:
-    d[e]=len(d[e])
-s={}
-for shot in (shots_transformed):
+    d[e] = len(d[e])
+s = {}
+for shot in shots_transformed:
     if ("team" in shot.columns) and ("player1" in shot.columns):
         colonne_team = [g for g in shot["team"]]
         colonne_player1 = [g for g in shot["player1"]]
         for i in range(len(colonne_team)):
-            if colonne_team[i]not in s:
-                s[str(colonne_team[i])]=[]
+            if colonne_team[i] not in s:
+                s[str(colonne_team[i])] = []
             s[str(colonne_team[i])].append(colonne_player1[i])
-for e in s :
-    s[e]=len(s[e])
+for e in s:
+    s[e] = len(s[e])
 for e in d:
     if e in s:
-        d[e] = d[e]/(d[e]+s[e]) 
+        d[e] = d[e] / (d[e] + s[e])
     else:
-        d[e]=d[e]/d[e] 
+        d[e] = d[e] / d[e]
 
-print(d) 
-
+print(d)
