@@ -1,20 +1,22 @@
-from project.src.fonctions_communes import (
-    lire_csv,
-    select_all,
-    diff_abs,
-    formation,
-    convertir_list,
+from project.src.fonctions.data_loader import (
+    charger_csv,
+    convertir_colonne,
     fusionner_colonnes_en_listes,
-    cle_maximale,
+)
+from project.src.fonctions.manipulations import filtrer_df
+from project.src.fonctions.statistiques import resume_colonne
+from project.src.fonctions.utils import (
+    formation,
 )
 
 
 def run_q5(saison):
     print("== Résolution de la question 5 ==")
 
-    match = lire_csv("data/Match.csv")
-    match = select_all(match, "season", saison)
-    match = select_all(match, "league_id", 21518)
+    match = charger_csv("data/Match.csv")
+    if saison != 0:
+        match = filtrer_df(match, "season", saison)
+    match = filtrer_df(match, "league_id", 21518)
 
     Coordonée_home_joueur = fusionner_colonnes_en_listes(
         match,
@@ -46,8 +48,10 @@ def run_q5(saison):
             "away_player_Y11",
         ],
     )
-    match["ecart"] = diff_abs(match, "home_team_goal", "away_team_goal")
-    diff_but = convertir_list(match, "ecart")
+    match["ecart"] = resume_colonne(
+        match, "home_team_goal", "away_team_goal", "diff_abs"
+    )
+    diff_but = convertir_colonne(match, "ecart", "list")
 
     d = {}
     for i in range(len(diff_but)):
@@ -62,4 +66,6 @@ def run_q5(saison):
             else:
                 d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 
-    print(cle_maximale(d))
+    classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
+    for rang, (formation1, nb_occurrences) in enumerate(classement, start=1):
+        print(f"{rang}.  {formation1} - {nb_occurrences} fois")

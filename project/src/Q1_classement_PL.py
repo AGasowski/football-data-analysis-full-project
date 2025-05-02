@@ -1,22 +1,25 @@
-from project.src.fonctions_communes import (
-    lire_csv_en_dict,
+from project.src.fonctions.data_loader import charger_csv
+from project.src.fonctions.manipulations import (
     creer_dict,
     filtre_dic,
-    saison_equipe,
     name_team_dic,
+)
+from project.src.fonctions.statistiques import (
+    saison_equipe,
 )
 
 
 def run_q1(saison):
     print("== Résolution de la question 1 ==")
 
-    team_names = lire_csv_en_dict(
-        "data/Team.csv", "team_api_id", ("team_long_name")
+    team_names = charger_csv(
+        "data/Team.csv", "dict", "team_api_id", "team_long_name"
     )
 
     # Lecture du fichier des matchs et filtrage pour l'année 2014
-    matchs = lire_csv_en_dict(
+    matchs = charger_csv(
         "data/Match.csv",
+        "dict",
         "id",
         "season",
         "league_id",

@@ -1,6 +1,5 @@
-from project.src.fonctions_communes import (
-    lire_csv,
-    transforme,
+from project.src.fonctions.data_loader import charger_csv, transforme
+from project.src.fonctions.statistiques import (
     compter_actions_par_joueur,
     trier_joueurs_par_actions,
 )
@@ -10,8 +9,8 @@ def run_q2d(saison):
     print("== Résolution de la question 2 ==")
 
     # Charger les données
-    match = lire_csv("data/Match.csv")
-    player = lire_csv("data/Player.csv")
+    match = charger_csv("data/Match.csv")
+    player = charger_csv("data/Player.csv")
 
     # Filtrer le championnat et la saison souhaités
     match = match[(match["goal"].notna()) & (match["goal"] != "")]

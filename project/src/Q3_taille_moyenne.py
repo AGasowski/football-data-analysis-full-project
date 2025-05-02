@@ -1,10 +1,14 @@
-from project.src.fonctions_communes import (
-    lire_csv,
+from project.src.fonctions.data_loader import (
+    charger_csv,
     transforme,
-    convertir_int,
+    convertir_colonne,
+)
+from project.src.fonctions.statistiques import (
     get_scorers_by_subtype,
+    calculer_moyenne,
+)
+from project.src.fonctions.utils import (
     get_taille_joueurs,
-    moyenne,
 )
 
 
@@ -12,10 +16,10 @@ def run_q3():
     print("== Résolution de la question 3 ==")
 
     # On importe la table match
-    match = lire_csv("data/Match.csv")
+    match = charger_csv("data/Match.csv")
 
     # On importe la table player
-    player = lire_csv("data/Player.csv")
+    player = charger_csv("data/Player.csv")
 
     match = match[match["goal"].notna() & (match["goal"] != "")]
     # match=match[match["country_id"] == "1729"]
@@ -23,8 +27,8 @@ def run_q3():
 
     goals_transformed = [transforme(goal_str) for goal_str in match["goal"]]
 
-    convertir_int(player, "player_api_id")
-    convertir_int(player, "height")
+    convertir_colonne(player, "player_api_id", "int")
+    convertir_colonne(player, "height", "int")
 
     header_scorers = get_scorers_by_subtype(goals_transformed, "header")
 
@@ -33,4 +37,4 @@ def run_q3():
         if get_taille_joueurs(player, pid) is not None:
             header_heights.append(get_taille_joueurs(player, pid))
 
-    print(moyenne(header_heights))
+    print(calculer_moyenne(header_heights))

@@ -112,3 +112,9 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Fichiers LaTeX à ignorer
+rapport.*
+!rapport.tex
+
+*.aux

@@ -21,16 +21,21 @@ diff_but = convertir_list (match,"ecart")
 
 d = {}
 for i in range(len(diff_but)): 
-    if diff_but[i] > 0:
+    #if diff_but[i] > 0:
         if tuple(formation(Coordonée_home_joueur[i])) not in d:
             d[tuple(formation(Coordonée_home_joueur[i]))] = 1
         else:
             d[tuple(formation(Coordonée_home_joueur[i]))] += 1
-    if diff_but[i] < 0:
+    #if diff_but[i] < 0:
         if tuple(formation(Coordonée_away_joueur[i])) not in d:
             d[tuple(formation(Coordonée_away_joueur[i]))] = 1
         else:
             d[tuple(formation(Coordonée_away_joueur[i]))] += 1  
 
-print(cle_maximale(d)) 
+classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
+for rang, (formation, nb_occurrences) in enumerate(classement, start=1):
+    print(f"{rang}.  {formation} - {nb_occurrences} fois")
+#print(cle_maximale(d))  
+
+
 
