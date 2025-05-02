@@ -19,9 +19,9 @@ def run_q6():
     """
     Affiche le jour où il y a eu le plus de matchs nuls.
 
-    Étapes : - Chargement et conversion des dates des matchs - Filtrage des
-    matchs nuls (égalité des scores) - Calcul du jour avec le plus
-    d’occurrences de matchs nuls
+    Args:
+        Aucun argument nécessaire, la fonction travaille directement avec les
+        données des matchs chargées depuis un fichier CSV.
     """
     print("== Résolution de la question 6 ==")
 
