@@ -161,7 +161,7 @@ class AccueilView(AbstractView):
             saison = answersaison["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            from project.src.Q5_meilleur_formation import run_q5
+            from project.src.q5_meilleur_formation import run_q5
 
             run_q5(saison)
             next_view = AccueilView()  # On revient au menu
