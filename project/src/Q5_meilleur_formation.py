@@ -51,20 +51,17 @@ def run_q5(saison):
     match["ecart"] = resume_colonne(
         match, "home_team_goal", "away_team_goal", "diff_abs"
     )
-    diff_but = convertir_colonne(match, "ecart", "list")
-
+    
     d = {}
     for i in range(len(diff_but)):
-        if diff_but[i] > 0:
-            if tuple(formation(Coordonée_home_joueur[i])) not in d:
-                d[tuple(formation(Coordonée_home_joueur[i]))] = 1
-            else:
-                d[tuple(formation(Coordonée_home_joueur[i]))] += 1
-        if diff_but[i] < 0:
-            if tuple(formation(Coordonée_away_joueur[i])) not in d:
-                d[tuple(formation(Coordonée_away_joueur[i]))] = 1
-            else:
-                d[tuple(formation(Coordonée_away_joueur[i]))] += 1
+        if tuple(formation(Coordonée_home_joueur[i])) not in d:
+            d[tuple(formation(Coordonée_home_joueur[i]))] = 1
+        else:
+            d[tuple(formation(Coordonée_home_joueur[i]))] += 1
+        if tuple(formation(Coordonée_away_joueur[i])) not in d:
+             d[tuple(formation(Coordonée_away_joueur[i]))] = 1
+        else:
+            d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 
     classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
     for rang, (formation1, nb_occurrences) in enumerate(classement, start=1):

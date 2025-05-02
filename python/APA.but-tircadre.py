@@ -36,6 +36,5 @@ for e in d:
         d[e] = d[e]/(d[e]+s[e]) 
     else:
         d[e]=d[e]/d[e] 
-
 print(d) 
 

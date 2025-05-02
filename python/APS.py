@@ -12,10 +12,10 @@ def process_player_attributes(chemin_csv):
     # Création de la colonne saison
     def get_season(date):
         year = date.year
-        if date.month >= 8:  # Août à Décembre => saison commence cette année
-            return f"{year}-{year + 1}"
+        if date.month >= 6:  # Août à Décembre => saison commence cette année
+            return f"{year}/{year + 1}"
         else:  # Janvier à Juillet => saison commence l'année précédente
-            return f"{year - 1}-{year}"
+            return f"{year - 1}/{year}"
 
     df["saison"] = df["date"].apply(get_season)
 
@@ -48,4 +48,3 @@ def process_player_attributes(chemin_csv):
     return full_df
 
 
-print(process_player_attributes("data/Player_Attributes.csv"))
