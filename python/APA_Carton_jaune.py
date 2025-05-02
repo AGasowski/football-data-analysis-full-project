@@ -8,7 +8,6 @@ player = lire_csv("data/Player.csv")
 match = match[(match["goal"].notna()) & (match["goal"] != "")]
 
 card_df = [transforme(g) for g in match["card"]]
-
 team_stats = creer_dict(2)  # d = {Id_team = [Nombre carton Jaune, Nombre de Match]}
 
 for df in card_df:
