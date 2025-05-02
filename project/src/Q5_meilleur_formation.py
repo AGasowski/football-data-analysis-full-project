@@ -1,6 +1,5 @@
 from project.src.fonctions.data_loader import (
     charger_csv,
-    convertir_colonne,
     fusionner_colonnes_en_listes,
 )
 from project.src.fonctions.manipulations import filtrer_df
@@ -51,7 +50,7 @@ def run_q5(saison):
     match["ecart"] = resume_colonne(
         match, "home_team_goal", "away_team_goal", "diff_abs"
     )
-    
+
     d = {}
     for i in range(len(Coordonée_home_joueur)):
         if tuple(formation(Coordonée_home_joueur[i])) not in d:
@@ -59,7 +58,7 @@ def run_q5(saison):
         else:
             d[tuple(formation(Coordonée_home_joueur[i]))] += 1
         if tuple(formation(Coordonée_away_joueur[i])) not in d:
-             d[tuple(formation(Coordonée_away_joueur[i]))] = 1
+            d[tuple(formation(Coordonée_away_joueur[i]))] = 1
         else:
             d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 

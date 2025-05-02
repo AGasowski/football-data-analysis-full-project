@@ -1,3 +1,12 @@
+"""
+Module pour afficher le classement des équipes avec la plus grande différence
+de buts marqués à l'extérieur vs domicile.
+
+Ce module traite les données des matchs de football pour calculer et afficher
+le classement des équipes en fonction de la différence de buts marqués à
+domicile et à l'extérieur.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.manipulations import (
     creer_dict,
@@ -14,6 +23,14 @@ from project.src.fonctions.utils import (
 
 
 def run_q9(saison, championnat):
+    """
+    Affiche le classement des équipes avec la plus grande différence de buts
+    marqués à l'extérieur vs domicile pour une saison et un championnat donnés.
+
+    Args:
+        saison (str): Saison ciblée
+        championnat (str): Nom du championnat ciblé
+    """
     print("== Résolution de la question 9 ==")
 
     team_names = charger_csv(
