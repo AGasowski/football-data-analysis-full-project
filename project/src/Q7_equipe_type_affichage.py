@@ -1,3 +1,12 @@
+"""
+Module pour sélectionner et afficher le meilleur onze (11) de football en
+formation 4-4-2.
+
+Ce script évalue les joueurs selon des critères par poste à partir des données
+de FIFA, filtre les joueurs selon la saison, calcule les scores pour chaque
+poste, puis affiche le meilleur 11 sur le terrain.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.dates_formats import convertir_date
 from project.src.fonctions.manipulations import (
@@ -16,6 +25,17 @@ from project.src.fonctions.utils import (
 
 
 def run_q7(saison):
+    """
+    Affiche le meilleur onze (11) de football pour une saison donnée en
+    formation 4-4-2.
+
+    Ce script sélectionne les meilleurs joueurs pour chaque poste, puis les
+    affiche dans une formation 4-4-2.
+
+    Args:
+        saison (str): Saison ciblée, ex. "2007/2008". Si "0", tous les matchs
+        sont pris en compte.
+    """
     print("== Résolution de la question 7 ==")
 
     # Charger le fichier CSV

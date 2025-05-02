@@ -1,3 +1,11 @@
+"""
+Module pour analyser les jours où il y a eu le plus de matchs nuls.
+
+Ce script transforme les dates en format lisible, filtre les matchs nuls, puis
+identifie le jour ayant connu le plus de matchs nuls parmi tous les matchs
+enregistrés.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.dates_formats import convertir_date, date_format
 from project.src.fonctions.manipulations import filtrer_df
@@ -8,6 +16,13 @@ from project.src.fonctions.statistiques import (
 
 
 def run_q6():
+    """
+    Affiche le jour où il y a eu le plus de matchs nuls.
+
+    Étapes : - Chargement et conversion des dates des matchs - Filtrage des
+    matchs nuls (égalité des scores) - Calcul du jour avec le plus
+    d’occurrences de matchs nuls
+    """
     print("== Résolution de la question 6 ==")
 
     # Charger les données
