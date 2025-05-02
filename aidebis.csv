@@ -1,0 +1,3 @@
+event_incident_typefk,coordinates,elapsed,subtype,player1,sortorder,team,n,type,id,stats_blocked
+61,,6,blocked_shot,189192,0,8302,224,shoton,3659870,1
+61,,28,blocked_shot,361770,1,10267,206,shoton,3660175,1
