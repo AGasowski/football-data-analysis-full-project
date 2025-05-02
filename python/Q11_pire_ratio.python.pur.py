@@ -48,7 +48,7 @@ for equipe in team_names:
         if equipe == match[matchs][0]:
             if team_names[equipe] not in final:
                 final[team_names[equipe]] = []
-            final[team_names[equipe]].append((int(match[matchs][2])+int(match[matchs][3]))/int(match[matchs][4]))                
+            final[team_names[equipe]].append((int(match[matchs][2])+int(match[matchs][3]))/(int(match[matchs][2])+int(match[matchs][3])+int(match[matchs][4])))                
 
 print(cle_minimale(appliquer_fonction_aux_valeurs(final,moyenne_liste)))
 

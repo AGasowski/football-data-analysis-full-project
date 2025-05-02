@@ -3,19 +3,22 @@ from project.src.fonctions.manipulations import (
     filtrer_df,
     name_team_dic,
     cle_extreme,
+    id_championnat,
 )
 from project.src.fonctions.statistiques import (
     calculer_moyenne,
 )
 
 
-def run_q11(saison):
+def run_q11(saison, championnat):
     print("== Résolution de la question 11 ==")
 
     match = charger_csv("data/Match.csv")
-    if saison != 0:
+    if saison != "0":
         match = filtrer_df(match, "season", saison)
-    match = filtrer_df(match, "league_id", 21518)
+    id_champ = id_championnat(championnat)
+    if championnat != 0:
+        match = filtrer_df(match, "league_id", int(id_champ))
     match = filtrer_df(
         match,
         None,
@@ -29,7 +32,7 @@ def run_q11(saison):
     match["tir_cadre"] = match["shoton"].map(
         lambda x: (len(x) if isinstance(x, (list, str)) and x != "" else 1)
     )
-    match["ratio"] = match["but"] / match["tir_cadre"]
+    match["ratio"] = match["but"] / (match["but"]+match["tir_cadre"])
     d = calculer_moyenne(match, "home_team_api_id", "ratio")
     team_names = data_to_dict(team, "team_api_id", "team_long_name")
     print(name_team_dic(team_names, cle_extreme(d, "min")))

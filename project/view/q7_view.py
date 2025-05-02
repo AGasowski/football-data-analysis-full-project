@@ -6,13 +6,13 @@ class Q7View(AbstractView):
 
     def __init__(self):
         super().__init__()
-        self.answers = [
+        self.question_saison = [
             {
                 "type": "list",
-                "name": "Menu Q7",
+                "name": "question saison",
                 "message": "Que souhaitez-vous faire ?",
                 "choices": [
-                    "Equipe type général (entre 2008 et 2016)",
+                    "Equipe type générale (entre 2008 et 2016)",
                     "Equipe type 2008/2009",
                     "Equipe type 2009/2010",
                     "Equipe type 2010/2011",
@@ -28,80 +28,81 @@ class Q7View(AbstractView):
         ]
 
     def make_choice(self):
-        answers = prompt(self.answers)
+        saison = prompt(self.question_saison)["question saison"]
 
-        if answers["Menu Q7"] == "Equipe type général (entre 2008 et 2016)":
+        if saison == "Equipe type générale (entre 2008 et 2016)":
+            saison = "0"
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("0")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2008/2009":
+        elif saison == "Equipe type 2008/2009":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2008/2009")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2009/2010":
+        elif saison == "Equipe type 2009/2010":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2009/2010")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2010/2011":
+        elif saison == "Equipe type 2010/2011":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2010/2011")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2011/2012":
+        elif saison == "Equipe type 2011/2012":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2011/2012")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2012/2013":
+        elif saison == "Equipe type 2012/2013":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2012/2013")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2013/2014":
+        elif saison == "Equipe type 2013/2014":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2013/2014")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2014/2015":
+        elif saison == "Equipe type 2014/2015":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2014/2015")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Equipe type 2015/2016":
+        elif saison == "Equipe type 2015/2016":
 
             from project.src.Q7_equipe_type_affichage import run_q7
 
             run_q7("2015/2016")
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu Q7"] == "Retourner au menu principal":
+        elif saison == "Retourner au menu principal":
             from project.view.accueil_view import AccueilView
 
             return AccueilView()  # On revient au menu principal
 
-        elif answers["Menu Q7"] == "Quitter l'appli":
+        elif saison == "Quitter l'appli":
             next_view = None
 
         return next_view
 
     def display_info(self):
-        print(" MENU Question 2".center(80, "="))
+        print(" MENU Question 7".center(80, "="))
