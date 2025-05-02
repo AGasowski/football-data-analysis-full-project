@@ -1,64 +1,43 @@
-\section{Caractéristiques Fonctionnelles}
+\section{Présentation des questions posées}
 
-\subsection{Première sous-partie}
+\subsection{Questions imposées}
 
-\blindtext[2]
-
-\vskip 10pt
-
-\begin{table}[ht]
-    \centering
-    \captionsetup{justification=centering}
-    \begin{tabular}{lcc}
-          \hline
-          Variable & 1\up{er} groupe & 2\up{ème} groupe\\ 
-          \hline
-          POP1529 & 17,64 & 13,83 \\ 
-          POP3044 & 17,61 & 17,56 \\ 
-          POP4559 & 19,67 & 20,84 \\ 
-          POP6074 & 17,76 & 18,98 \\ 
-          POP7589 & 9,03 & 9,48 \\ 
-          POP90P & 1,36 & 1,39 \\ 
-          CS1 & 0,79 & 1,55 \\ 
-          CS2 & 2,82 & 3,07 \\ 
-          CS3 & 7,35 & 4,09 \\ 
-          CS4 & 11,76 & 10,51 \\ 
-          CS5 & 12,45 & 12,60 \\ 
-          CS6 & 9,78 & 12,60 \\ 
-          CS7 & 25,20 & 27,17 \\ 
-          CS8 & 12,94 & 10,46 \\
-           \hline
-    \end{tabular}
-    \vskip 10pt
-    \caption{Titre.\\
-    \textit{Note de lecture: xxxxxxxx.}\\
-    \textit{Champ et source: xxxxxxxx.}}
-\end{table}
+Deux questions nous étaient imposées par le sujet. Nous avons décidé d'ajouter
+des fonctionnalités pour que l'utilisateur puisse choisir des paramètres de ces
+questions.
 
 
-\newpage
+\textbf{Question 1 :} Quel est le classement de la Premier League lors de la \\
+saison 2015/2016 ? 
 
 
-\subsection{Deuxième sous-partie}
+Pour réaliser cette question, nous avons codé en python pur, c'est-à-dire sans
+l'aide du module pandas. Nous avons utilisé les règles officielles pour le
+classement de la Premier League. Les critères, par ordre d'importance, sont les
+suivants: le nombre de points, la différence de buts et le nombre de buts
+marqués. Nous avons voulu laisser la possibilité à l'utilisateur de choisir une
+autre saison que 2015/2016. De plus, il a la possibilité de demander le
+classement d'un autre championnat. Ce dernier point doit être précisé, puisque
+les critères utilisés pour départager deux équipes ayant le même nombre de
+point dépend du championnat. En France par exemple, si la différence de buts
+est la même, nous regardons les points obtenus lors des confrontations directes
+entre les deux équipes. Cependant, dans un souci de temps imparti, nous n'avons
+pas pu ajuster les critères en fonction des championnats et les classements
+sont réalisés selon les règles de la Premier League.
 
-\blindtext[2]
 
-\vskip 10pt
+\textbf{Question 2 :} Quels sont les matchs avec la plus grande différence \\
+de buts dans le jeu de données ?
 
-\begin{figure}[htb]
-    \captionsetup{justification=centering}
-    \begin{centering}
-        \centerline{\includegraphics[scale = 0.6]{Images/image4.pdf}}
-        \caption{Titre. \\
-        \textit{Note de lecture: xxxxxxxxxxxxx.} \\
-        \textit{Champ et source: xxxxxxxxxxxxx.}}
-    \end{centering}
-\end{figure}
 
-\newpage
+Cette fois, nous avons répondu à la question en utilisant le paquet pandas. De
+plus, nous avons ajouter la possibilité pour l'utilisateur de choisir si il
+veut obtenir les matchs avec la plus grande différence de buts pour toutes les
+saisons confondues, ou bien pour une saison bien particulière.
 
-\blindtext[2]
 
-\newpage
+\subsection{Questions choisies}
 
-\subsection{Troisième sous-partie}
+
+\textbf{Question 3 :} Quels sont les matchs avec la plus grande différence \\
+de buts dans le jeu de données ?

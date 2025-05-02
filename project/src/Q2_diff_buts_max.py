@@ -6,8 +6,8 @@ from project.src.fonctions.utils import (
 )
 
 
-def run_q4(saison):
-    print("== Résolution de la question 4 ==")
+def run_q2(saison):
+    print("== Résolution de la question 2 ==")
     match = charger_csv("data/Match.csv")
     if saison != 0:
         match = filtrer_df(match, "season", saison)
