@@ -3,13 +3,10 @@ from project.src.fonctions.statistiques import (
     compter_actions_par_joueur,
     trier_joueurs_par_actions,
 )
-from project.src.fonctions.utils import (
-    filtre_cartons,
-)
 
 
-def run_q2a(saison):
-    print("== Résolution de la question 2 ==")
+def run_q4d(saison):
+    print("== Résolution de la question 4 ==")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -22,11 +19,13 @@ def run_q2a(saison):
     # filtrer par championnat
 
     # Transformer les colonnes goal en DataFrames
-    card = [transforme(g) for g in match["card"]]
+    goals_transformed = [transforme(g) for g in match["goal"]]
 
-    carton_jaune_dfs = filtre_cartons(card, "y")
+    # Compter les buts par joueur (player1)
+    buts_par_joueur = compter_actions_par_joueur(goals_transformed, "player2")
 
-    # Étape 2 : utiliser la fonction générique
-    jaunes_par_joueur = compter_actions_par_joueur(carton_jaune_dfs, "player1")
-    top_jaunes = trier_joueurs_par_actions(jaunes_par_joueur, player, 10)
-    print(top_jaunes)
+    # Obtenir le top 10 des buteurs
+    top_passeur = trier_joueurs_par_actions(buts_par_joueur, player, top_n=10)
+
+    # Afficher le classement
+    print(top_passeur)

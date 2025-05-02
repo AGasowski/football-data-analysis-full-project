@@ -3,13 +3,14 @@ from project.src.fonctions.manipulations import (
     creer_dict,
     filtre_dic,
     name_team_dic,
+    id_championnat,
 )
 from project.src.fonctions.statistiques import (
     saison_equipe,
 )
 
 
-def run_q1(saison):
+def run_q1(saison, championnat):
     print("== Résolution de la question 1 ==")
 
     team_names = charger_csv(
@@ -33,7 +34,8 @@ def run_q1(saison):
     stats = creer_dict(3)
 
     matchs = filtre_dic(matchs, 0, saison)
-    matchs = filtre_dic(matchs, 1, "1729")
+    champ = id_championnat(championnat)
+    matchs = filtre_dic(matchs, 1, str(champ))
 
     stats = saison_equipe(matchs)
 

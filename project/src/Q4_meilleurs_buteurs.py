@@ -5,8 +5,8 @@ from project.src.fonctions.statistiques import (
 )
 
 
-def run_q2c(saison):
-    print("== Résolution de la question 2 ==")
+def run_q4c(saison):
+    print("== Résolution de la question 4 ==")
 
     # Charger les données
     match = charger_csv("data/Match.csv")

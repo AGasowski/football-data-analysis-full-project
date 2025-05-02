@@ -1,7 +1,7 @@
 from fonction_commune_chahid import *
 
 
-def carton_jaune(season):
+def carton_rouge(season):
     # Charger les données
     match = lire_csv("data/Match.csv")
     player = lire_csv("data/Player.csv")
@@ -39,4 +39,4 @@ def carton_jaune(season):
         )
 
 
-carton_jaune("2014/2015")
+carton_rouge("2014/2015")

@@ -1,64 +1,170 @@
-\section{Caractéristiques Fonctionnelles}
+\section{Présentation des questions posées}
 
-\subsection{Première sous-partie}
+\subsection{Questions imposées}
 
-\blindtext[2]
-
-\vskip 10pt
-
-\begin{table}[ht]
-    \centering
-    \captionsetup{justification=centering}
-    \begin{tabular}{lcc}
-          \hline
-          Variable & 1\up{er} groupe & 2\up{ème} groupe\\ 
-          \hline
-          POP1529 & 17,64 & 13,83 \\ 
-          POP3044 & 17,61 & 17,56 \\ 
-          POP4559 & 19,67 & 20,84 \\ 
-          POP6074 & 17,76 & 18,98 \\ 
-          POP7589 & 9,03 & 9,48 \\ 
-          POP90P & 1,36 & 1,39 \\ 
-          CS1 & 0,79 & 1,55 \\ 
-          CS2 & 2,82 & 3,07 \\ 
-          CS3 & 7,35 & 4,09 \\ 
-          CS4 & 11,76 & 10,51 \\ 
-          CS5 & 12,45 & 12,60 \\ 
-          CS6 & 9,78 & 12,60 \\ 
-          CS7 & 25,20 & 27,17 \\ 
-          CS8 & 12,94 & 10,46 \\
-           \hline
-    \end{tabular}
-    \vskip 10pt
-    \caption{Titre.\\
-    \textit{Note de lecture: xxxxxxxx.}\\
-    \textit{Champ et source: xxxxxxxx.}}
-\end{table}
-
-
-\newpage
-
-
-\subsection{Deuxième sous-partie}
-
-\blindtext[2]
+Deux questions nous étaient imposées par le sujet. Nous avons décidé d'ajouter
+des fonctionnalités pour que l'utilisateur puisse choisir des paramètres de ces
+questions.
 
 \vskip 10pt
 
-\begin{figure}[htb]
-    \captionsetup{justification=centering}
-    \begin{centering}
-        \centerline{\includegraphics[scale = 0.6]{Images/image4.pdf}}
-        \caption{Titre. \\
-        \textit{Note de lecture: xxxxxxxxxxxxx.} \\
-        \textit{Champ et source: xxxxxxxxxxxxx.}}
-    \end{centering}
-\end{figure}
+\textbf{Question 1 : Quel est le classement de la Premier League lors de la
+saison 2015/2016 ?}
 
-\newpage
+\vskip 10pt
 
-\blindtext[2]
+Pour réaliser cette question, nous avons codé en python pur, c'est-à-dire sans
+l'aide du module pandas. Nous avons utilisé les règles officielles pour le
+classement de la Premier League. Les critères, par ordre d'importance, sont les
+suivants: le nombre de points, la différence de buts et le nombre de buts
+marqués. Nous avons voulu laisser la possibilité à l'utilisateur de choisir une
+autre saison que 2015/2016. De plus, il a la possibilité de demander le
+classement d'un autre championnat. Ce dernier point doit être précisé, puisque
+les critères utilisés pour départager deux équipes ayant le même nombre de
+point dépend du championnat. En France par exemple, si la différence de buts
+est la même, nous regardons les points obtenus lors des confrontations directes
+entre les deux équipes. Cependant, dans un souci de temps imparti, nous n'avons
+pas pu ajuster les critères en fonction des championnats et les classements
+sont réalisés selon les règles de la Premier League.
 
-\newpage
+\vskip 10pt
 
-\subsection{Troisième sous-partie}
+\textbf{Question 2 : Quels sont les matchs avec la plus grande différence de
+buts dans le jeu de données ?}
+
+\vskip 10pt
+
+Cette fois, nous avons répondu à la question en utilisant le paquet pandas. De
+plus, nous avons ajouter la possibilité pour l'utilisateur de choisir si il
+veut obtenir les matchs avec la plus grande différence de buts pour toutes les
+saisons confondues, ou bien pour une saison bien particulière.
+
+
+\subsection{Questions choisies}
+
+
+\textbf{Question 3 : Quelle est la taille moyenne des joueurs ayant marqué de
+la tête ?}
+
+\vskip 10pt
+
+Pour trouver l'intitulé de cette question, nous voulions profiter de la liberté
+que nous possédions afin de déterminer une statistique descriptive que l'on ne
+trouve pas habituellement. La taille moyenne des joueurs marquant de la tête
+semble être une statistique inutile à première vue, mais nous souhaitions
+observer si cette taille était élevée, ou bien similaire à la taille moyenne
+d'une population de joueurs de foot. Comme pour les questions précédentes, nous
+avons permis à l'utilisateur de choisir une saison en particulier ou non. De
+plus, nous l'avons traitée avec pandas.
+
+\vskip 10pt
+
+\textbf{Question 4 : Quel est le classement, tous championnats confondus, des
+cartons jaunes, des cartons rouges, des buteurs et des passeurs ?}
+
+\vskip 10pt
+
+Ces quatre questions sont en réalité très similaires, d'où notre volonté de les
+rassembler en une seule question. Ce sont des statistiques très facilement
+accessibles sur les sites spécialisés puisqu'elles sont au coeur des débats
+footballistiques. Elles ont toutes été traitées avec le paquet pandas.
+L'utilisateur peut choisir la saison pour laquelle il veut afficher le
+classement en question.
+
+\vskip 10pt
+
+\textbf{Question 5 : Combien de fois ont été utilisé chaque dispositif ?}
+
+\vskip 10pt
+
+Au départ, nous voulions connaître le dispositif le plus utilisé, et qui
+semblerait être le préféré des entraîneur. La réponse renvoyée était la même
+pour chaque saison: 4 2 3 1. Nous avons alors eu envie de connaître les autres
+dispositifs les plus utilisés, d'où la création de ce classement. Il est
+important de rappeler que la base de donnée ne prend pas en compte les
+changements possibles de dispositif au cours d'un match. La réalisation de
+cette question a été faite en utilisant pandas.
+
+\vskip 10pt
+
+\textbf{Question 6 : Quel est le jour, entre 2008 et 2016, qui a connu le plus
+de matchs nuls ?}
+
+\vskip 10pt
+
+De nouveau, nous avions envie de chercher un résultat original. Pour cela, nous
+avons utilisé le paquet pandas. L'idée était de trouver ce jour un peu
+exceptionnel, par curiosité. Il s'agit d'un samedi , ce qui semble logique
+puisque plus de matchs y sont joués. Le paquet pandas nous a de nouveau servi
+ici.
+
+\vskip 10pt
+
+\textbf{Question 7 : Quelle est l'équipe type en 4 4 2 ?}
+
+\vskip 10pt
+
+Chaque weekend, les médias de foot déterminent leur équipe type. La sélection
+et la comparaison des joueurs est presque une obsession pour les fans de foot,
+d'où notre volonté de créer notre propre sélection. Tout d'abord, la
+détermination des critères d'une équipe type est évidemment subjective.
+Ensuite, nous avons choisi un dispositif précis et populaire (le 4 4 2) afin de
+simplifier le choix des critères en fonction des postes. La méthode utilisée
+pour sélectionner un joueur à un poste est la suivante:
+
+\begin{itemize}
+    \item \textbf{Choix des critères les plus importants pour jouer à un
+    poste.} Par exemple, en ce qui concerne les défenseurs centraux, nous avons
+    sélectionné des aptitudes telles que l'agressivité, l'interception, les
+    tacles, la détente, la force et le marquage. Nous ne développons pas les
+    aptitudes sélectionnées pour chaque poste, mais la sélection a été faite en
+    nous renseignant sur celles qui étaient les plus importantes sur des médias
+    de tactique de foot.
+    \item \textbf{Calcul des scores.} Le calcul du score est réalisé en faisant
+    la somme des scores de chaque critère sélectionné pour le poste. En effet,
+    chaque joueur possède une note pour chaque aptitude. Nous choisissons
+    ensuite le joueur qui obtient le meilleur score et qui n'est pas déjà
+    présent dans notre équipe type. 
+    \item \textbf{Choix du pied fort.} Sur un terrain, il est plus probable de
+    jouer à droite en étant droitier, et inversement en étant gaucher. Pour
+    retrouver une certaine cohérence avec la réalité, nous voulions
+    sélectionner le côté des joueurs en fonction de leur pied fort. Pour cela,
+    les postes de latéral, d'ailier et de défenseur central sont concernés.
+\end{itemize}
+
+\vskip 10pt
+
+L'utilisateur a ici le choix de choisir la saison pour laquelle il souhaite
+obtenir l'équipe type. Pour une visualisation plus agréable, nous avons
+modélisé un beau terrain de foot afin de placer les joueurs au bon endroit.
+Toute cette question a été réalisée à l'aide du paquet pandas. 
+
+\vskip 10pt
+
+\textbf{Question 9 : Quelle équipe marque, en moyenne, plus à l'extérieur qu'à
+domicile ?}
+
+\vskip 10pt
+
+Jouer à domicile est souvent considéré comme un avantage. Les supporters sont
+parfois appelés le 12e homme, les joueurs sont familiers avec l'environnement,
+ils n'ont pas besoin d'effectuer un long trajet. Tout semble en effet favoriser
+l'équipe qui joue à domicile. Cependant, certaines équipe ont de meilleurs
+résultats à l'extérieur, et c'est ce que nous avons voulu mettre en avant dans
+cette question. Nous avons réalisé le classement en fonction de l'écart entre
+le nombre moyen de buts marqués à l'extérieur et à domicile. Nous avons étudié
+l'écart des moyennes pour que la comparaison entre les équipes soit pertinente.
+Cette fois, nous avons répondu à la question en python pur.
+
+\vskip 10pt
+
+\textbf{Question 11 : Quelle équipe a eu le pire ratio buts marqués / tirs
+cadrés ?}
+
+\vskip 10pt
+
+L'idée était de connaître l'équipe avec le moins de résussite, par rapport à
+ses frappes cadrées. En d'autres termes, quelle équipe a du faire face à des
+gardiens très efficaces ? L'utilisateur a de nouveau la possibilité de choisir
+la saison pour laquelle il souhaite voir cette statique. Cette question a été
+réalisée en python pur.

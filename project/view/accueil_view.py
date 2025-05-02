@@ -85,6 +85,26 @@ class AccueilView(AbstractView):
                 ],
             }
         ]
+        self.question_championnat_unique = [
+            {
+                "type": "list",
+                "name": "question championnat",
+                "message": "Pour quel championnat souhaitez-vous répondre "
+                + "à la question ?",
+                "choices": [
+                    "Ligue 1 (France)",
+                    "Premier League (Angleterre)",
+                    "Bundesliga (Allemagne)",
+                    "Serie A (Italie)",
+                    "Liga BBVA (Espagne)",
+                    "Eredivisie (Pays-Bas)",
+                    "Liga ZON Sagres (Portugal)",
+                    "Ekstraklasa (Pologne)",
+                    "Jupiler League (Belgique)",
+                    "Super League (Suisse)",
+                ],
+            }
+        ]
 
     def make_choice(self):
         answers = prompt(self.questions)
@@ -102,17 +122,24 @@ class AccueilView(AbstractView):
             next_view = UserView()
 
         elif answers["Menu principal"] == "Lancer la question 1":
-            answersaison = prompt(self.question_saison_unique)
-            saison = answersaison["question saison"]
+            saison = prompt(self.question_saison_unique)["question saison"]
+            champ = prompt(self.question_championnat_unique)[
+                "question championnat"
+            ]
             from project.src.Q1_classement_PL import run_q1
 
-            run_q1(saison)
+            run_q1(saison, champ)
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 2":
-            from project.view.q2_view import Q2View
+            answersaison = prompt(self.question_saison)
+            saison = answersaison["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
+            from project.src.Q2_diff_buts_max import run_q2
 
-            next_view = Q2View()  # On revient au menu
+            run_q2(saison)
+            next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 3":
             saison = prompt(self.question_saison)["question saison"]
@@ -125,21 +152,16 @@ class AccueilView(AbstractView):
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 4":
-            answersaison = prompt(self.question_saison)
-            saison = answersaison["question saison"]
-            if saison == "Toutes les saisons réunies":
-                saison = "0"
-            from project.src.Q4_diff_buts_max import run_q4
+            from project.view.q4_view import Q4View
 
-            run_q4(saison)
-            next_view = AccueilView()  # On revient au menu
+            next_view = Q4View()  # On revient au menu
 
         elif answers["Menu principal"] == "Lancer la question 5":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            from project.src.Q5_meilleur_formation import run_q5
+            from project.src.q5_meilleur_formation import run_q5
 
             run_q5(saison)
             next_view = AccueilView()  # On revient au menu

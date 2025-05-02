@@ -8,8 +8,8 @@ from project.src.fonctions.utils import (
 )
 
 
-def run_q2b(saison):
-    print("== Résolution de la question 2 ==")
+def run_q4a(saison):
+    print("== Résolution de la question 4 ==")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -24,9 +24,9 @@ def run_q2b(saison):
     # Transformer les colonnes goal en DataFrames
     card = [transforme(g) for g in match["card"]]
 
-    carton_rouge_dfs = filtre_cartons(card, "r")
+    carton_jaune_dfs = filtre_cartons(card, "y")
 
     # Étape 2 : utiliser la fonction générique
-    rouges_par_joueur = compter_actions_par_joueur(carton_rouge_dfs, "player1")
-    top_rouges = trier_joueurs_par_actions(rouges_par_joueur, player, 10)
-    print(top_rouges)
+    jaunes_par_joueur = compter_actions_par_joueur(carton_jaune_dfs, "player1")
+    top_jaunes = trier_joueurs_par_actions(jaunes_par_joueur, player, 10)
+    print(top_jaunes)

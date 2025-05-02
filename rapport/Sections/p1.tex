@@ -1,5 +1,47 @@
-\section{Mise en contexte}
+\section{Présentation du jeu de données}
 
 \vskip 10pt
 
-\blindtext
+Pour réaliser notre travail, nous avons utilisé une base de données
+relationnelle composée de plusieurs tables au format CSV. Celle-ci regroupe des
+données sur le football européen, allant de 2008 à 2016. Les différentes tables
+qui la compose sont: 
+\begin{itemize}
+    \item \textbf{Country} : Table de référence listant les pays. Elle associe
+    un identifiant à un nom de pays.
+    \item \textbf{League} : Contient les championnats, en lien avec un pays.
+    Chaque ligue a un nom et une clé étrangère vers \textit{Country}.
+    \item \textbf{Match} : Table centrale regroupant les rencontres entre
+    équipes, avec les scores, les identifiants des équipes en jeu et de
+    nombreuses statistiques.
+    \item \textbf{Player} : Contient les informations de base sur les joueurs,
+    telles que le nom, la taille et le poids.
+    \item \textbf{Player\_Attributes} : Données dynamiques décrivant les
+    caractéristiques des joueurs à différentes dates (note générale, pied
+    préféré, etc.).
+    \item \textbf{Team} : Donne des informations statiques sur les équipes (nom
+    complet, nom abrégé).
+    \item \textbf{Team\_Attributes} : Caractéristiques des équipes évoluant
+    dans le temps (style de jeu, tactiques, etc.).
+    \item \textbf{Goal} : La table Goal n’existe pas en tant que table
+    distincte dans le fichier CSV, car les données relatives aux buts sont
+    imbriquées dans un champ XML de la table principale Match. Plus
+    précisément, la colonne goal contient, pour chaque match, un bloc XML
+    décrivant les événements de but (joueur, minute, type de but, équipe,
+    etc.). Ici, nous ne représentons que la table Goal, mais il en existe plein
+    d'autres de même nature telles que Shoton, Shotoff, Foulcommit, Card,
+    Cross, Corner ou Possession.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{Images/schema_relationnel2.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Schéma relationnel \\
+    \textit{Note de lecture : xxxxxxxxxxxxx.} \\
+    \textit{Réalisé sur dbdiagram.io}}
+    \end{centering}
+\end{figure}
+
+\vskip 10pt
