@@ -53,7 +53,7 @@ def run_q5(saison):
     )
     
     d = {}
-    for i in range(len(diff_but)):
+    for i in range(len(Coordonée_home_joueur)):
         if tuple(formation(Coordonée_home_joueur[i])) not in d:
             d[tuple(formation(Coordonée_home_joueur[i]))] = 1
         else:
