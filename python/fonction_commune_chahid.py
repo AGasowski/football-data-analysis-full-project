@@ -357,6 +357,25 @@ def max_serie(df):
     return df.idxmax(), df.max()
 
 
+def creer_dict(nb_val):
+    """
+    Crée un dictionnaire avec des listes de zéros de longueur nb_val comme
+    valeur par défaut.
+
+    Paramètres
+    ----------
+    nb_val : int
+        Nombre d'éléments par défaut dans la liste associée à chaque clé.
+
+    Retourne
+    -------
+    defaultdict
+        Dictionnaire avec des listes de zéros comme valeur par défaut.
+    """
+    dict = defaultdict(lambda: [0] * nb_val)
+    return dict
+
+
 def creer_dict_2(cles):
     """
     Crée un dictionnaire avec des clés dynamiques et un dictionnaire de zéros
