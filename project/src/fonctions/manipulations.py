@@ -33,6 +33,35 @@ def filtrer_df(df, filtre_col=None, filtre_val=None, colonnes=None):
 
 
 def fusionner(df1, df2, col1, col2):
+    """
+    Fusionne deux DataFrames sur des colonnes spécifiées.
+
+    Paramètres
+    ----------
+    df1 : pandas.DataFrame
+        Premier DataFrame.
+    df2 : pandas.DataFrame
+        Deuxième DataFrame.
+    col1 : str
+        Nom de la colonne de df1 à utiliser pour la jointure.
+    col2 : str
+        Nom de la colonne de df2 à utiliser pour la jointure.
+
+    Retourne
+    -------
+    pandas.DataFrame
+        Résultat de la fusion des deux DataFrames.
+
+    Exemple
+    -------
+    >>> import pandas as pd
+    >>> df1 = pd.DataFrame({'A': [1, 2, 3], 'val1': ['a', 'b', 'c']})
+    >>> df2 = pd.DataFrame({'B': [3, 1, 4], 'val2': ['x', 'y', 'z']})
+    >>> fusionner(df1, df2, 'A', 'B')
+       A val1  B val2
+    0  1    a  1    y
+    1  3    c  3    x
+    """
     return pd.merge(
         df1,
         df2,
