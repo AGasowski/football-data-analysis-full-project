@@ -17,7 +17,9 @@ def run_q4d(saison):
     Args:
         saison (str): Saison ciblée, ex. "2014/2015"
     """
-    print("== Résolution de la question 4 ==")
+    print("==================================================================")
+    print(f"    Classement des passeurs pour la saison {saison}")
+    print("==================================================================")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -36,7 +38,9 @@ def run_q4d(saison):
     buts_par_joueur = compter_actions_par_joueur(goals_transformed, "player2")
 
     # Obtenir le top 10 des buteurs
-    top_passeur = trier_joueurs_par_actions(buts_par_joueur, player, top_n=10)
+    top_passeur = trier_joueurs_par_actions(
+        buts_par_joueur, player, "Nombre de passes décisives", top_n=10
+    )
 
     # Afficher le classement
     print(top_passeur)

@@ -12,17 +12,23 @@ class AccueilView(AbstractView):
                 "name": "Menu principal",
                 "message": "Que souhaitez-vous faire ?",
                 "choices": [
-                    "S'identifier en tant qu'admin",
-                    "S'identifier en tant qu'utilisateur",
-                    "Lancer la question 1",
-                    "Lancer la question 2",
-                    "Lancer la question 3",
-                    "Lancer la question 4",
-                    "Lancer la question 5",
-                    "Lancer la question 6",
-                    "Lancer la question 7",
-                    "Lancer la question 9",
-                    "Lancer la question 11",
+                    "Q1 - Afficher le classement d'un championnat",
+                    "Q2 - Afficher les matchs avec la plus grande différence "
+                    "de buts",
+                    "Q3 - Afficher la taille moyenne des buteurs de tête",
+                    "Q4 - Afficher un classement de statistiques",
+                    "Q5 - Afficher le classement des dispositifs les plus "
+                    "utilisés",
+                    "Q6 - Afficher le jour qui a connu le plus de matchs nuls",
+                    "Q7 - Afficher l'équipe type",
+                    "Q8 - Afficher le classement des équipes avec un 11 "
+                    "régulier",
+                    "Q9 - Afficher le classement des équipes marquant plus "
+                    "à l'extérieur",
+                    "Q10 - Afficher l'évolution des aptitudes par catégorie "
+                    "d'âge",
+                    "Q11 - Afficher l'équipe ayant le pire ratio de buts/tirs "
+                    "cadrés",
                     "Quitter l'appli",
                 ],
             }
@@ -109,19 +115,10 @@ class AccueilView(AbstractView):
     def make_choice(self):
         answers = prompt(self.questions)
 
-        if answers["Menu principal"] == "S'identifier en tant qu'admin":
-            from project.view.admin_view import AdminView
-
-            next_view = AdminView()
-
-        elif (
-            answers["Menu principal"] == "S'identifier en tant qu'utilisateur"
+        if (
+            answers["Menu principal"]
+            == "Q1 - Afficher le classement d'un championnat"
         ):
-            from project.view.user_view import UserView
-
-            next_view = UserView()
-
-        elif answers["Menu principal"] == "Lancer la question 1":
             saison = prompt(self.question_saison_unique)["question saison"]
             champ = prompt(self.question_championnat_unique)[
                 "question championnat"
@@ -131,7 +128,11 @@ class AccueilView(AbstractView):
             run_q1(saison, champ)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 2":
+        elif (
+            answers["Menu principal"]
+            == "Q2 - Afficher les matchs avec la plus grande différence de "
+            "buts"
+        ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             if saison == "Toutes les saisons réunies":
@@ -141,22 +142,31 @@ class AccueilView(AbstractView):
             run_q2(saison)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 3":
+        elif (
+            answers["Menu principal"]
+            == "Q3 - Afficher la taille moyenne des buteurs de tête"
+        ):
             saison = prompt(self.question_saison)["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q3_taille_moyenne import run_q3
 
-            run_q3(saison, champ)
+            run_q3(saison)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 4":
+        elif (
+            answers["Menu principal"]
+            == "Q4 - Afficher un classement de statistiques"
+        ):
             from project.view.q4_view import Q4View
 
             next_view = Q4View()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 5":
+        elif (
+            answers["Menu principal"]
+            == "Q5 - Afficher le classement des dispositifs les plus "
+            "utilisés"
+        ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             if saison == "Toutes les saisons réunies":
@@ -166,28 +176,60 @@ class AccueilView(AbstractView):
             run_q5(saison)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 6":
+        elif (
+            answers["Menu principal"]
+            == "Q6 - Afficher le jour qui a connu le plus de matchs nuls"
+        ):
+            answersaison = prompt(self.question_saison)
+            saison = answersaison["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
             from project.src.q6_jour_matchs_nuls import run_q6
 
-            run_q6()
+            run_q6(saison)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 7":
+        elif answers["Menu principal"] == "Q7 - Afficher l'équipe type":
             from project.view.q7_view import Q7View
 
             next_view = Q7View()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 9":
+        elif (
+            answers["Menu principal"]
+            == "Q8 - Afficher le classement des équipes avec un 11 régulier"
+        ):
+            from project.src.q8_variance_11 import run_q8
+
+            run_q8()
+            next_view = AccueilView()  # On revient au menu
+
+        elif (
+            answers["Menu principal"]
+            == "Q9 - Afficher le classement des équipes marquant plus à "
+            "l'extérieur"
+        ):
             saison = prompt(self.question_saison)["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q9_equipe_but_exterieur import run_q9
 
-            run_q9(saison, champ)
+            run_q9(saison)
             next_view = AccueilView()  # On revient au menu
 
-        elif answers["Menu principal"] == "Lancer la question 11":
+        elif (
+            answers["Menu principal"]
+            == "Q10 - Afficher l'évolution des aptitudes par catégorie d'âge"
+        ):
+            from project.src.q10_aptitudes_age import run_q10
+
+            run_q10()
+            next_view = AccueilView()  # On revient au menu
+
+        elif (
+            answers["Menu principal"]
+            == "Q11 - Afficher l'équipe ayant le pire ratio de buts/tirs "
+            "cadrés"
+        ):
             saison = prompt(self.question_saison)["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"

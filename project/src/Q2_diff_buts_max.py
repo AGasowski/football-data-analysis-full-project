@@ -20,7 +20,13 @@ def run_q2(saison):
         saison (str): Saison ciblée au format "2014/2015". Si "0", utilise
         toutes les saisons.
     """
-    print("== Résolution de la question 2 ==")
+    print("==================================================================")
+    print(
+        f"    Matchs avec la plus grande différence de buts"
+        f"{f' ({saison})' if saison != '0' else ''}"
+    )
+    print("==================================================================")
+
     match = charger_csv("data/Match.csv")
     if saison != "0":
         match = filtrer_df(match, "season", saison)
@@ -38,5 +44,6 @@ def run_q2(saison):
             "ecart",
             resume_colonne(match, "ecart", None, "max"),
             ["home_team", "home_team_goal", "away_team_goal", "away_team"],
-        )
+        ),
+        False,
     )

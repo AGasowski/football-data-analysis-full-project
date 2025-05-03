@@ -33,6 +33,35 @@ def filtrer_df(df, filtre_col=None, filtre_val=None, colonnes=None):
 
 
 def fusionner(df1, df2, col1, col2):
+    """
+    Fusionne deux DataFrames sur des colonnes spécifiées.
+
+    Paramètres
+    ----------
+    df1 : pandas.DataFrame
+        Premier DataFrame.
+    df2 : pandas.DataFrame
+        Deuxième DataFrame.
+    col1 : str
+        Nom de la colonne de df1 à utiliser pour la jointure.
+    col2 : str
+        Nom de la colonne de df2 à utiliser pour la jointure.
+
+    Retourne
+    -------
+    pandas.DataFrame
+        Résultat de la fusion des deux DataFrames.
+
+    Exemple
+    -------
+    >>> import pandas as pd
+    >>> df1 = pd.DataFrame({'A': [1, 2, 3], 'val1': ['a', 'b', 'c']})
+    >>> df2 = pd.DataFrame({'B': [3, 1, 4], 'val2': ['x', 'y', 'z']})
+    >>> fusionner(df1, df2, 'A', 'B')
+       A val1  B val2
+    0  1    a  1    y
+    1  3    c  3    x
+    """
     return pd.merge(
         df1,
         df2,
@@ -95,6 +124,57 @@ def id_championnat(nom):
         return 1
     elif nom == "Super League (Suisse)":
         return 24558
+
+
+def get_saison(df):
+    def saison_par_date(date):
+        annee = date.year
+        if date.month >= 8:
+            return f"{annee}/{annee + 1}"
+        else:
+            return f"{annee - 1}/{annee}"
+
+    df["saison"] = df["date"].apply(saison_par_date)
+    return df
+
+
+def creer_colonne_age_au_moment(df, colonne_anniv, colonne_eval):
+    """
+    Calcule l'âge d'un individu à une date donnée et ajoute une colonne 'age'
+    au DataFrame.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les colonnes de dates.
+    colonne_anniv : str
+        Le nom de la colonne contenant les dates de naissance.
+    colonne_eval : str
+        Le nom de la colonne contenant les dates auxquelles on souhaite évaluer
+        l'âge.
+
+    Retour
+    ------
+    pandas.DataFrame
+        Le DataFrame d'origine avec une nouvelle colonne 'age' (âge en années).
+
+    Notes
+    -----
+    L'âge est calculé en années entières en divisant le nombre de jours entre
+    les deux dates par 365 (approximation ne tenant pas compte des années
+    bissextiles).
+    """
+    df["age"] = (df[colonne_eval] - df[colonne_anniv]).dt.days // 365
+    return df
+
+
+def creer_tranche_age(df, col_age):
+    bins = [0, 22, 27, 32, 37, 100]
+    labels = ["18-22", "23-27", "28-32", "33-37", "38+"]
+    df["age_group"] = pd.cut(
+        df[col_age], bins=bins, labels=labels, right=False
+    )
+    return df
 
 
 # Gestion de dictionnaires

@@ -1,10 +1,6 @@
 """
-Module pour afficher le classement des équipes avec la plus grande différence
-de buts marqués à l'extérieur vs domicile.
-
-Ce module traite les données des matchs de football pour calculer et afficher
-le classement des équipes en fonction de la différence de buts marqués à
-domicile et à l'extérieur.
+Script pour afficher le classement des équipes avec la plus grande différence
+de buts marqués en moyenne à l'extérieur vs domicile.
 """
 
 from project.src.fonctions.data_loader import charger_csv
@@ -14,7 +10,6 @@ from project.src.fonctions.manipulations import (
     cles_dic,
     ratio_dic,
     name_team_dic,
-    id_championnat,
 )
 from project.src.fonctions.statistiques import compter_buts_matchs
 from project.src.fonctions.utils import (
@@ -22,7 +17,7 @@ from project.src.fonctions.utils import (
 )
 
 
-def run_q9(saison, championnat):
+def run_q9(saison):
     """
     Affiche le classement des équipes avec la plus grande différence de buts
     marqués à l'extérieur vs domicile pour une saison et un championnat donnés.
@@ -31,7 +26,10 @@ def run_q9(saison, championnat):
         saison (str): Saison ciblée
         championnat (str): Nom du championnat ciblé
     """
-    print("== Résolution de la question 9 ==")
+    print("==================================================================")
+    print("    Classement des équipes qui marquent plus à l'extérieur")
+    print(f"                        {f' ({saison})' if saison != "0" else ''}")
+    print("==================================================================")
 
     team_names = charger_csv(
         "data/Team.csv", "dict", "team_api_id", ("team_long_name")
@@ -56,9 +54,6 @@ def run_q9(saison, championnat):
     )
     if saison != "0":
         matchs = filtre_dic(matchs, 0, saison)
-    id_champ = id_championnat(championnat)
-    if id_champ != 0:
-        matchs = filtre_dic(matchs, 5, str(id_champ))
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)

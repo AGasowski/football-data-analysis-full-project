@@ -7,7 +7,7 @@ from project.src.fonctions.manipulations import filtrer_df
 
 
 # Affichage et tri
-def afficher(resultat):
+def afficher(resultat, head=True):
     """
     Affiche un DataFrame sans les index, sous forme de texte.
 
@@ -20,7 +20,7 @@ def afficher(resultat):
     -------
     None
     """
-    print(resultat.to_string(index=False))
+    print(resultat.to_string(index=False, header=head))
 
 
 def trier(data, par=None, type_data="liste", reverse=True):
@@ -45,6 +45,12 @@ def trier(data, par=None, type_data="liste", reverse=True):
     if type_data == "liste":
         data.sort(key=lambda x: x[par], reverse=reverse)
     elif type_data == "dict":
+        # Si par est un entier (on trie par la valeur du dictionnaire)
+        if isinstance(par, int):
+            return dict(
+                sorted(data.items(), key=lambda item: item[1], reverse=reverse)
+            )
+        # Si par est un itérable, on trie par les clés multiples
         return dict(
             sorted(
                 data.items(),
@@ -521,13 +527,44 @@ def terrain(df_meilleur_11):
     plt.show()
 
 
-def get_saison(df):
-    def saison_par_date(date):
-        annee = date.year
-        if date.month >= 8:
-            return f"{annee}/{annee + 1}"
-        else:
-            return f"{annee - 1}/{annee}"
+# Spécifique Q10
 
-    df["saison"] = df["date"].apply(saison_par_date)
-    return df
+
+def visualisation(age_group_avg):
+    age_group_avg.plot(kind="bar", figsize=(10, 6))
+    plt.title(
+        "Moyenne des attributs physiques par groupe d'âge "
+        "(au moment de l'évaluation)"
+    )
+    plt.ylabel("Valeur moyenne des attributs")
+    plt.xlabel("Tranche d'âge")
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.show()
+
+
+# Spécifiques Q8
+
+
+def afficher_top_clubs_regularite(df, top_n=10):
+    """Affiche les top N clubs avec les joueurs les plus réguliers."""
+    # Renommer les colonnes
+    df = df.rename(
+        columns={
+            "team_long_name": "Equipe",
+            "tech_std": "Moyenne des écarts-types des performances",
+        }
+    )
+
+    # Réinitialiser l'index pour affichage propre avec classement
+    df = df.reset_index(drop=True)
+    df.index += 1  # Le classement commence à 1
+
+    # Affichage
+    print(
+        f"Top {top_n} clubs les plus réguliers (selon les 11 joueurs les "
+        f"plus utilisés) :\n"
+    )
+    print(
+        df[["Equipe", "Moyenne des écarts-types des performances"]].head(top_n)
+    )

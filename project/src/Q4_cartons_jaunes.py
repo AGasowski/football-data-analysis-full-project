@@ -21,7 +21,9 @@ def run_q4a(saison):
     Args:
         saison (str): Saison ciblée, ex. "2014/2015"
     """
-    print("== Résolution de la question 4 ==")
+    print("==================================================================")
+    print(f"    Classement des cartons jaunes pour la saison {saison}")
+    print("==================================================================")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -40,5 +42,7 @@ def run_q4a(saison):
 
     # Étape 2 : utiliser la fonction générique
     jaunes_par_joueur = compter_actions_par_joueur(carton_jaune_dfs, "player1")
-    top_jaunes = trier_joueurs_par_actions(jaunes_par_joueur, player, 10)
+    top_jaunes = trier_joueurs_par_actions(
+        jaunes_par_joueur, player, "Nombre de cartons jaunes", 10
+    )
     print(top_jaunes)

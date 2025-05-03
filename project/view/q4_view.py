@@ -12,10 +12,10 @@ class Q4View(AbstractView):
                 "name": "Menu Q4",
                 "message": "Que souhaitez-vous faire ?",
                 "choices": [
-                    "Lancer la question 4: classement des cartons jaunes",
-                    "Lancer la question 4: classement des cartons rouges",
-                    "Lancer la question 4: classement des buteurs",
-                    "Lancer la question 4: classement des passeurs",
+                    "Q4: Classement des cartons jaunes",
+                    "Q4: Classement des cartons rouges",
+                    "Q4: Classement des buteurs",
+                    "Q4: Classement des passeurs",
                     "Retourner au menu principal",
                     "Quitter l'appli",
                 ],
@@ -43,46 +43,34 @@ class Q4View(AbstractView):
     def make_choice(self):
         answers = prompt(self.questions)
 
-        if (
-            answers["Menu Q4"]
-            == "Lancer la question 4: classement des cartons jaunes"
-        ):
+        if answers["Menu Q4"] == "Q4: Classement des cartons jaunes":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q4_cartons_jaunes import run_q4a
+            from project.src.q4_cartons_jaunes import run_q4a
 
             run_q4a(saison)
             next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q4"]
-            == "Lancer la question 4: classement des cartons rouges"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des cartons rouges":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q4_cartons_rouges import run_q4b
+            from project.src.q4_cartons_rouges import run_q4b
 
             run_q4b(saison)
             next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q4"]
-            == "Lancer la question 4: classement des buteurs"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des buteurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q4_meilleurs_buteurs import run_q4c
+            from project.src.q4_meilleurs_buteurs import run_q4c
 
             run_q4c(saison)
             next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q4"]
-            == "Lancer la question 4: classement des passeurs"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des passeurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q4_meilleurs_passeurs import run_q4d
+            from project.src.q4_meilleurs_passeurs import run_q4d
 
             run_q4d(saison)
             next_view = Q4View()  # On revient au menu

@@ -13,19 +13,20 @@ saison 2015/2016 ?}
 
 \vskip 10pt
 
-Pour réaliser cette question, nous avons codé en python pur, c'est-à-dire sans
+Pour réaliser cette question, nous avons codé en Python pur, c'est-à-dire sans
 l'aide du module pandas. Nous avons utilisé les règles officielles pour le
 classement de la Premier League. Les critères, par ordre d'importance, sont les
-suivants: le nombre de points, la différence de buts et le nombre de buts
-marqués. Nous avons voulu laisser la possibilité à l'utilisateur de choisir une
-autre saison que 2015/2016. De plus, il a la possibilité de demander le
-classement d'un autre championnat. Ce dernier point doit être précisé, puisque
-les critères utilisés pour départager deux équipes ayant le même nombre de
-point dépend du championnat. En France par exemple, si la différence de buts
-est la même, nous regardons les points obtenus lors des confrontations directes
-entre les deux équipes. Cependant, dans un souci de temps imparti, nous n'avons
-pas pu ajuster les critères en fonction des championnats et les classements
-sont réalisés selon les règles de la Premier League.
+suivants: le nombre de points, puis la différence de buts, puis le nombre de
+buts marqués. Nous avons voulu laisser la possibilité à l'utilisateur de
+choisir une autre saison que 2015/2016. De plus, il a la possibilité de
+demander le classement d'un autre championnat. Ce dernier point doit être
+précisé, puisque les critères utilisés pour départager deux équipes ayant le
+même nombre de points dépend du championnat. En France par exemple, si la
+différence de buts est la même, nous regardons les points obtenus lors des
+confrontations directes entre les deux équipes. Cependant, dans un souci de
+temps imparti, nous n'avons pas pu ajuster les critères en fonction des
+championnats et les classements sont réalisés selon les règles de la Premier
+League.
 
 \vskip 10pt
 
@@ -34,14 +35,12 @@ buts dans le jeu de données ?}
 
 \vskip 10pt
 
-Cette fois, nous avons répondu à la question en utilisant le paquet pandas. De
-plus, nous avons ajouter la possibilité pour l'utilisateur de choisir si il
-veut obtenir les matchs avec la plus grande différence de buts pour toutes les
-saisons confondues, ou bien pour une saison bien particulière.
-
+Nous avons répondu à la question en utilisant le paquet pandas. De plus, nous
+avons ajouté la possibilité pour l'utilisateur de choisir s'il veut obtenir les
+matchs avec la plus grande différence de buts pour toutes les saisons
+confondues, ou bien pour une saison bien particulière.
 
 \subsection{Questions choisies}
-
 
 \textbf{Question 3 : Quelle est la taille moyenne des joueurs ayant marqué de
 la tête ?}
@@ -51,11 +50,11 @@ la tête ?}
 Pour trouver l'intitulé de cette question, nous voulions profiter de la liberté
 que nous possédions afin de déterminer une statistique descriptive que l'on ne
 trouve pas habituellement. La taille moyenne des joueurs marquant de la tête
-semble être une statistique inutile à première vue, mais nous souhaitions
-observer si cette taille était élevée, ou bien similaire à la taille moyenne
-d'une population de joueurs de foot. Comme pour les questions précédentes, nous
-avons permis à l'utilisateur de choisir une saison en particulier ou non. De
-plus, nous l'avons traitée avec pandas.
+peut sembler anecdotique à première vue, mais nous souhaitions observer si
+cette taille était élevée, ou bien similaire à la taille moyenne d'une
+population de joueurs de foot. Comme pour les questions précédentes, nous avons
+permis à l'utilisateur de choisir une saison en particulier ou non. De plus,
+nous l'avons traitée avec pandas.
 
 \vskip 10pt
 
@@ -66,24 +65,24 @@ cartons jaunes, des cartons rouges, des buteurs et des passeurs ?}
 
 Ces quatre questions sont en réalité très similaires, d'où notre volonté de les
 rassembler en une seule question. Ce sont des statistiques très facilement
-accessibles sur les sites spécialisés puisqu'elles sont au coeur des débats
+accessibles sur les sites spécialisés puisqu'elles sont au cœur des débats
 footballistiques. Elles ont toutes été traitées avec le paquet pandas.
 L'utilisateur peut choisir la saison pour laquelle il veut afficher le
 classement en question.
 
 \vskip 10pt
 
-\textbf{Question 5 : Combien de fois ont été utilisé chaque dispositif ?}
+\textbf{Question 5 : Combien de fois chaque dispositif a-t-il été utilisé ?}
 
 \vskip 10pt
 
-Au départ, nous voulions connaître le dispositif le plus utilisé, et qui
-semblerait être le préféré des entraîneur. La réponse renvoyée était la même
-pour chaque saison: 4 2 3 1. Nous avons alors eu envie de connaître les autres
-dispositifs les plus utilisés, d'où la création de ce classement. Il est
-important de rappeler que la base de donnée ne prend pas en compte les
-changements possibles de dispositif au cours d'un match. La réalisation de
-cette question a été faite en utilisant pandas.
+Au départ, nous voulions connaître le dispositif le plus utilisé, et qui semble
+être le préféré des entraîneurs. La réponse renvoyée était la même pour chaque
+saison: 4 2 3 1. Nous avons alors eu envie de connaître les autres dispositifs
+les plus utilisés, d'où la création de ce classement. Il est important de
+rappeler que la base de données ne prend pas en compte les éventuels
+changements de dispositif au cours d'un match. La réalisation de cette question
+a été faite en utilisant pandas.
 
 \vskip 10pt
 
@@ -93,10 +92,10 @@ de matchs nuls ?}
 \vskip 10pt
 
 De nouveau, nous avions envie de chercher un résultat original. Pour cela, nous
-avons utilisé le paquet pandas. L'idée était de trouver ce jour un peu
-exceptionnel, par curiosité. Il s'agit d'un samedi , ce qui semble logique
-puisque plus de matchs y sont joués. Le paquet pandas nous a de nouveau servi
-ici.
+avons utilisé le paquet pandas. Nous cherchions à identifier un jour
+particulièrement notable, et le jour ayant connu le plus de matchs nuls était
+idéal. Il s'agit d'un samedi, ce qui semble logique puisque plus de matchs y
+sont joués. Le paquet pandas nous a de nouveau servi ici.
 
 \vskip 10pt
 
@@ -113,7 +112,7 @@ simplifier le choix des critères en fonction des postes. La méthode utilisée
 pour sélectionner un joueur à un poste est la suivante:
 
 \begin{itemize}
-    \item \textbf{Choix des critères les plus importants pour jouer à un
+    \item \textbf{Sélection des critères les plus importants pour jouer à un
     poste.} Par exemple, en ce qui concerne les défenseurs centraux, nous avons
     sélectionné des aptitudes telles que l'agressivité, l'interception, les
     tacles, la détente, la force et le marquage. Nous ne développons pas les
@@ -134,10 +133,47 @@ pour sélectionner un joueur à un poste est la suivante:
 
 \vskip 10pt
 
-L'utilisateur a ici le choix de choisir la saison pour laquelle il souhaite
-obtenir l'équipe type. Pour une visualisation plus agréable, nous avons
-modélisé un beau terrain de foot afin de placer les joueurs au bon endroit.
-Toute cette question a été réalisée à l'aide du paquet pandas. 
+L'utilisateur peut ici choisir la saison pour laquelle il souhaite obtenir
+l'équipe type. Pour une visualisation plus agréable, nous avons modélisé un
+beau terrain de foot afin de placer les joueurs au bon endroit. Toute cette
+question a été réalisée à l'aide du paquet pandas. 
+
+\vskip 10pt
+
+\textbf{Question 8 : Quelles sont les équipes qui sont les plus régulières en
+terme de performances ?}
+
+Il est intéressant de savoir si certaines équipes sont constantes dans leurs
+performances, que ça soit avec de bonnes ou moins bonnes aptitudes. Pour
+répondre à cette question, il est possible de proposer de nombreuses méthodes.
+Nous allons donc détailler la nôtre. Nous utilisons d'abord la table Matchs
+afin de connaître les 11 joueurs les plus souvent alignés pour chaque équipe et
+simplifier notre démarche. Nous utilisons ensuite la table des attributs des
+joueurs afin d'évaluer l'écart-type de ses attributs techniques à différents
+instants.
+
+Soit \( E \) un ensemble d'équipes, et pour chaque équipe \( e \in E \), soit
+\( J_e = \{j_1, j_2, \dots, j_{11}\} \) l'ensemble des 11 joueurs les plus
+souvent alignés.  
+Pour chaque joueur \( j \in J_e \), on considère un vecteur d'attributs
+techniques au cours du temps, noté \( A_j(t) \), et on calcule :
+
+\[
+\sigma_j = \frac{1}{n} \sum_{k=1}^{n} \text{écart-type}(A_j(t_k))
+\]
+
+où \( t_1, t_2, \dots, t_n \) sont les instants d'observation.
+
+Ensuite, pour chaque équipe \( e \), on calcule la moyenne des écarts-types des
+11 joueurs :
+
+\[
+\Sigma_e = \frac{1}{11} \sum_{j \in J_e} \sigma_j
+\]
+
+Une faible valeur de \( \Sigma_e \) indique que les joueurs de l’équipe \( e \)
+présentent des performances cohérentes dans le temps. Nous obtenons ainsi un
+classement des équipes selon ce critère.
 
 \vskip 10pt
 
@@ -149,12 +185,28 @@ domicile ?}
 Jouer à domicile est souvent considéré comme un avantage. Les supporters sont
 parfois appelés le 12e homme, les joueurs sont familiers avec l'environnement,
 ils n'ont pas besoin d'effectuer un long trajet. Tout semble en effet favoriser
-l'équipe qui joue à domicile. Cependant, certaines équipe ont de meilleurs
+l'équipe qui joue à domicile. Cependant, certaines équipes ont de meilleurs
 résultats à l'extérieur, et c'est ce que nous avons voulu mettre en avant dans
 cette question. Nous avons réalisé le classement en fonction de l'écart entre
 le nombre moyen de buts marqués à l'extérieur et à domicile. Nous avons étudié
 l'écart des moyennes pour que la comparaison entre les équipes soit pertinente.
-Cette fois, nous avons répondu à la question en python pur.
+Cette fois, nous avons répondu à la question en Python pur.
+
+\vskip 10pt
+
+\textbf{Question 10 : Quelle est l'évolution des attributs physiques des
+joueurs en fonction de leur âge ?}
+
+\vskip 10pt
+
+Il est intéressant d'étudier l'évolution de certaines capacités physiques en
+fonction de l'âge des joueurs. Nous pensons que l'accélération, la force et
+l'endurance sont trois facteurs qui varient fortement en fonction de l'âge,
+d'où notre choix d'étude de ceux-ci. Nous calculons ensuite la moyenne des
+attributs sélectionnés pour chaque catégorie d'âge. Le résultat de cette
+question est un graphique affichant clairement la moyenne pour chaque
+catégorie. On y voit facilement l'évolution des attributs, ce qui est plutôt
+intéressant à observer.
 
 \vskip 10pt
 
@@ -163,8 +215,16 @@ cadrés ?}
 
 \vskip 10pt
 
-L'idée était de connaître l'équipe avec le moins de résussite, par rapport à
-ses frappes cadrées. En d'autres termes, quelle équipe a du faire face à des
+L'idée était de connaître l'équipe avec le moins de réussite, par rapport à ses
+frappes cadrées. En d'autres termes, quelle équipe a dû faire face à des
 gardiens très efficaces ? L'utilisateur a de nouveau la possibilité de choisir
-la saison pour laquelle il souhaite voir cette statique. Cette question a été
-réalisée en python pur.
+la saison pour laquelle il souhaite consulter cette statistique. Cette question
+a été réalisée en Python pur.
+
+\vskip 25pt 
+
+Nous avons souhaité offrir des résultats qui allient nos connaissances
+statistiques, des choix subjectifs dans la création et la sélection des
+résultats, ainsi que de l’originalité. L’accent a été mis sur l’interactivité
+de l’utilisateur et sur une visualisation agréable des résultats, tout en
+utilisant diverses techniques pour enrichir l'expérience.
