@@ -23,7 +23,7 @@ def run_q5(saison):
     print("==================================================================")
 
     match = charger_csv("data/Match.csv")
-    if saison != 0:
+    if saison != "0":
         match = filtrer_df(match, "season", saison)
     match = filtrer_df(match, "league_id", 21518)
 

@@ -20,7 +20,7 @@ class AccueilView(AbstractView):
                     "Q5 - Afficher le meilleur dispositif",
                     "Q6 - Afficher le jour qui a connu le plus de matchs nuls",
                     "Q7 - Afficher l'équipe type",
-                    "Q8 - Afficher le classement des équipes ave un 11 "
+                    "Q8 - Afficher le classement des équipes avec un 11 "
                     "régulier",
                     "Q9 - Afficher le classement des équipes marquant plus "
                     "à l'extérieur",
@@ -177,9 +177,13 @@ class AccueilView(AbstractView):
             answers["Menu principal"]
             == "Q6 - Afficher le jour qui a connu le plus de matchs nuls"
         ):
+            answersaison = prompt(self.question_saison)
+            saison = answersaison["question saison"]
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
             from project.src.q6_jour_matchs_nuls import run_q6
 
-            run_q6()
+            run_q6(saison)
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Q7 - Afficher l'équipe type":
@@ -189,7 +193,7 @@ class AccueilView(AbstractView):
 
         elif (
             answers["Menu principal"]
-            == "Q8 - Afficher le classement des équipes ave un 11 régulier"
+            == "Q8 - Afficher le classement des équipes avec un 11 régulier"
         ):
             from project.src.q8_variance_11 import run_q8
 
@@ -204,10 +208,9 @@ class AccueilView(AbstractView):
             saison = prompt(self.question_saison)["question saison"]
             if saison == "Toutes les saisons réunies":
                 saison = "0"
-            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q9_equipe_but_exterieur import run_q9
 
-            run_q9(saison, champ)
+            run_q9(saison)
             next_view = AccueilView()  # On revient au menu
 
         elif (

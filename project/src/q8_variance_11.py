@@ -1,5 +1,6 @@
 """
-Script pour déterminer les clubs qui ont un 11 plus régulier que les autres.
+Script pour déterminer les clubs qui ont un 11 plus régulier en terme de
+performances que les autres.
 """
 
 from project.src.fonctions.data_loader import charger_csv
@@ -16,8 +17,14 @@ from project.src.fonctions.utils import afficher_top_clubs_regularite
 
 def run_q8():
     """
-    Affiche le classement des équipes avec le 11 le plus régulier.
+    Affiche le classement des équipes avec le 11 le plus régulier en terme de
+    performances. On choisit pour chaque équipe les 11 joueurs les plus
+    souvent alignés sur le terrain.
     """
+
+    print("==================================================================")
+    print("         Classement des équipes les plus régulières")
+    print("==================================================================")
     # Chargement
     player_attr = charger_csv("data/Player_Attributes.csv")
     matches = charger_csv("data/Match.csv")

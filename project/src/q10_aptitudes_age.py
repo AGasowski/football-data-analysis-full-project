@@ -23,7 +23,9 @@ def run_q10():
     """
     Calcule et affiche la moyenne des attributs physiques par tranche d'âge.
     """
-    print("== Résolution de la question 10 ==")
+    print("==================================================================")
+    print("    Evolution des aptitudes des joueurs par catégories d'âge")
+    print("==================================================================")
 
     # Charger les données
     player_attributes = charger_csv("data/Player_Attributes.csv")

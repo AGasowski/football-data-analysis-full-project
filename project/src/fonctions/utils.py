@@ -548,8 +548,23 @@ def visualisation(age_group_avg):
 
 def afficher_top_clubs_regularite(df, top_n=10):
     """Affiche les top N clubs avec les joueurs les plus réguliers."""
-    print(
-        f"Top {top_n} clubs les plus réguliers (selon 11 joueurs les "
-        f"plus utilisés) :"
+    # Renommer les colonnes
+    df = df.rename(
+        columns={
+            "team_long_name": "Equipe",
+            "tech_std": "Moyenne des écarts-types des performances",
+        }
     )
-    print(df[["team_long_name", "tech_std"]].head(top_n))
+
+    # Réinitialiser l'index pour affichage propre avec classement
+    df = df.reset_index(drop=True)
+    df.index += 1  # Le classement commence à 1
+
+    # Affichage
+    print(
+        f"Top {top_n} clubs les plus réguliers (selon les 11 joueurs les "
+        f"plus utilisés) :\n"
+    )
+    print(
+        df[["Equipe", "Moyenne des écarts-types des performances"]].head(top_n)
+    )

@@ -32,7 +32,9 @@ def run_q7(saison):
         saison (str): Saison ciblée, ex. "2007/2008". Si "0", tous les matchs
         sont pris en compte.
     """
-    print("== Résolution de la question 7 ==")
+    print("==================================================================")
+    print(f"          Equipe type de la saison {saison}")
+    print("==================================================================")
 
     # Charger le fichier CSV
     df_stats = charger_csv("data/Player_Attributes.csv")
