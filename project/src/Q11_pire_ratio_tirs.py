@@ -1,5 +1,5 @@
 """
-Module pour dentifier l'équipe avec le meilleur ratio entre les buts marqués et
+Script pour dentifier l'équipe avec le pire ratio entre les buts marqués et
 les tirs cadrés dans une saison donnée.
 """
 
@@ -21,7 +21,7 @@ def run_q11(saison, championnat):
 
     Args:
         saison (str): Saison ciblée, par exemple "2014/2015". championnat
-        (str): Nom du championnat (ex. "France", "England", etc.).
+        (str): Nom du championnat
     """
     print("== Résolution de la question 11 ==")
 

@@ -1,9 +1,5 @@
 """
-Module pour analyser les jours où il y a eu le plus de matchs nuls.
-
-Ce script transforme les dates en format lisible, filtre les matchs nuls, puis
-identifie le jour ayant connu le plus de matchs nuls parmi tous les matchs
-enregistrés.
+Script pour analyser les jours où il y a eu le plus de matchs nuls.
 """
 
 from project.src.fonctions.data_loader import charger_csv

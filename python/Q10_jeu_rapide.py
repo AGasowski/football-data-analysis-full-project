@@ -56,7 +56,8 @@ print(age_group_avg)
 # Visualisation
 age_group_avg.plot(kind="bar", figsize=(10, 6))
 plt.title(
-    "Moyenne des attributs physiques par groupe d'âge (au moment de l'évaluation)"
+    "Moyenne des attributs physiques par groupe d'âge "
+    "(au moment de l'évaluation)"
 )
 plt.ylabel("Valeur moyenne des attributs")
 plt.xlabel("Tranche d'âge")

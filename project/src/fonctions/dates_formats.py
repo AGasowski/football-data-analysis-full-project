@@ -45,6 +45,27 @@ def date_format(date):
     return date.strftime("%A %d %B %Y")
 
 
+def convertir_col_date(df, colonne):
+    """
+    Convertit une colonne d'un DataFrame en format datetime.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant la colonne à convertir.
+    colonne : str
+        Le nom de la colonne à convertir au format datetime.
+
+    Retour
+    ------
+    pandas.DataFrame
+        Le DataFrame original avec la colonne spécifiée convertie en datetime.
+
+    """
+    df[colonne] = pd.to_datetime(df[colonne])
+    return df
+
+
 # Gestion de la langue
 def date_francais():
     """

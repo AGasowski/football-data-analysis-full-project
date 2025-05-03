@@ -97,6 +97,57 @@ def id_championnat(nom):
         return 24558
 
 
+def get_saison(df):
+    def saison_par_date(date):
+        annee = date.year
+        if date.month >= 8:
+            return f"{annee}/{annee + 1}"
+        else:
+            return f"{annee - 1}/{annee}"
+
+    df["saison"] = df["date"].apply(saison_par_date)
+    return df
+
+
+def creer_colonne_age_au_moment(df, colonne_anniv, colonne_eval):
+    """
+    Calcule l'âge d'un individu à une date donnée et ajoute une colonne 'age'
+    au DataFrame.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les colonnes de dates.
+    colonne_anniv : str
+        Le nom de la colonne contenant les dates de naissance.
+    colonne_eval : str
+        Le nom de la colonne contenant les dates auxquelles on souhaite évaluer
+        l'âge.
+
+    Retour
+    ------
+    pandas.DataFrame
+        Le DataFrame d'origine avec une nouvelle colonne 'age' (âge en années).
+
+    Notes
+    -----
+    L'âge est calculé en années entières en divisant le nombre de jours entre
+    les deux dates par 365 (approximation ne tenant pas compte des années
+    bissextiles).
+    """
+    df["age"] = (df[colonne_eval] - df[colonne_anniv]).dt.days // 365
+    return df
+
+
+def creer_tranche_age(df, col_age):
+    bins = [0, 22, 27, 32, 37, 100]
+    labels = ["18-22", "23-27", "28-32", "33-37", "38+"]
+    df["age_group"] = pd.cut(
+        df[col_age], bins=bins, labels=labels, right=False
+    )
+    return df
+
+
 # Gestion de dictionnaires
 def creer_dict(nb_val):
     """

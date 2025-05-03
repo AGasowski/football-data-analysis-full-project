@@ -1,16 +1,26 @@
+"""
+Script pour générer le classement des dispositifs les plus utilisés pour une
+saison spécifique, en analysant les données de matchs à partir de fichiers CSV.
+"""
+
 from project.src.fonctions.data_loader import (
     charger_csv,
     fusionner_colonnes_en_listes,
 )
 from project.src.fonctions.manipulations import filtrer_df
-from project.src.fonctions.statistiques import resume_colonne
-from project.src.fonctions.utils import (
-    formation,
-)
+from project.src.fonctions.utils import formation, trier
 
 
 def run_q5(saison):
-    print("== Résolution de la question 5 ==")
+    """
+    Affiche le classement des dispositifs pour une saison spécifique.
+
+    Args:
+        saison (str): Saison sous forme de chaîne, ex. "2014/2015"
+    """
+    print("==================================================================")
+    print(f"    Classement des dispositifs les plus utilisés ({saison})")
+    print("==================================================================")
 
     match = charger_csv("data/Match.csv")
     if saison != 0:
@@ -47,9 +57,6 @@ def run_q5(saison):
             "away_player_Y11",
         ],
     )
-    match["ecart"] = resume_colonne(
-        match, "home_team_goal", "away_team_goal", "diff_abs"
-    )
 
     d = {}
     for i in range(len(Coordonée_home_joueur)):
@@ -62,6 +69,10 @@ def run_q5(saison):
         else:
             d[tuple(formation(Coordonée_away_joueur[i]))] += 1
 
-    classement = sorted(d.items(), key=lambda item: item[1], reverse=True)
-    for rang, (formation1, nb_occurrences) in enumerate(classement, start=1):
-        print(f"{rang}.  {formation1} - {nb_occurrences} fois")
+    classement = trier(d, par=1, type_data="dict", reverse=True)
+
+    for rank, (formation1, nb_occurrences) in enumerate(
+        classement.items(), start=1
+    ):
+        formation1 = " ".join(str(x) for x in formation1)
+        print(f"{rank:<5}{formation1:<20}{nb_occurrences} fois")

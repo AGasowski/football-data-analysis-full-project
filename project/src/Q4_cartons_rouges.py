@@ -21,7 +21,9 @@ def run_q4b(saison):
     Args:
         saison (str): Saison ciblée, ex. "2014/2015"
     """
-    print("== Résolution de la question 4 ==")
+    print("==================================================================")
+    print(f"    Classement des cartons rouges pour la saison {saison}")
+    print("==================================================================")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -40,5 +42,7 @@ def run_q4b(saison):
 
     # Étape 2 : utiliser la fonction générique
     rouges_par_joueur = compter_actions_par_joueur(carton_rouge_dfs, "player1")
-    top_rouges = trier_joueurs_par_actions(rouges_par_joueur, player, 10)
+    top_rouges = trier_joueurs_par_actions(
+        rouges_par_joueur, player, "Nombre de cartons rouges", 10
+    )
     print(top_rouges)

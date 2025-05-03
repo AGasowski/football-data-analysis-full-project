@@ -15,10 +15,10 @@ from project.src.fonctions.statistiques import (
 from project.src.fonctions.utils import (
     get_taille_joueurs,
 )
-from project.src.fonctions.manipulations import id_championnat, filtrer_df
+from project.src.fonctions.manipulations import filtrer_df
 
 
-def run_q3(saison, championnat):
+def run_q3(saison):
     """
     Calcule et affiche la taille moyenne des joueurs ayant marqué de la tête
     pour un championnat et une saison donnés.
@@ -29,7 +29,12 @@ def run_q3(saison, championnat):
 
         championnat (str): Nom du championnat ciblé.
     """
-    print("== Résolution de la question 3 ==")
+    print("==============================================================")
+    print(
+        f"    Taille moyenne des buteurs de tête"
+        f"{f' ({saison})' if saison != '0' else ''}"
+    )
+    print("==============================================================")
 
     # On importe la table match
     match = charger_csv("data/Match.csv")
@@ -41,9 +46,6 @@ def run_q3(saison, championnat):
 
     if saison != "0":
         match = filtrer_df(match, "season", saison)
-    id_champ = id_championnat(championnat)
-    if championnat != 0:
-        match = filtrer_df(match, "league_id", int(id_champ))
 
     goals_transformed = [transforme(goal_str) for goal_str in match["goal"]]
 
@@ -57,4 +59,4 @@ def run_q3(saison, championnat):
         if get_taille_joueurs(player, pid) is not None:
             header_heights.append(get_taille_joueurs(player, pid))
 
-    print(calculer_moyenne(header_heights))
+    print(f"{round(calculer_moyenne(header_heights), 2)} cm")
