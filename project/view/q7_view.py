@@ -33,63 +33,63 @@ class Q7View(AbstractView):
         if saison == "Equipe type générale (entre 2008 et 2016)":
             saison = "0"
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("0")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2008/2009":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2008/2009")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2009/2010":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2009/2010")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2010/2011":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2010/2011")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2011/2012":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2011/2012")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2012/2013":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2012/2013")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2013/2014":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2013/2014")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2014/2015":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2014/2015")
             next_view = Q7View()  # On revient au menu
 
         elif saison == "Equipe type 2015/2016":
 
-            from project.src.Q7_equipe_type_affichage import run_q7
+            from project.src.q7_equipe_type_affichage import run_q7
 
             run_q7("2015/2016")
             next_view = Q7View()  # On revient au menu

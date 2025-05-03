@@ -1,8 +1,14 @@
+"""
+Script pour sélectionner et afficher le meilleur 11 de football en formation
+4-4-2.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.dates_formats import convertir_date
 from project.src.fonctions.manipulations import (
     fusionner,
     filtrer_df,
+    get_saison,
 )
 from project.src.fonctions.utils import (
     terrain,
@@ -11,12 +17,24 @@ from project.src.fonctions.utils import (
     list_en_df,
     trouver_joueur_poste,
     calcul_scores_postes,
-    get_saison,
 )
 
 
 def run_q7(saison):
-    print("== Résolution de la question 7 ==")
+    """
+    Affiche le meilleur onze (11) de football pour une saison donnée en
+    formation 4-4-2.
+
+    Ce script sélectionne les meilleurs joueurs pour chaque poste, puis les
+    affiche dans une formation 4-4-2.
+
+    Args:
+        saison (str): Saison ciblée, ex. "2007/2008". Si "0", tous les matchs
+        sont pris en compte.
+    """
+    print("==================================================================")
+    print(f"          Equipe type de la saison {saison}")
+    print("==================================================================")
 
     # Charger le fichier CSV
     df_stats = charger_csv("data/Player_Attributes.csv")

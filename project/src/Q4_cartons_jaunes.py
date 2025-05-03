@@ -1,3 +1,8 @@
+"""
+Script pour identifier les 10 joueurs ayant reçu le plus de cartons jaunes
+durant une saison donnée, en analysant les données de matchs.
+"""
+
 from project.src.fonctions.data_loader import charger_csv, transforme
 from project.src.fonctions.statistiques import (
     compter_actions_par_joueur,
@@ -8,8 +13,17 @@ from project.src.fonctions.utils import (
 )
 
 
-def run_q2a(saison):
-    print("== Résolution de la question 2 ==")
+def run_q4a(saison):
+    """
+    Affiche les 10 joueurs ayant reçu le plus de cartons jaunes pour une saison
+    donnée.
+
+    Args:
+        saison (str): Saison ciblée, ex. "2014/2015"
+    """
+    print("==================================================================")
+    print(f"    Classement des cartons jaunes pour la saison {saison}")
+    print("==================================================================")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -28,5 +42,7 @@ def run_q2a(saison):
 
     # Étape 2 : utiliser la fonction générique
     jaunes_par_joueur = compter_actions_par_joueur(carton_jaune_dfs, "player1")
-    top_jaunes = trier_joueurs_par_actions(jaunes_par_joueur, player, 10)
+    top_jaunes = trier_joueurs_par_actions(
+        jaunes_par_joueur, player, "Nombre de cartons jaunes", 10
+    )
     print(top_jaunes)

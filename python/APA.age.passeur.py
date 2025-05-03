@@ -1,15 +1,16 @@
+
 from fonction_commune_chahid import *
-from APS import process_player_attributes,moyenne
+from APS import process_player_attributes,moyenne,process_player_attributes1
 import math
 import pandas as pd
-# Charger les données
-A=process_player_attributes("data/Player_Attributes.csv")
+A=process_player_attributes1("data/Player_Attributes.csv","data/Player.csv") 
 valeurs_interdites_saison = ["2006/2007","2016/2017"]
 A = A[~A["saison"].isin(valeurs_interdites_saison)] 
+#print(A) 
 def f(saison,id):
     s=[g for g in A["saison"]]
     id1 =[g for g in A["player_api_id"]]
-    n=[g for g in A["overall_rating"]]
+    n=[g for g in A["age"]]
     for i in range(len(s)):
         if not math.isnan(int(id)):
            if (s[i]==saison) and (int(id1[i])==int(id)):
@@ -25,9 +26,9 @@ def exo(season):
     d = {}
 
     for goal in goals_transformed:
-        if ("team" in goal.columns) and ("player1" in goal.columns):
+        if ("team" in goal.columns) and ("player2" in goal.columns):
             colonne_team = [g for g in goal["team"]]
-            colonne_player1 = [g for g in goal["player1"]]
+            colonne_player1 = [g for g in goal["player2"]]
             for i in range(len(colonne_team)):
                 if colonne_team[i] not in d:
                     d[str(colonne_team[i])] = []
@@ -46,40 +47,29 @@ def exo(season):
     return d
 
 A1 = exo("2008/2009")  # d doit être retourné par la fonction exo
-d1 = pd.DataFrame(list(A1.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d1 = pd.DataFrame(list(A1.items()), columns=["team_api_id", "age_moyen_passeur"])
 d1["saison"] = "2008/2009"
-#d1.to_excel('attribut_buteur1.xlsx', index=False)
 A2 = exo("2009/2010")  # d doit être retourné par la fonction exo
-d2 = pd.DataFrame(list(A2.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d2 = pd.DataFrame(list(A2.items()), columns=["team_api_id", "age_moyen_passeur"])
 d2["saison"] = "2009/2010"
 A3 = exo("2010/2011")  # d doit être retourné par la fonction exo
-d3 = pd.DataFrame(list(A3.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d3 = pd.DataFrame(list(A3.items()), columns=["team_api_id", "age_moyen_passeur"])
 d3["saison"] = "2010/2011"
 A4 = exo("2011/2012")  # d doit être retourné par la fonction exo
-d4 = pd.DataFrame(list(A4.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d4 = pd.DataFrame(list(A4.items()), columns=["team_api_id", "age_moyen_passeur"])
 d4["saison"] = "2011/2012"
 A5 = exo("2012/2013")  # d doit être retourné par la fonction exo
-d5 = pd.DataFrame(list(A5.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d5 = pd.DataFrame(list(A5.items()), columns=["team_api_id", "age_moyen_passeur"])
 d5["saison"] = "2012/2013" 
 A6= exo("2013/2014")  # d doit être retourné par la fonction exo
-d6 = pd.DataFrame(list(A6.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d6 = pd.DataFrame(list(A6.items()), columns=["team_api_id", "age_moyen_passeur"])
 d6["saison"] = "2013/2014"
 A7 = exo("2014/2015")  # d doit être retourné par la fonction exo
-d7 = pd.DataFrame(list(A7.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d7 = pd.DataFrame(list(A7.items()), columns=["team_api_id", "age_moyen_passeur"])
 d7["saison"] = "2014/2015"
 A8 = exo("2015/2016")  # d doit être retourné par la fonction exo
-d8 = pd.DataFrame(list(A8.items()), columns=["team_api_id", "moyenne_attributs_buteur"])
+d8 = pd.DataFrame(list(A8.items()), columns=["team_api_id", "age_moyen_passeur"])
 d8["saison"] = "2015/2016"
- 
-attribut_buteur = pd.concat([d1, d2, d3,d4,d5,d6,d7,d8], ignore_index=True)
-age_buteur=pd.read_pickle('age_buteur.pkl')
-attribut_passeur=pd.read_pickle('attribut_passeur.pkl')
-age_passeur=pd.read_pickle('age_passeur.pkl')
-but_tircadre= pd.read_pickle('but_tircadre.pkl')
-tircadre_tirnoncadre=pd.read_pickle('tircadre_tirnoncadre.pkl')
-final1= pd.merge(attribut_buteur, attribut_passeur, on=['team_api_id', 'saison'], how='outer')
-final2=pd.merge(final1, age_buteur, on=['team_api_id', 'saison'], how='outer')
-final3=pd.merge(final2, age_passeur, on=['team_api_id', 'saison'], how='outer')
-final4=pd.merge(final3, but_tircadre, on=['team_api_id', 'saison'], how='outer')
-Last_dance=pd.merge(final4, tircadre_tirnoncadre, on=['team_api_id', 'saison'], how='outer')
-print(Last_dance)
+
+age_passeur=pd.concat([d1,d2,d3,d4,d5,d6,d7,d8], ignore_index=True)
+age_passeur.to_pickle('age_passeur.pkl')

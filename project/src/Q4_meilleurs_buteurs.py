@@ -1,3 +1,8 @@
+"""
+Script pour identifier les 10 meilleurs buteurs d'une saison donnée,
+à partir des données de matchs et de joueurs.
+"""
+
 from project.src.fonctions.data_loader import charger_csv, transforme
 from project.src.fonctions.statistiques import (
     compter_actions_par_joueur,
@@ -5,8 +10,16 @@ from project.src.fonctions.statistiques import (
 )
 
 
-def run_q2c(saison):
-    print("== Résolution de la question 2 ==")
+def run_q4c(saison):
+    """
+    Affiche les 10 meilleurs buteurs pour une saison donnée.
+
+    Args:
+        saison (str): Saison ciblée, ex. "2014/2015"
+    """
+    print("==================================================================")
+    print(f"    Classement des buteurs pour la saison {saison}")
+    print("==================================================================")
 
     # Charger les données
     match = charger_csv("data/Match.csv")
@@ -25,7 +38,9 @@ def run_q2c(saison):
     buts_par_joueur = compter_actions_par_joueur(goals_transformed, "player1")
 
     # Obtenir le top 10 des buteurs
-    top_buteurs = trier_joueurs_par_actions(buts_par_joueur, player, top_n=10)
+    top_buteurs = trier_joueurs_par_actions(
+        buts_par_joueur, player, "Nombre de buts", 10
+    )
 
     # Afficher le classement
     print(top_buteurs)

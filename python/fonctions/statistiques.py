@@ -233,7 +233,7 @@ def get_scorers_by_subtype(goals_df_list, subtype):
     return scorers
 
 
-def trier_joueurs_par_actions(compteur, player_df, nom_action, top_n=10):
+def trier_joueurs_par_actions(compteur, player_df, top_n=10):
     """
     Trie les joueurs selon leur nombre d'actions (but, passe, etc.) et ajoute
     leur nom.
@@ -242,7 +242,7 @@ def trier_joueurs_par_actions(compteur, player_df, nom_action, top_n=10):
     player_df (DataFrame) : Table des joueurs (doit contenir player_api_id et
     player_name) - top_n (int) : Nombre de joueurs à afficher (default = 10)
 
-    Retour : - DataFrame : Classement des joueurs avec nom et nombre d'actions
+    Retour : - DataFrame : Classement des joueurs
     """
     # Convertir le dictionnaire en DataFrame
     data = [
@@ -251,7 +251,7 @@ def trier_joueurs_par_actions(compteur, player_df, nom_action, top_n=10):
     ]
     df = pd.DataFrame(data)
 
-    # Fusion avec les noms des joueurs
+    # Utiliser la fonction fusionner pour ajouter les noms des joueurs
     fusion = fusionner(
         df,
         player_df[["player_api_id", "player_name"]],
@@ -260,91 +260,8 @@ def trier_joueurs_par_actions(compteur, player_df, nom_action, top_n=10):
     )
 
     # Trier par nombre d’actions décroissant
-    fusion = fusion.sort_values(by="nb_actions", ascending=False).reset_index(
+    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(
         drop=True
     )
 
-    # Garder uniquement les colonnes utiles et renommer
-    fusion = fusion[["player_name", "nb_actions"]].copy()
-    fusion.columns = ["Joueur", nom_action]
-
-    # Réinitialiser l'index pour faire un classement de 1 à top_n
-    fusion.index += 1
-
-    return fusion.head(top_n)
-
-
-def nettoyer_attributs_techniques(df, colonnes):
-    """Supprime les lignes avec des valeurs manquantes sur les attributs
-    techniques."""
-    return df.dropna(subset=colonnes)
-
-
-def calculer_ecart_type_technique_par_joueur(df, colonnes):
-    """Ajoute une colonne 'tech_std' : écart-type des attributs techniques par
-    ligne."""
-    df["tech_std"] = df[colonnes].std(axis=1)
-    return df
-
-
-def moyenne_ecart_type_par_joueur(df):
-    """Calcule la moyenne des écarts-types pour chaque joueur."""
-    return df.groupby("player_api_id")["tech_std"].mean().reset_index()
-
-
-def construire_compteur_joueurs(matches):
-    """Construit un dictionnaire : club → nombre d’apparitions de chaque
-    joueur."""
-    club_player_counts = {}
-    for _, row in matches.iterrows():
-        home_team = row["home_team_api_id"]
-        away_team = row["away_team_api_id"]
-
-        # Initialisation
-        if home_team not in club_player_counts:
-            club_player_counts[home_team] = {}
-        if away_team not in club_player_counts:
-            club_player_counts[away_team] = {}
-
-        for i in range(1, 12):
-            hp = row[f"home_player_{i}"]
-            ap = row[f"away_player_{i}"]
-
-            if pd.notna(hp):
-                if hp not in club_player_counts[home_team]:
-                    club_player_counts[home_team][hp] = 0
-                club_player_counts[home_team][hp] += 1
-
-            if pd.notna(ap):
-                if ap not in club_player_counts[away_team]:
-                    club_player_counts[away_team][ap] = 0
-                club_player_counts[away_team][ap] += 1
-
-    return club_player_counts
-
-
-def extraire_top_joueurs_par_club(compteur, top_n=11):
-    """Extrait les top N joueurs les plus utilisés pour chaque club."""
-    club_player_pairs = []
-    for club_id, joueurs in compteur.items():
-        joueurs_tries = sorted(
-            joueurs.items(), key=lambda x: x[1], reverse=True
-        )[:top_n]
-        for player_id, _ in joueurs_tries:
-            club_player_pairs.append((club_id, player_id))
-    return pd.DataFrame(
-        club_player_pairs, columns=["team_api_id", "player_api_id"]
-    )
-
-
-def calculer_consistance_club(df_players, player_std_by_player, teams):
-    """Calcule la moyenne des écarts-types pour chaque club, et ajoute le nom
-    du club."""
-    merged = df_players.merge(player_std_by_player, on="player_api_id")
-    club_consistency = (
-        merged.groupby("team_api_id")["tech_std"].mean().reset_index()
-    )
-    club_consistency = club_consistency.merge(
-        teams[["team_api_id", "team_long_name"]], on="team_api_id"
-    )
-    return club_consistency.sort_values("tech_std")
+    return result.head(top_n)

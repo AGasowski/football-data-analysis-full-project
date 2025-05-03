@@ -2,20 +2,20 @@ from project.view.abstract_view import AbstractView
 from InquirerPy import prompt
 
 
-class Q2View(AbstractView):
+class Q4View(AbstractView):
 
     def __init__(self):
         super().__init__()
         self.questions = [
             {
                 "type": "list",
-                "name": "Menu Q2",
+                "name": "Menu Q4",
                 "message": "Que souhaitez-vous faire ?",
                 "choices": [
-                    "Lancer la question 2: classement des cartons jaunes",
-                    "Lancer la question 2: classement des cartons rouges",
-                    "Lancer la question 2: classement des buteurs",
-                    "Lancer la question 2: classement des passeurs",
+                    "Q4: Classement des cartons jaunes",
+                    "Q4: Classement des cartons rouges",
+                    "Q4: Classement des buteurs",
+                    "Q4: Classement des passeurs",
                     "Retourner au menu principal",
                     "Quitter l'appli",
                 ],
@@ -43,59 +43,47 @@ class Q2View(AbstractView):
     def make_choice(self):
         answers = prompt(self.questions)
 
-        if (
-            answers["Menu Q2"]
-            == "Lancer la question 2: classement des cartons jaunes"
-        ):
+        if answers["Menu Q4"] == "Q4: Classement des cartons jaunes":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q2_cartons_jaunes import run_q2a
+            from project.src.q4_cartons_jaunes import run_q4a
 
-            run_q2a(saison)
-            next_view = Q2View()  # On revient au menu
+            run_q4a(saison)
+            next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q2"]
-            == "Lancer la question 2: classement des cartons rouges"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des cartons rouges":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q2_cartons_rouges import run_q2b
+            from project.src.q4_cartons_rouges import run_q4b
 
-            run_q2b(saison)
-            next_view = Q2View()  # On revient au menu
+            run_q4b(saison)
+            next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q2"]
-            == "Lancer la question 2: classement des buteurs"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des buteurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q2_meilleurs_buteurs import run_q2c
+            from project.src.q4_meilleurs_buteurs import run_q4c
 
-            run_q2c(saison)
-            next_view = Q2View()  # On revient au menu
+            run_q4c(saison)
+            next_view = Q4View()  # On revient au menu
 
-        elif (
-            answers["Menu Q2"]
-            == "Lancer la question 2: classement des passeurs"
-        ):
+        elif answers["Menu Q4"] == "Q4: Classement des passeurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.Q2_meilleurs_passeurs import run_q2d
+            from project.src.q4_meilleurs_passeurs import run_q4d
 
-            run_q2d(saison)
-            next_view = Q2View()  # On revient au menu
+            run_q4d(saison)
+            next_view = Q4View()  # On revient au menu
 
-        elif answers["Menu Q2"] == "Retourner au menu principal":
+        elif answers["Menu Q4"] == "Retourner au menu principal":
             from project.view.accueil_view import AccueilView
 
             return AccueilView()  # On revient au menu principal
 
-        elif answers["Menu Q2"] == "Quitter l'appli":
+        elif answers["Menu Q4"] == "Quitter l'appli":
             next_view = None
 
         return next_view
 
     def display_info(self):
-        print(" MENU Question 2".center(80, "="))
+        print(" MENU Question 4".center(80, "="))
