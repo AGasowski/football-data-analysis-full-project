@@ -150,10 +150,30 @@ Nous allons donc détailler la nôtre. Nous utilisons d'abord la table Matchs
 afin de connaître les 11 joueurs les plus souvent alignés pour chaque équipe et
 simplifier notre démarche. Nous utilisons ensuite la table des attributs des
 joueurs afin d'évaluer l'écart-type de ses attributs techniques à différents
-instants. Puis nous calculons la moyenne de ces écarts-types pour chaque
-joueur. Nous calculons ensuite la moyenne des écarts-types pour chaque équipe,
-en considérant les 11 joueurs jouant le plus. Nous obtenons alors les équipes
-dont les joueurs ont des performances plutôt cohérentes dans le temps.
+instants.
+
+Soit \( E \) un ensemble d'équipes, et pour chaque équipe \( e \in E \), soit
+\( J_e = \{j_1, j_2, \dots, j_{11}\} \) l'ensemble des 11 joueurs les plus
+souvent alignés.  
+Pour chaque joueur \( j \in J_e \), on considère un vecteur d'attributs
+techniques au cours du temps, noté \( A_j(t) \), et on calcule :
+
+\[
+\sigma_j = \frac{1}{n} \sum_{k=1}^{n} \text{écart-type}(A_j(t_k))
+\]
+
+où \( t_1, t_2, \dots, t_n \) sont les instants d'observation.
+
+Ensuite, pour chaque équipe \( e \), on calcule la moyenne des écarts-types des
+11 joueurs :
+
+\[
+\Sigma_e = \frac{1}{11} \sum_{j \in J_e} \sigma_j
+\]
+
+Une faible valeur de \( \Sigma_e \) indique que les joueurs de l’équipe \( e \)
+présentent des performances cohérentes dans le temps. Nous obtenons ainsi un
+classement des équipes selon ce critère.
 
 \vskip 10pt
 

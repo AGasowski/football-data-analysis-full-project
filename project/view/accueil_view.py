@@ -17,7 +17,8 @@ class AccueilView(AbstractView):
                     "de buts",
                     "Q3 - Afficher la taille moyenne des buteurs de tête",
                     "Q4 - Afficher un classement de statistiques",
-                    "Q5 - Afficher le meilleur dispositif",
+                    "Q5 - Afficher le classement des dispositifs les plus "
+                    "utilisés",
                     "Q6 - Afficher le jour qui a connu le plus de matchs nuls",
                     "Q7 - Afficher l'équipe type",
                     "Q8 - Afficher le classement des équipes avec un 11 "
@@ -162,7 +163,9 @@ class AccueilView(AbstractView):
             next_view = Q4View()  # On revient au menu
 
         elif (
-            answers["Menu principal"] == "Q5 - Afficher le meilleur dispositif"
+            answers["Menu principal"]
+            == "Q5 - Afficher le classement des dispositifs les plus "
+            "utilisés"
         ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
