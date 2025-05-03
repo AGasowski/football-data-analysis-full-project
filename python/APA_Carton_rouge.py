@@ -39,7 +39,7 @@ def carton(season, couleur):  # couleur : str
             {
                 "team_api_id": int(team_id),
                 "season": season,
-                f"{couleur} cards_per_match": ratio,
+                f"{couleur}_cards_per_match": ratio,
                 "match_count": nb_matches,
             }
         )
@@ -67,4 +67,11 @@ def carton_toute_saison(couleur):
     return df_final
 
 
-print(carton_toute_saison("y"))
+carton_jaune_df = carton_toute_saison("y")
+carton_rouge_df = carton_toute_saison("r")
+carton_df = fusionner(
+    carton_jaune_df,
+    carton_rouge_df,
+    ["team_api_id", "season"],
+    ["team_api_id", "season"],
+)
