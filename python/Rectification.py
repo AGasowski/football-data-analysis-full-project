@@ -21,4 +21,5 @@ for col in colonnes_a_remplir:
 df= df.drop(columns=['saison_num'])  # plus nécessaire
 df= df.sort_values(by=['saison', 'team_api_id']).reset_index(drop=True)
 df.to_pickle('last_dance.pkl')
+print(df)
 
