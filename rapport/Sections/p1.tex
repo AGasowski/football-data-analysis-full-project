@@ -4,11 +4,32 @@
 
 Pour réaliser notre travail, nous avons utilisé une base de données
 relationnelle composée de plusieurs tables au format CSV. Celle-ci regroupe des
-données sur le football européen, allant de 2008 à 2016. Les différentes tables
-qui la compose sont: 
+données sur le football européen, allant de 2008 à 2016. Par souci de clarté,
+nous n'avons pas listé l'ensemble des champs de chaque table.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth, keepaspectratio]{Images/schema_relationnel2.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Schéma relationnel \\
+    \textit{Note de lecture : Une équipe peut jouer plusieurs matchs
+    (cardinalité 1,N), mais chaque match ne peut avoir qu'une seule équipe à
+    domicile (cardinalité 1,1).} \\
+    \textit{Réalisé sur dbdiagram.io}}
+    \end{centering}
+\end{figure}
+
+\vskip 10pt
+
+Les différentes tables qui composent notre base de données sont : 
+
+\vskip 10pt
+
 \begin{itemize}
     \item \textbf{Country} : Table de référence listant les pays. Elle associe
-    un identifiant à un nom de pays.
+    un identifiant unique à chaque pays, facilitant ainsi les relations avec
+    d'autres tables.
     \item \textbf{League} : Contient les championnats, en lien avec un pays.
     Chaque ligue a un nom et une clé étrangère vers \textit{Country}.
     \item \textbf{Match} : Table centrale regroupant les rencontres entre
@@ -28,20 +49,9 @@ qui la compose sont:
     imbriquées dans un champ XML de la table principale Match. Plus
     précisément, la colonne goal contient, pour chaque match, un bloc XML
     décrivant les événements de but (joueur, minute, type de but, équipe,
-    etc.). Ici, nous ne représentons que la table Goal, mais il en existe plein
-    d'autres de même nature telles que Shoton, Shotoff, Foulcommit, Card,
-    Cross, Corner ou Possession.
+    etc.). Ici, nous ne représentons que la table Goal, mais d'autres tables de
+    même nature existent également, comme Shoton, Shotoff, Foulcommit, Card,
+    Cross, Corner, et Possession.
 \end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth, keepaspectratio]{Images/schema_relationnel2.png}
-    \begin{centering}
-        \captionsetup{justification=centering}
-    \caption{Schéma relationnel \\
-    \textit{Note de lecture : xxxxxxxxxxxxx.} \\
-    \textit{Réalisé sur dbdiagram.io}}
-    \end{centering}
-\end{figure}
 
 \vskip 10pt

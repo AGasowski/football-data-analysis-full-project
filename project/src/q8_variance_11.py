@@ -27,7 +27,7 @@ def run_q8():
     print("==================================================================")
     # Chargement
     player_attr = charger_csv("data/Player_Attributes.csv")
-    matches = charger_csv("data/Match.csv")
+    matchs = charger_csv("data/Match.csv")
     teams = charger_csv("data/Team.csv")
 
     # Attributs techniques utilisés
@@ -48,7 +48,7 @@ def run_q8():
     )
     player_std_by_player = moyenne_ecart_type_par_joueur(player_attr)
 
-    compteur = construire_compteur_joueurs(matches)
+    compteur = construire_compteur_joueurs(matchs)
     club_player_df = extraire_top_joueurs_par_club(compteur)
     club_consistency = calculer_consistance_club(
         club_player_df, player_std_by_player, teams

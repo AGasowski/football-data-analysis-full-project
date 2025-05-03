@@ -565,6 +565,4 @@ def afficher_top_clubs_regularite(df, top_n=10):
         f"Top {top_n} clubs les plus réguliers (selon les 11 joueurs les "
         f"plus utilisés) :\n"
     )
-    print(
-        df[["Equipe", "Moyenne des écarts-types des performances"]].head(top_n)
-    )
+    print(df[["Equipe", "Moyenne des écarts-types des attributs"]].head(top_n))
