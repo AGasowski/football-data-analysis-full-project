@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from collections import defaultdict
-from manipulations import (
+from project.src.fonctions.manipulations import (
     filtrer_df,
     fusionner,
     id_championnat,
@@ -12,6 +12,10 @@ from manipulations import (
     ratio_dic,
     cle_extreme,
     appliquer_fonction_aux_valeurs,
+    creer_tranche_age,
+    id_en_nom,
+    get_saison,
+    creer_colonne_age_au_moment,
 )
 
 
@@ -100,3 +104,74 @@ def test_appliquer_fonction_aux_valeurs_doublement():
     d = {"a": 1, "b": 2}
     result = appliquer_fonction_aux_valeurs(d, lambda x: x * 2)
     assert result == {"a": 2, "b": 4}
+
+
+def test_id_championnat_inconnu():
+    assert id_championnat("Championnat Inconnu") is None
+
+
+def test_id_en_nom_substitution():
+    match_df = pd.DataFrame(
+        {"home_team_api_id": [1, 2], "away_team_api_id": [2, 3]}
+    )
+    team_df = pd.DataFrame(
+        {"team_api_id": [1, 2], "team_long_name": ["PSG", "OM"]}
+    )
+    id_en_nom(match_df, team_df)
+    assert list(match_df.columns) == ["home_team", "away_team"]
+    assert match_df["home_team"].tolist() == ["PSG", "OM"]
+    assert match_df["away_team"].tolist() == ["OM", 3]
+
+
+def test_get_saison():
+    df = pd.DataFrame({"date": pd.to_datetime(["2020-09-15", "2021-05-10"])})
+    result = get_saison(df)
+    assert result["saison"].tolist() == ["2020/2021", "2020/2021"]
+
+
+def test_creer_colonne_age_au_moment():
+    df = pd.DataFrame(
+        {
+            "naissance": pd.to_datetime(["2000-01-01"]),
+            "eval": pd.to_datetime(["2020-01-01"]),
+        }
+    )
+    result = creer_colonne_age_au_moment(df, "naissance", "eval")
+    assert result["age"].iloc[0] == 20
+
+
+def test_creer_tranche_age():
+    df = pd.DataFrame({"age": [20, 25, 30, 35, 40]})
+    result = creer_tranche_age(df, "age")
+    assert result["age_group"].tolist() == [
+        "18-22",
+        "23-27",
+        "28-32",
+        "33-37",
+        "38+",
+    ]
+
+
+def test_filtrer_df_filtre_col_sans_valeur():
+    df = pd.DataFrame({"A": [1, 2], "B": ["x", "y"]})
+    # filtre_col est fourni mais filtre_val est None
+    result = filtrer_df(df, filtre_col="A", filtre_val=None)
+    pd.testing.assert_frame_equal(result, df)
+
+
+@pytest.mark.parametrize(
+    "nom, attendu",
+    [
+        ("Premier League (Angleterre)", 1729),
+        ("Bundesliga (Allemagne)", 7809),
+        ("Serie A (Italie)", 10257),
+        ("Liga BBVA (Espagne)", 21518),
+        ("Eredivisie (Pays-Bas)", 13274),
+        ("Liga ZON Sagres (Portugal)", 17642),
+        ("Ekstraklasa (Pologne)", 15722),
+        ("Jupiler League (Belgique)", 1),
+        ("Super League (Suisse)", 24558),
+    ],
+)
+def test_id_championnat_complet(nom, attendu):
+    assert id_championnat(nom) == attendu

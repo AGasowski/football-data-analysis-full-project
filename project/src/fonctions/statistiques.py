@@ -56,8 +56,7 @@ def resume_colonne(df, col_a, col_b=None, operation="max"):
     if operation == "max":
         return df[col_a].max()
     elif operation == "min":
-        idx_min = df[col_b].idxmin()
-        return df.loc[idx_min, col_a]
+        return df[col_a].min()
     elif operation == "diff_abs":
         return abs(df[col_a] - df[col_b])
     else:
@@ -130,7 +129,7 @@ def compter_buts_matchs(dic, goals, ind_team, ind_goal):
         if team in goals:
             goals[team][0] += goal
         else:
-            goals[team][0] = goal
+            goals[team] = [goal, 0]
         goals[team][1] += 1
     return goals
 

@@ -29,7 +29,8 @@ def charger_csv(chemin, mode="dataframe", cle_id=None, *noms_champs):
     pd.DataFrame ou dict
     """
     if mode == "dataframe":
-        return pd.read_csv(chemin)
+        df = pd.read_csv(chemin)
+        return df
     elif mode == "dict" and cle_id:
         data_dict = {}
         with open(chemin, mode="r", encoding="utf-8") as file:
@@ -84,12 +85,11 @@ def transforme(X):
     for value in root.findall("value"):
         entry = {
             child.tag: child.text for child in value if child.tag != "stats"
-        }  # Exclure stats pour l'instant
-        stats = value.find("stats")  # Extraire les stats
+        }
+        stats = value.find("stats")
         if stats is not None:
             entry.update({f"stats_{child.tag}": child.text for child in stats})
             data.append(entry)
-    # Convertir en DataFrame
     df = pd.DataFrame(data)
     return df
 
