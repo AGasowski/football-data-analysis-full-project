@@ -98,35 +98,75 @@ y_test = test[["home_team_goal", "away_team_goal"]]
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
+moyennes = pd.Series(scaler.mean_, index=X_train.columns, name="Moyenne")
+
+# Écarts-types
+ecarts_type = pd.Series(scaler.scale_, index=X_train.columns, name="Écart-type")
 
 # Étape 5 : entraînement
 model = LinearRegression()
 model.fit(X_train_scaled, y_train)
 
-# Étape 6 : prédiction sur test set
-y_pred = model.predict(X_test_scaled)
-print(len(y_pred))
-# Étape 7 : évaluation
+
+def fonction(id1, id2, df_base):
+    d = df_base[(df_base["home_team_api_id"] == id1) & (df_base["away_team_api_id"] == id2)]
+    return d[features]
+df_2014 = df_match_clean[df_match_clean["saison"] == "2014/2015"].copy()
+df_2015 = df_match_clean[df_match_clean["saison"] == "2015/2016"].copy()
+classement = []
+
+for _, row in df_2015.iterrows():
+    id1 = row["home_team_api_id"]
+    id2 = row["away_team_api_id"]
+    league_id = row["league_id"]
+
+    X_input = fonction(id1, id2, df_2015)
+    if X_input.empty:
+        continue  # Skip if match not found (shouldn’t happen here)
+
+    X_scaled = (X_input - moyennes) / ecarts_type
+    pred = model.predict(X_scaled)[0]
+    home_goals, away_goals = pred
+    home_goals=round(home_goals, 0)
+    away_goals=round(away_goals, 0)
+    if home_goals > away_goals:
+        points_home, points_away = 3, 0
+    elif home_goals < away_goals:
+        points_home, points_away = 0, 3
+    else:
+        points_home = points_away = 1
+
+    classement.append({
+        "team_api_id": id1,
+        "league_id": league_id,
+        "points": points_home,
+        "but_marques": home_goals,
+        "but_encaisses": away_goals,
+    })
+    classement.append({
+        "team_api_id": id2,
+        "league_id": league_id,
+        "points": points_away,
+        "but_marques": away_goals,
+        "but_encaisses": home_goals,
+    })
+
+df_classement = pd.DataFrame(classement)
+df_resultats = df_classement.groupby(["league_id", "team_api_id"]).agg(
+    points_total=("points", "sum"),
+    buts_marques=("but_marques", "sum"),
+    buts_encaisses=("but_encaisses", "sum")
+).reset_index()
+
+df_resultats = df_resultats.sort_values(["league_id", "points_total"], ascending=[True, False])
+print(df_resultats[df_resultats["league_id"]==7809])
+
+#y_pred=model.predict((fonction(8633,10205)-moyennes)/(ecarts_type))
+#print(y_pred)
+'''
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 print("MSE :", mse)
 print("R² :", r2)
-
-
-# Exemple : moyenne des confrontations où 8633 est à domicile et 8634 à l’extérieur
-df_sample = df_match_clean[
-    (df_match_clean["home_team_api_id"] == 8633)
-    & (df_match_clean["away_team_api_id"] == 10205)
-]
-
-# Moyenne des features de ces matchs
-X_input = df_sample[features]
-# Standardisation avec le scaler déjà entraîné
-X_input_scaled = scaler.transform(X_input)
-
-# Prédiction
-prediction = model.predict(X_input_scaled)
-print(prediction)
-home_goals, away_goals = prediction[1]
-print(f"Score prédit : {home_goals:.1f} - {away_goals:.1f}")
+'''
