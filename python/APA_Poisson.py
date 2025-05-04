@@ -3,6 +3,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.linear_model import PoissonRegressor
 
 df_equipe = pd.read_excel("stats_equipes.xlsx")
 df_match = pd.read_excel("match.xlsx")
@@ -47,7 +48,11 @@ features = [
     "ratio_but_tir_cadre_h",
     "ratio_tir_cadre_tir_non_cadre_h",
     "y_cards_per_match_h",
+    "match_count_x_h",
     "r_cards_per_match_h",
+    "match_count_y_h",
+    "nb_scorers_h",
+    "nb_assisters_h",
     "nb_unique_contributors_h",
     "buildUpPlaySpeed_h",
     "buildUpPlayDribbling_h",
@@ -64,7 +69,11 @@ features = [
     "ratio_but_tir_cadre_a",
     "ratio_tir_cadre_tir_non_cadre_a",
     "y_cards_per_match_a",
+    "match_count_x_a",
     "r_cards_per_match_a",
+    "match_count_y_a",
+    "nb_scorers_a",
+    "nb_assisters_a",
     "nb_unique_contributors_a",
     "buildUpPlaySpeed_a",
     "buildUpPlayDribbling_a",
@@ -76,48 +85,50 @@ features = [
     "defenceTeamWidth_a",
 ]
 
-
-# Étape 1 : nettoyage
 df_match_clean = df_match.dropna()
 
-# Étape 2 : X et y
+
+# Variables cibles
+y_home = df_match_clean["home_team_goal"]
+y_away = df_match_clean["away_team_goal"]
+
 X = df_match_clean[features]
-y = df_match_clean[["home_team_goal", "away_team_goal"]]
 
-# Étape 3 : train/test split
-train = df_match_clean[df_match_clean["saison"] < "2014/2015"]
-test = df_match_clean[df_match_clean["saison"] == "2014/2015"]
+# Séparer les données pour entraîner/évaluer
+X_train, X_test, y_home_train, y_home_test = train_test_split(
+    X, y_home, test_size=0.2, random_state=42
+)
+_, _, y_away_train, y_away_test = train_test_split(
+    X, y_away, test_size=0.2, random_state=42
+)
 
-X_train = train[features]
-y_train = train[["home_team_goal", "away_team_goal"]]
-
-X_test = test[features]
-y_test = test[["home_team_goal", "away_team_goal"]]
-
-# Étape 4 : standardisation
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Étape 5 : entraînement
-model = LinearRegression()
-model.fit(X_train_scaled, y_train)
+# Modèle pour les buts de l'équipe à domicile
+model_home = PoissonRegressor(alpha=1e-12, max_iter=300)
+model_home.fit(X_train_scaled, y_home_train)
 
-# Étape 6 : prédiction sur test set
-y_pred = model.predict(X_test_scaled)
-print(len(y_pred))
-# Étape 7 : évaluation
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+# Modèle pour les buts de l'équipe à l'extérieur
+model_away = PoissonRegressor(alpha=1e-12, max_iter=300)
+model_away.fit(X_train_scaled, y_away_train)
 
-print("MSE :", mse)
-print("R² :", r2)
+y_home_pred = model_home.predict(X_test_scaled)
+y_away_pred = model_away.predict(X_test_scaled)
+
+# MSE
+print("MSE home:", mean_squared_error(y_home_test, y_home_pred))
+print("MSE away:", mean_squared_error(y_away_test, y_away_pred))
+
+# R²
+print("R² home:", r2_score(y_home_test, y_home_pred))
+print("R² away:", r2_score(y_away_test, y_away_pred))
 
 
-# Exemple : moyenne des confrontations où 8633 est à domicile et 8634 à l’extérieur
 df_sample = df_match_clean[
     (df_match_clean["home_team_api_id"] == 8633)
-    & (df_match_clean["away_team_api_id"] == 10205)
+    & (df_match_clean["away_team_api_id"] == 8634)
 ]
 
 # Moyenne des features de ces matchs
@@ -126,7 +137,7 @@ X_input = df_sample[features]
 X_input_scaled = scaler.transform(X_input)
 
 # Prédiction
-prediction = model.predict(X_input_scaled)
-print(prediction)
-home_goals, away_goals = prediction[1]
+prediction_home = model_home.predict(X_input_scaled)
+prediction_away = model_away.predict(X_input_scaled)
+home_goals, away_goals = prediction_home[0], prediction_away[0]
 print(f"Score prédit : {home_goals:.1f} - {away_goals:.1f}")
