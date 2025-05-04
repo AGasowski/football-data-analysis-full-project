@@ -31,7 +31,7 @@ def run_q1(saison, championnat):
         "data/Team.csv", "dict", "team_api_id", "team_long_name"
     )
 
-    # Lecture du fichier des matchs et filtrage pour l'année 2014
+    # Lecture du fichier des matchs
     matchs = charger_csv(
         "data/Match.csv",
         "dict",
@@ -53,12 +53,18 @@ def run_q1(saison, championnat):
 
     stats = saison_equipe(matchs)
 
-    classement = sorted(stats.items(), key=lambda x: x[1][0], reverse=True)
+    # Calcul du classement : Pts, Diff. Buts, Buts marqués
+    classement = sorted(
+        stats.items(),
+        key=lambda x: (x[1][0], x[1][1] - x[1][2], x[1][1]),  # Pts, DB, BM
+        reverse=True,
+    )
 
     # En-tête
-    print(f"{'Équipe':<30} {'Pts':<5} {'BM':<5} {'BE':<5}")
+    print(f"{'Équipe':<30} {'Pts':<5} {'DB':<5} {'BM':<5}")
 
     # Affichage
     for team_id, (points, scored, conceded) in classement:
         nom = name_team_dic(team_names, team_id)
-        print(f"{nom:<30} {points:<5} {scored:<5} {conceded:<5}")
+        db = scored - conceded
+        print(f"{nom:<30} {points:<5} {db:<5} {scored:<5}")
