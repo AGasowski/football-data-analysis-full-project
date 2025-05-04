@@ -40,7 +40,6 @@ df_match = df_match.rename(
 )
 
 features = [
-    features = [
     "moyenne_attributs_buteur_h",
     "moyenne_attributs_passeur_h",
     "age_moyen_buteur_h",
@@ -84,48 +83,54 @@ features = [
     "defenceAggression_a",
     "defenceTeamWidth_a",
 ]
-]
+
+
+# Étape 1 : nettoyage
 df_match_clean = df_match.dropna()
 
+# Étape 2 : X et y
 X = df_match_clean[features]
 y = df_match_clean[["home_team_goal", "away_team_goal"]]
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
 
-
-# Puis tu continues normalement :
+# Étape 3 : train/test split
 X_train, X_test, y_train, y_test = train_test_split(
-    X_scaled, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42
 )
 
+# Étape 4 : standardisation
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Étape 5 : entraînement
 model = LinearRegression()
-model.fit(X_train, y_train)
-# print("Coefficients :", model.coef_)
-# print("Intercept :", model.intercept_)
-y_pred = model.predict(X_test)
-# print(y_pred)
-# print("MSE :", mean_squared_error(y_test, y_pred))
-# print("R² :", r2_score(y_test, y_pred))
+model.fit(X_train_scaled, y_train)
+
+# Étape 6 : prédiction sur test set
+y_pred = model.predict(X_test_scaled)
+
+# Étape 7 : évaluation
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("MSE :", mse)
+print("R² :", r2)
 
 
-df_historique = df_match_clean[
-    (
-        (df_match_clean["home_team_api_id"] == 8633)
-        & (df_match_clean["away_team_api_id"] == 8634)
-    )
-    | (
-        (df_match_clean["home_team_api_id"] == 8634)
-        & (df_match_clean["away_team_api_id"] == 8633)
-    )
-]
-
+# Exemple : moyenne des confrontations où 8633 est à domicile et 8634 à l’extérieur
 df_sample = df_match_clean[
     (df_match_clean["home_team_api_id"] == 8633)
     & (df_match_clean["away_team_api_id"] == 8634)
 ]
 
-X_input = df_sample[features].mean().to_frame().T  # 1 ligne moyenne
+# Moyenne des features de ces matchs
+X_input = df_sample[features].mean().to_frame().T
 
-prediction = model.predict(X_input)
+# Standardisation avec le scaler déjà entraîné
+X_input_scaled = scaler.transform(X_input)
+
+# Prédiction
+prediction = model.predict(X_input_scaled)
+print(prediction)
 home_goals, away_goals = prediction[0]
 print(f"Score prédit : {home_goals:.1f} - {away_goals:.1f}")
