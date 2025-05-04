@@ -47,11 +47,7 @@ features = [
     "ratio_but_tir_cadre_h",
     "ratio_tir_cadre_tir_non_cadre_h",
     "y_cards_per_match_h",
-    "match_count_x_h",
     "r_cards_per_match_h",
-    "match_count_y_h",
-    "nb_scorers_h",
-    "nb_assisters_h",
     "nb_unique_contributors_h",
     "buildUpPlaySpeed_h",
     "buildUpPlayDribbling_h",
@@ -68,11 +64,7 @@ features = [
     "ratio_but_tir_cadre_a",
     "ratio_tir_cadre_tir_non_cadre_a",
     "y_cards_per_match_a",
-    "match_count_x_a",
     "r_cards_per_match_a",
-    "match_count_y_a",
-    "nb_scorers_a",
-    "nb_assisters_a",
     "nb_unique_contributors_a",
     "buildUpPlaySpeed_a",
     "buildUpPlayDribbling_a",
@@ -93,9 +85,14 @@ X = df_match_clean[features]
 y = df_match_clean[["home_team_goal", "away_team_goal"]]
 
 # Étape 3 : train/test split
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+train = df_match_clean[df_match_clean["saison"] < "2014/2015"]
+test = df_match_clean[df_match_clean["saison"] == "2014/2015"]
+
+X_train = train[features]
+y_train = train[["home_team_goal", "away_team_goal"]]
+
+X_test = test[features]
+y_test = test[["home_team_goal", "away_team_goal"]]
 
 # Étape 4 : standardisation
 scaler = StandardScaler()
@@ -108,7 +105,7 @@ model.fit(X_train_scaled, y_train)
 
 # Étape 6 : prédiction sur test set
 y_pred = model.predict(X_test_scaled)
-
+print(len(y_pred))
 # Étape 7 : évaluation
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
@@ -124,8 +121,7 @@ df_sample = df_match_clean[
 ]
 
 # Moyenne des features de ces matchs
-X_input = df_sample[features].mean().to_frame().T
-
+X_input = df_sample[features]
 # Standardisation avec le scaler déjà entraîné
 X_input_scaled = scaler.transform(X_input)
 
