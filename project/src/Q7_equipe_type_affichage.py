@@ -82,4 +82,8 @@ def run_q7(saison):
     df_meilleur_11 = nom_prenom(df_meilleur_11)
 
     # Afficher l'équipe sur le terrain
-    terrain(df_meilleur_11)
+    saison_clean = saison.replace("/", "_")  # "2013_2014"
+    terrain(
+        df_meilleur_11,
+        chemin_sortie=f"output/meilleure_formation_{saison_clean}.png",
+    )

@@ -22,14 +22,15 @@ def test20122013_run_q1(monkeypatch, capsys):
 
     classement_obtenu = []
     for ligne in lignes_resultats:
-        # Expression régulière : capture nom + 3 nombres (DB peut être négatif)
-        match = re.match(r"^(.*\S)\s+(\d+)\s+(-?\d+)\s+(\d+)$", ligne.strip())
+        # Nouvelle regex pour inclure le rang
+        match = re.match(
+            r"^(\d+)\s+(.*?)\s+(\d+)\s+(-?\d+)\s+(\d+)$", ligne.strip()
+        )
         if not match:
             raise ValueError(f"Ligne mal formatée : {ligne}")
-        nom, pts, db, bm = match.groups()
+        _, nom, pts, db, bm = match.groups()
         classement_obtenu.append((nom, int(pts), int(db), int(bm)))
 
-    # Classement officiel trié par : Pts, Diff de buts (DB), Buts marqués (BM)
     classement_attendu = [
         ("Manchester United", 89, 43, 86),
         ("Manchester City", 78, 32, 66),
@@ -79,14 +80,15 @@ def test20152016_run_q1(monkeypatch, capsys):
 
     classement_obtenu = []
     for ligne in lignes_resultats:
-        # Expression régulière : capture nom + 3 nombres (DB peut être négatif)
-        match = re.match(r"^(.*\S)\s+(\d+)\s+(-?\d+)\s+(\d+)$", ligne.strip())
+        # Nouvelle regex pour inclure le rang
+        match = re.match(
+            r"^(\d+)\s+(.*?)\s+(\d+)\s+(-?\d+)\s+(\d+)$", ligne.strip()
+        )
         if not match:
             raise ValueError(f"Ligne mal formatée : {ligne}")
-        nom, pts, db, bm = match.groups()
+        _, nom, pts, db, bm = match.groups()
         classement_obtenu.append((nom, int(pts), int(db), int(bm)))
 
-    # Classement officiel trié par : Pts, Diff de buts (DB), Buts marqués (BM)
     classement_attendu = [
         ("Leicester City", 81, 32, 68),
         ("Arsenal", 71, 29, 65),

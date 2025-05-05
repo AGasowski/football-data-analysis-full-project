@@ -1,5 +1,84 @@
 \section{Apprentissage automatique}
 
-\subsection{Première sous-partie}
 
+Notre travail consiste à prédire le classement final d'un championnat à l'aide
+des caractéristiques des équipes, des joueurs, ainsi que des caractéristiques
+des matchs de chaque équipe. Pour cela, nous utilisons une régression linéaire
+multiple. En entrée, nous avons une table que l'on peut nommer Match, et en
+sortie, nous avons la liste des scores que nous souhaitons prédire. Grâce à ces
+résultats on pourra en déduire le classement du championnat.
 
+\subsection{Préparation de la table Match}
+
+Tout d'abord, il faut préparer la table Match. Nous utilisons la convention
+suivante pour le nom des colonnes: "h" représente l'équipe à domicile (home) et
+"a" désigne l'équipe à l'extérieur (away). Les principales colonnes
+sélectionnées sont:
+\begin{itemize}
+    \item "moyenne\_attributs\_buteur\_h"
+    \item "moyenne\_attributs\_passeur\_h"
+    \item "age\_moyen\_buteur\_h"
+    \item "age\_moyen\_passeur\_h"
+    \item "ratio\_but\_tir\_cadre\_h"
+    \item "ratio\_tir\_cadre\_tir\_non\_cadre\_h"
+    \item "y\_cards\_per\_match\_h"
+    \item "r\_cards\_per\_match\_h"
+    \item "nb\_unique\_contributors\_h"
+    \item "buildUpPlaySpeed\_h"
+    \item "buildUpPlayDribbling\_h"
+    \item "buildUpPlayPassing\_h"
+    \item "chanceCreationPassing\_h"
+    \item "chanceCreationCrossing\_h"
+    \item "defencePressure\_h"
+    \item "defenceAggression\_h"
+    \item "defenceTeamWidth\_h"
+\end{itemize}
+
+À l'origine, nous voulions calculer la moyenne des attributs de tous les
+joueurs d'une équipe, mais la structure de la base de données ne nous permet
+pas de lier directement les joueurs à leurs équipes. Nous avons donc opté pour
+la moyenne des attributs des buteurs et des passeurs, en considérant qu'ils
+contribuent le plus à la performance de l'équipe. En résumé, toutes les
+variables listées ci-dessus nous ont semblé suffisamment pertinentes. Le but,
+par la suite, est aussi d'affiner la sélection des variables en ajoutant ou en
+supprimant celles qui pourraient être nuisibles à la performance du modèle.
+
+\subsection{Traitement des attributs d'équipe}
+
+Nous avons rencontré quelques difficultés avec la table Team\_Attributes, qui
+contient les attributs d'une équipe à une date donnée. Il arrive qu'une même
+équipe apparaisse plusieurs fois au cours d'une même saison. Dans ce cas, nous
+avons choisi de conserver la ligne présentant les attributs les plus élevés.
+Cependant, pour certaines équipes, aucun attribut n'était disponible pour une
+saison donnée. Dans ces cas-là, nous avons utilisé les attributs de la saison
+précédente. Nous avons rencontré le même problème avec la table
+Player\_Attributes, et avons adopté la même méthode. 
+
+\subsection{Modèle et prédiction}
+
+Finalement, nous avons réussi à construire la table Match, qui constitue notre
+entrée X, et la sortie Y est composée des variables home\_team\_goal et
+away\_team\_goal. Nous avons ensuite séparé la base de données en deux jeux de
+données : 80\% pour l'entraînement et 20\% pour le test. Comme nous disposons
+de données sur 8 saisons, nous avons décidé d'utiliser les 6 premières saisons
+pour l'entraînement, et les 2 dernières pour le test. Nous avons également
+standardisé les variables, afin d'éviter qu'une variable ait un poids excessif
+ou insuffisant à cause de son échelle. Nous avons ensuite entraîné notre modèle
+avec le module LinearRegression().fit(X\_train, Y\_train). Le coefficient R²
+obtenu est de 0,14, ce qui reste relativement faible.
+
+\vskip 10pt
+
+Grâce à cet entraînement, nous avons pu tester notre modèle sur les saisons
+2014/2015 et 2015/2016. Nous avons ainsi obtenu tous les scores prédits pour
+ces saisons. À partir de ces scores, nous avons établi un classement, qui s'est
+avéré relativement satisfaisant comparé au classement réel. Cependant, lorsque
+des équipes créent la surprise, le modèle a du mal à les prédire, ce qui est
+compréhensible. Par exemple, lors de la saison où Leicester a remporté la
+Premier League, le modèle ne l'avait pas prévu.
+
+\subsection{Perspectives}
+
+Par la suite, nous aimerions tenter de prédire le classement d'un championnat à
+partir des premières journées de la saison. Il faudra donc revoir la façon dont
+nous constituons X\_train et X\_test.

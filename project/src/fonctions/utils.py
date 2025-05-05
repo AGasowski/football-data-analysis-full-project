@@ -408,7 +408,7 @@ def trouver_joueur_poste(df_stats, poste, joueurs_selectionnes):
     return None  # Aucun joueur disponible
 
 
-def terrain(df_meilleur_11):
+def terrain(df_meilleur_11, chemin_sortie):
     """
     Affiche une représentation graphique d'un terrain de football avec les
     joueurs placés en formation 4-4-2.
@@ -526,6 +526,11 @@ def terrain(df_meilleur_11):
     ax.set_frame_on(False)
 
     plt.title("Formation 4-4-2", fontsize=14, color="black", fontweight="bold")
+
+    # Enregistrement
+    plt.savefig(chemin_sortie, bbox_inches="tight", dpi=300)
+    print(f"Terrain enregistré dans {chemin_sortie}")
+
     plt.show()
 
 
@@ -542,6 +547,8 @@ def visualisation(age_group_avg):
     plt.xlabel("Tranche d'âge")
     plt.xticks(rotation=0)
     plt.tight_layout()
+    plt.savefig("output/aptitudes_age.png", bbox_inches="tight", dpi=300)
+    print("Graphique enregistré dans 'output/aptitudes_age.png' ")
     plt.show()
 
 

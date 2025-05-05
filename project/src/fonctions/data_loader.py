@@ -2,7 +2,6 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 import csv
 
-
 # Charger des données (CSV/XML) et les convertir en formats utiles (DataFrame,
 # dict, list, etc.).
 
