@@ -31,3 +31,4 @@ match = matches_filtered[
     ]
 ]
 match.to_excel("match2.xlsx")
+match.to_csv("match.csv")
