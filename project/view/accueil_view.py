@@ -1,8 +1,8 @@
 """
 Module : accueil_view
 
-Ce module contient la classe AccueilView qui gère
-l'affichage du menu principal et la gestion des choix de l'utilisateur.
+Ce module contient la classe AccueilView qui gère l'affichage du menu principal
+et la gestion des choix de l'utilisateur.
 """
 
 from project.view.abstract_view import AbstractView
@@ -76,7 +76,7 @@ class AccueilView(AbstractView):
                 "type": "list",
                 "name": "question saison",
                 "message": "Pour quelle saison souhaitez-vous répondre à la "
-                + "question ?",
+                "question ?",
                 "choices": [
                     "2008/2009",
                     "2009/2010",
@@ -149,7 +149,7 @@ class AccueilView(AbstractView):
                 run_q1,
                 saison,
                 champ,
-                chemin=f"output/classement_{champ}_{saison_clean}.png",
+                chemin=f"output/q1/classement_{champ}_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -170,7 +170,7 @@ class AccueilView(AbstractView):
                 run_q2,
                 saison,
                 champ,
-                chemin=f"output/diff_buts_{champ}_{saison_clean}.png",
+                chemin=f"output/q2/diff_buts_{champ}_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -187,7 +187,7 @@ class AccueilView(AbstractView):
             capture_et_enregistrer_png(
                 run_q3,
                 saison,
-                chemin=f"output/taille_buts_tete_{saison_clean}.png",
+                chemin=f"output/q3/taille_buts_tete_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -214,7 +214,7 @@ class AccueilView(AbstractView):
             capture_et_enregistrer_png(
                 run_q5,
                 saison,
-                chemin=f"output/formations_{saison_clean}.png",
+                chemin=f"output/q5/formations_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -232,7 +232,7 @@ class AccueilView(AbstractView):
             capture_et_enregistrer_png(
                 run_q6,
                 saison,
-                chemin=f"output/matchs_nuls_max_{saison_clean}.png",
+                chemin=f"output/q6/matchs_nuls_max_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -249,7 +249,7 @@ class AccueilView(AbstractView):
 
             capture_et_enregistrer_png(
                 run_q8,
-                chemin="output/coherence.png",
+                chemin="output/q8/coherence.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -269,7 +269,8 @@ class AccueilView(AbstractView):
                 run_q9,
                 saison,
                 champ,
-                chemin=f"output/equipes_exterieur_{champ}_{saison_clean}.png",
+                chemin=f"output/q9/equipes_exterieur_{champ}_"
+                f"{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -298,7 +299,7 @@ class AccueilView(AbstractView):
                 run_q11,
                 saison,
                 champ,
-                chemin=f"output/pire_ratio_{champ}_{saison_clean}.png",
+                chemin=f"output/q11/pire_ratio_{champ}_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -315,7 +316,7 @@ class AccueilView(AbstractView):
             capture_et_enregistrer_png(
                 run_q12,
                 saison,
-                chemin=f"output/imprevisible_{saison_clean}.png",
+                chemin=f"output/q12/imprevisible_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
