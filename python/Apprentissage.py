@@ -5,6 +5,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
 df_equipe = pd.read_excel("stats_equipes.xlsx")
+df_titulaire = pd.read_excel("titulaire.xlsx")
+df_equipe = fusionner(
+    df_equipe, df_titulaire, ["team_api_id", "saison"], ["team_api_id", "season"]
+)
+
 df_match = pd.read_excel("match.xlsx")
 team = lire_csv("data/Team.csv")
 
@@ -41,6 +46,7 @@ df_match = df_match.rename(
 )
 
 features = [
+    "moyenne_overall_titulaire_h",
     "moyenne_attributs_buteur_h",
     "moyenne_attributs_passeur_h",
     "age_moyen_buteur_h",
@@ -75,6 +81,7 @@ features = [
     "defencePressure_a",
     "defenceAggression_a",
     "defenceTeamWidth_a",
+    "moyenne_overall_titulaire_a",
 ]
 
 
@@ -160,6 +167,7 @@ for _, row in df_2014.iterrows():
         }
     )
 
+id_en_nom_2(classement, team)
 df_classement = pd.DataFrame(classement)
 df_resultats = (
     df_classement.groupby(["league_id", "team_api_id"])
@@ -174,10 +182,11 @@ df_resultats = (
 df_resultats = df_resultats.sort_values(
     ["league_id", "points_total"], ascending=[True, False]
 )
-print(df_resultats[df_resultats["league_id"] == 4769])
+print(df_resultats[df_resultats["league_id"] == 1729])
 
 # y_pred=model.predict((fonction(8633,10205)-moyennes)/(ecarts_type))
 # print(y_pred)
+
 """
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
