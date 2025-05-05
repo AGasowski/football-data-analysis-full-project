@@ -215,7 +215,7 @@ df_train = df_final
 # Tu peux les charger dans un DataFrame séparé (par exemple df_test pour la saison 2014/2015)
 # Je suppose ici que df_test contient les stats pour la saison 2014/2015
 df_test = fonction("2014/2015")  # Remplace df_saison_test par le vrai DataFrame contenant les données de la saison 2014/2015
-
+df_test = df_test[df_test['equipe'] == 8633]
 # 3. Sélectionner les features et la cible dans df_train
 features = [
     'points', 'goal_diff', 'buts_marques', 'buts_encaisses', 'victoires',
@@ -235,6 +235,9 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
+# 4. Entraîner le modèle
+model = LinearRegression()
+model.fit(X_train_scaled, y_train)
 
 # 5. Prédire les classements
 y_pred = model.predict(X_test_scaled)
