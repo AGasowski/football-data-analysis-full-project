@@ -40,6 +40,27 @@ class Q4View(AbstractView):
                 ],
             }
         ]
+        self.question_championnat = [
+            {
+                "type": "list",
+                "name": "question championnat",
+                "message": "Pour quel championnat souhaitez-vous répondre "
+                "à la question ?",
+                "choices": [
+                    "Tous les championnats réunis",
+                    "Ligue 1 (France)",
+                    "Premier League (Angleterre)",
+                    "Bundesliga (Allemagne)",
+                    "Serie A (Italie)",
+                    "Liga BBVA (Espagne)",
+                    "Eredivisie (Pays-Bas)",
+                    "Liga ZON Sagres (Portugal)",
+                    "Ekstraklasa (Pologne)",
+                    "Jupiler League (Belgique)",
+                    "Super League (Suisse)",
+                ],
+            }
+        ]
 
     def make_choice(self):
         answers = prompt(self.questions)
@@ -48,11 +69,14 @@ class Q4View(AbstractView):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             saison_clean = saison.replace("/", "_")
-            from project.src.q4_cartons_jaunes import run_q4a
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
             capture_et_enregistrer_png(
-                run_q4a,
+                run_q4,
                 saison,
+                champ,
+                "jaune",
                 chemin=f"output/classement_jaunes_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
@@ -61,11 +85,14 @@ class Q4View(AbstractView):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             saison_clean = saison.replace("/", "_")
-            from project.src.q4_cartons_rouges import run_q4b
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
             capture_et_enregistrer_png(
-                run_q4b,
+                run_q4,
                 saison,
+                champ,
+                "rouge",
                 chemin=f"output/classement_rouges_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
@@ -74,11 +101,14 @@ class Q4View(AbstractView):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             saison_clean = saison.replace("/", "_")
-            from project.src.q4_meilleurs_buteurs import run_q4c
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
             capture_et_enregistrer_png(
-                run_q4c,
+                run_q4,
                 saison,
+                champ,
+                "but",
                 chemin=f"output/classement_buteurs_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
@@ -87,11 +117,14 @@ class Q4View(AbstractView):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
             saison_clean = saison.replace("/", "_")
-            from project.src.q4_meilleurs_passeurs import run_q4d
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
             capture_et_enregistrer_png(
-                run_q4d,
+                run_q4,
                 saison,
+                champ,
+                "passe",
                 chemin=f"output/classement_passeurs_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
