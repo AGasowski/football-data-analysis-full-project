@@ -38,7 +38,9 @@ buts dans le jeu de données ?}
 Nous avons répondu à la question en utilisant le paquet pandas. De plus, nous
 avons ajouté la possibilité pour l'utilisateur de choisir s'il veut obtenir les
 matchs avec la plus grande différence de buts pour toutes les saisons
-confondues, ou bien pour une saison bien particulière.
+confondues, ou bien pour une saison bien particulière. De même, il peut choisir
+de réaliser la recherche pour un championnat en particulier ou pour tous les
+championnats confondus.
 
 \subsection{Questions choisies}
 
@@ -68,7 +70,11 @@ rassembler en une seule question. Ce sont des statistiques très facilement
 accessibles sur les sites spécialisés puisqu'elles sont au cœur des débats
 footballistiques. Elles ont toutes été traitées avec le paquet pandas.
 L'utilisateur peut choisir la saison pour laquelle il veut afficher le
-classement en question.
+classement en question. Nous avons remarqué que les statistiques diffèrent
+parfois des classements officiels trouvés sur internet. Nous supposons alors
+que certaines données de notre base de données sont erronées ou manquantes.
+C'est principalement le cas en ce qui concerne les classements concernant les
+cartons reçus.
 
 \vskip 10pt
 
@@ -95,7 +101,11 @@ De nouveau, nous avions envie de chercher un résultat original. Pour cela, nous
 avons utilisé le paquet pandas. Nous cherchions à identifier un jour
 particulièrement notable, et le jour ayant connu le plus de matchs nuls était
 idéal. Il s'agit d'un samedi, ce qui semble logique puisque plus de matchs y
-sont joués. Le paquet pandas nous a de nouveau servi ici.
+sont joués. Comme la saison d'un match n'était pas immédiatement accesible dans
+la table nous avons créé une colonne saison qui détermine la saison d'un match
+en fonction de sa date (une saison dure de août à mai). On peut également
+choisir de trouver ce jour pour une saison en particulier. Le paquet pandas
+nous a de nouveau servi ici.
 
 \vskip 10pt
 
@@ -123,7 +133,43 @@ pour sélectionner un joueur à un poste est la suivante:
     la somme des scores de chaque critère sélectionné pour le poste. En effet,
     chaque joueur possède une note pour chaque aptitude. Nous choisissons
     ensuite le joueur qui obtient le meilleur score et qui n'est pas déjà
-    présent dans notre équipe type. 
+    présent dans notre équipe type. Soit un poste $P$ (par exemple défenseur
+    central), et un ensemble de critères $C_P = \{c_1, c_2, \dots, c_n\}$
+    considérés comme les plus pertinents pour ce poste.
+
+    Chaque joueur $j$ possède une note $s_j(c_k)$ pour chaque critère $c_k \in
+    C_P$.
+
+    Le \textbf{score total} $S_j$ du joueur $j$ pour le poste $P$ est défini
+    comme la somme des notes sur les critères sélectionnés :
+
+    \[
+    S_j = \sum_{k=1}^{n} s_j(c_k)
+    \]
+
+    où :
+    \begin{itemize}
+        \item $S_j$ : score total du joueur $j$ pour le poste $P$,
+        \item $s_j(c_k)$ : note du joueur $j$ pour le critère $c_k$,
+        \item $n$ : nombre de critères considérés pour le poste.
+    \end{itemize}
+
+    Le joueur sélectionné pour le poste $P$ est celui qui maximise $S_j$, tout
+    en respectant la contrainte qu’il ne soit pas déjà présent dans l’équipe
+    type :
+
+    \[
+    j^* = \underset{j \notin \text{équipe}}{\arg\max} \; S_j
+    \]
+
+    Pour les postes où le pied fort est pertinent (latéral, ailier, défenseur
+    central), une contrainte supplémentaire peut être ajoutée pour ne retenir
+    que les joueurs dont le pied fort correspond au côté du terrain :
+
+    \[
+    j^* = \underset{\substack{j \notin \text{équipe} \\ \text{pied}_j = 
+    \text{côté}_P}}{\arg\max} \; S_j
+    \]
     \item \textbf{Choix du pied fort.} Sur un terrain, il est plus probable de
     jouer à droite en étant droitier, et inversement en étant gaucher. Pour
     retrouver une certaine cohérence avec la réalité, nous voulions
@@ -135,8 +181,8 @@ pour sélectionner un joueur à un poste est la suivante:
 
 L'utilisateur peut ici choisir la saison pour laquelle il souhaite obtenir
 l'équipe type. Pour une visualisation plus agréable, nous avons modélisé un
-beau terrain de foot afin de placer les joueurs au bon endroit. Toute cette
-question a été réalisée à l'aide du paquet pandas. 
+terrain de foot afin de placer les joueurs au bon endroit. Toute cette question
+a été réalisée à l'aide du paquet pandas. 
 
 \vskip 10pt
 
