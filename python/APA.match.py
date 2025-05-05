@@ -23,7 +23,8 @@ matches_filtered = matches[matches.apply(match_is_valid, axis=1)]
 match = matches_filtered[
     [
         "league_id",
-        "date" "saison",
+        "date",
+        "saison",
         "home_team_api_id",
         "away_team_api_id",
         "home_team_goal",
