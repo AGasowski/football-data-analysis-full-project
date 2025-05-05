@@ -3,6 +3,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from change import *
 
 df_equipe = pd.read_excel("stats_equipes.xlsx")
 df_titulaire = pd.read_excel("titulaire.xlsx")
@@ -167,7 +168,7 @@ for _, row in df_2014.iterrows():
         }
     )
 
-id_en_nom_2(classement, team)
+
 df_classement = pd.DataFrame(classement)
 df_resultats = (
     df_classement.groupby(["league_id", "team_api_id"])
@@ -182,8 +183,9 @@ df_resultats = (
 df_resultats = df_resultats.sort_values(
     ["league_id", "points_total"], ascending=[True, False]
 )
-print(df_resultats[df_resultats["league_id"] == 1729])
 
+df_resultats["team_api_id"] = df_resultats["team_api_id"].apply(id_to_nom)
+print(df_resultats[df_resultats["league_id"] == 4769])
 # y_pred=model.predict((fonction(8633,10205)-moyennes)/(ecarts_type))
 # print(y_pred)
 
