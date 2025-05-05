@@ -163,12 +163,14 @@ class AccueilView(AbstractView):
             saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q2_diff_buts_max import run_q2
 
             capture_et_enregistrer_png(
                 run_q2,
                 saison,
-                chemin=f"output/diff_buts_{saison_clean}.png",
+                champ,
+                chemin=f"output/diff_buts_{champ}_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 

@@ -17,19 +17,20 @@ from project.src.fonctions.statistiques import (
 
 def run_q11(saison, championnat):
     """
-    Affiche l’équipe avec le meilleur ratio entre buts marqués et tirs cadrés.
+    Affiche l’équipe avec le pire ratio entre buts marqués et tirs cadrés.
 
     Args:
         saison (str): Saison ciblée, par exemple "2014/2015". championnat
         (str): Nom du championnat
     """
-    print("== Résolution de la question 11 ==")
+    print("Equipe avec le pire ratio buts marqués/tirs cadrés")
+    print(f"en {championnat} ({saison}):")
 
     match = charger_csv("data/Match.csv")
     if saison != "0":
         match = filtrer_df(match, "season", saison)
     id_champ = id_championnat(championnat)
-    if championnat != 0:
+    if id_champ != 0:
         match = filtrer_df(match, "league_id", int(id_champ))
     match = filtrer_df(
         match,
@@ -37,6 +38,7 @@ def run_q11(saison, championnat):
         None,
         ["home_team_api_id", "home_team_goal", "away_team_goal", "shoton"],
     )
+    print(match)
     team = charger_csv("data/Team.csv")
     team = filtrer_df(team, None, None, ["team_api_id", "team_long_name"])
 
