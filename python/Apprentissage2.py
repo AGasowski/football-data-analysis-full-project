@@ -11,9 +11,10 @@ df_equipe = fusionner(
     df_equipe, df_titulaire, ["team_api_id", "saison"], ["team_api_id", "season"]
 )
 
-df_match = pd.read_excel("match.xlsx")
+df_match = pd.read_excel("match2.xlsx")
+print(df_match.columns)
 team = lire_csv("data/Team.csv")
-
+"""
 # Jointure pour les équipes à domicile
 df_match = df_match.merge(
     df_equipe,
@@ -84,3 +85,47 @@ features = [
     "defenceTeamWidth_a",
     "moyenne_overall_titulaire_a",
 ]
+
+
+# Étape 1 : nettoyage
+df_match_clean = df_match.dropna()
+
+# Étape 2 : X et y
+X = df_match_clean[features]
+y = df_match_clean[["home_team_goal", "away_team_goal"]]
+
+# Étape 3 : train/test split
+df_2008 = df_match_clean[df_match_clean["saison"] == "2008/2009"]
+# Suppose que df est ton DataFrame
+# Assure-toi que la colonne 'date' est bien en datetime
+
+
+# Trie les matchs par date
+df_2008 = df_2008.sort_values("date")
+
+# Concatène tous les matchs joués par chaque équipe (à domicile ou à l'extérieur)
+home_matches = df_2008[["date", "home_team_api_id"]].rename(
+    columns={"home_team_api_id": "team"}
+)
+away_matches = df_2008[["date", "away_team_api_id"]].rename(
+    columns={"away_team_api_id": "team"}
+)
+
+all_matches = pd.concat([home_matches, away_matches])
+all_matches = all_matches.sort_values("date")
+
+# Numérote les matchs par équipe
+all_matches["match_number"] = all_matches.groupby("team").cumcount() + 1
+
+# Ne garde que les 20 premiers matchs pour chaque équipe
+valid_matches = all_matches[all_matches["match_number"] <= 20]
+
+print(valid_matches[valid_matches["league_id"] == 1729])
+"""
+"""
+X_train = train[features]
+y_train = train[["home_team_goal", "away_team_goal"]]
+
+X_test = test[features]
+y_test = test[["home_team_goal", "away_team_goal"]]
+"""
