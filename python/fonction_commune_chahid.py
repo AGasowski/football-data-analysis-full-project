@@ -292,6 +292,21 @@ def id_en_nom(match, team):
     match.rename(columns={"away_team_api_id": "away_team"}, inplace=True)
 
 
+def id_en_nom_2(classement, team):
+    classement["team_api_id"] = (
+        classement[int("team_api_id")]
+        .map(team.set_index("team_api_id")["team_long_name"])
+        .fillna(classement["team_api_id"])
+    )
+    classement.rename(columns={"team_api_id": "team"}, inplace=True)
+
+
+def id_to_nom(id):
+    for i in range(len(id_team)):
+        if id_team[i] == id:
+            return nom_team[i]
+
+
 def fusionner(df1, df2, col1, col2):
     return pd.merge(
         df1,

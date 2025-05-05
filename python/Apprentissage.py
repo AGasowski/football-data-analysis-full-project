@@ -3,9 +3,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from change import *
 
 df_equipe = pd.read_excel("stats_equipes.xlsx")
+df_titulaire = pd.read_excel("titulaire.xlsx")
+df_equipe = fusionner(
+    df_equipe, df_titulaire, ["team_api_id", "saison"], ["team_api_id", "season"]
+)
+
 df_match = pd.read_excel("match.xlsx")
+team = lire_csv("data/Team.csv")
 
 # Jointure pour les équipes à domicile
 df_match = df_match.merge(
@@ -40,6 +47,7 @@ df_match = df_match.rename(
 )
 
 features = [
+    "moyenne_overall_titulaire_h",
     "moyenne_attributs_buteur_h",
     "moyenne_attributs_passeur_h",
     "age_moyen_buteur_h",
@@ -74,6 +82,7 @@ features = [
     "defencePressure_a",
     "defenceAggression_a",
     "defenceTeamWidth_a",
+    "moyenne_overall_titulaire_a",
 ]
 
 
@@ -109,26 +118,30 @@ model.fit(X_train_scaled, y_train)
 
 
 def fonction(id1, id2, df_base):
-    d = df_base[(df_base["home_team_api_id"] == id1) & (df_base["away_team_api_id"] == id2)]
+    d = df_base[
+        (df_base["home_team_api_id"] == id1) & (df_base["away_team_api_id"] == id2)
+    ]
     return d[features]
+
+
 df_2014 = df_match_clean[df_match_clean["saison"] == "2014/2015"].copy()
 df_2015 = df_match_clean[df_match_clean["saison"] == "2015/2016"].copy()
 classement = []
 
-for _, row in df_2015.iterrows():
+for _, row in df_2014.iterrows():
     id1 = row["home_team_api_id"]
     id2 = row["away_team_api_id"]
     league_id = row["league_id"]
 
-    X_input = fonction(id1, id2, df_2015)
+    X_input = fonction(id1, id2, df_2014)
     if X_input.empty:
         continue  # Skip if match not found (shouldn’t happen here)
 
     X_scaled = (X_input - moyennes) / ecarts_type
     pred = model.predict(X_scaled)[0]
     home_goals, away_goals = pred
-    home_goals=round(home_goals, 0)
-    away_goals=round(away_goals, 0)
+    home_goals = round(home_goals, 0)
+    away_goals = round(away_goals, 0)
     if home_goals > away_goals:
         points_home, points_away = 3, 0
     elif home_goals < away_goals:
@@ -136,37 +149,50 @@ for _, row in df_2015.iterrows():
     else:
         points_home = points_away = 1
 
-    classement.append({
-        "team_api_id": id1,
-        "league_id": league_id,
-        "points": points_home,
-        "but_marques": home_goals,
-        "but_encaisses": away_goals,
-    })
-    classement.append({
-        "team_api_id": id2,
-        "league_id": league_id,
-        "points": points_away,
-        "but_marques": away_goals,
-        "but_encaisses": home_goals,
-    })
+    classement.append(
+        {
+            "team_api_id": id1,
+            "league_id": league_id,
+            "points": points_home,
+            "but_marques": home_goals,
+            "but_encaisses": away_goals,
+        }
+    )
+    classement.append(
+        {
+            "team_api_id": id2,
+            "league_id": league_id,
+            "points": points_away,
+            "but_marques": away_goals,
+            "but_encaisses": home_goals,
+        }
+    )
+
 
 df_classement = pd.DataFrame(classement)
-df_resultats = df_classement.groupby(["league_id", "team_api_id"]).agg(
-    points_total=("points", "sum"),
-    buts_marques=("but_marques", "sum"),
-    buts_encaisses=("but_encaisses", "sum")
-).reset_index()
+df_resultats = (
+    df_classement.groupby(["league_id", "team_api_id"])
+    .agg(
+        points_total=("points", "sum"),
+        buts_marques=("but_marques", "sum"),
+        buts_encaisses=("but_encaisses", "sum"),
+    )
+    .reset_index()
+)
 
-df_resultats = df_resultats.sort_values(["league_id", "points_total"], ascending=[True, False])
-print(df_resultats[df_resultats["league_id"]==7809])
+df_resultats = df_resultats.sort_values(
+    ["league_id", "points_total"], ascending=[True, False]
+)
 
-#y_pred=model.predict((fonction(8633,10205)-moyennes)/(ecarts_type))
-#print(y_pred)
-'''
+df_resultats["team_api_id"] = df_resultats["team_api_id"].apply(id_to_nom)
+print(df_resultats[df_resultats["league_id"] == 4769])
+# y_pred=model.predict((fonction(8633,10205)-moyennes)/(ecarts_type))
+# print(y_pred)
+
+"""
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 print("MSE :", mse)
 print("R² :", r2)
-'''
+"""
