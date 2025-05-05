@@ -4,12 +4,12 @@ les bookmakers B365 et BW, avec date, score et équipes.
 """
 
 from project.src.fonctions.data_loader import charger_csv
-from project.src.fonctions.manipulations import name_team_dic
+from project.src.fonctions.manipulations import name_team_dic, filtre_dic
 from project.src.fonctions.dates_formats import formater_date_fr, date_francais
 from project.src.fonctions.utils import tri_bet
 
 
-def run_q12():
+def run_q12(saison):
     """
     Retourne les 10 matchs qui ont eu les résultats les plus imprévisibles.
     """
@@ -34,7 +34,10 @@ def run_q12():
         "home_team_api_id",
         "away_team_api_id",
         "date",
+        "season",
     )
+    if saison != "0":
+        matches = filtre_dic(matches, 11, saison)
 
     surprises_b365 = []
     surprises_bw = []
@@ -89,6 +92,7 @@ def run_q12():
     # Affichage aligné avec une largeur ajustée pour la colonne "Score"
     print("=" * 100)
     print("                       Matchs avec surprises (Bet365 ≥ 10.0)")
+    print(f"                        {f' ({saison})' if saison != "0" else ''}")
     print("=" * 100)
     print(f"{'Date':<30}{'Score':<55}{'Cote B365':>10}")
     print("-" * 100)

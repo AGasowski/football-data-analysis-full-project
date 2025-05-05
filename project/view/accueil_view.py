@@ -262,12 +262,14 @@ class AccueilView(AbstractView):
             saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q9_equipe_but_exterieur import run_q9
 
             capture_et_enregistrer_png(
                 run_q9,
                 saison,
-                chemin=f"output/equipes_exterieur_{saison_clean}.png",
+                champ,
+                chemin=f"output/equipes_exterieur_{champ}_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 
@@ -304,11 +306,16 @@ class AccueilView(AbstractView):
             answers["Menu principal"]
             == "Q12 - Afficher le classement des matchs les plus imprévisibles"
         ):
+            saison = prompt(self.question_saison)["question saison"]
+            saison_clean = saison.replace("/", "_")
+            if saison == "Toutes les saisons réunies":
+                saison = "0"
             from project.src.q12_imprevisible import run_q12
 
             capture_et_enregistrer_png(
                 run_q12,
-                chemin="output/imprevisible.png",
+                saison,
+                chemin=f"output/imprevisible_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
 

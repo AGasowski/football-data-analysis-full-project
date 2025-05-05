@@ -15,20 +15,24 @@ from project.src.fonctions.statistiques import compter_buts_matchs
 from project.src.fonctions.utils import (
     trier,
 )
+from project.src.fonctions.manipulations import (
+    id_championnat,
+)
 
 
-def run_q9(saison):
+def run_q9(saison, championnat):
     """
     Affiche le classement des équipes avec la plus grande différence de buts
     marqués à l'extérieur vs domicile pour une saison et un championnat donnés.
 
     Args:
-        saison (str): Saison ciblée
-        championnat (str): Nom du championnat ciblé
+        saison (str): Saison ciblée championnat (str): Nom du championnat ciblé
     """
     print("==================================================================")
-    print("    Classement des équipes qui marquent plus à l'extérieur")
-    print(f"                        {f' ({saison})' if saison != "0" else ''}")
+    print(
+        f"       {f' {championnat}' if championnat != "Tous les championnats" 
+                  else ''} {f' ({saison})' if saison != "0" else ''}"
+    )
     print("==================================================================")
 
     team_names = charger_csv(
@@ -54,6 +58,9 @@ def run_q9(saison):
     )
     if saison != "0":
         matchs = filtre_dic(matchs, 0, saison)
+    id_champ = id_championnat(championnat)
+    if id_champ != 0:
+        matchs = filtre_dic(matchs, 5, str(id_champ))
 
     compter_buts_matchs(matchs, goals_home, 1, 3)
     compter_buts_matchs(matchs, goals_away, 2, 4)
