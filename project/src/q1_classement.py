@@ -3,7 +3,9 @@ Script pour générer le classement d'un championnat donné pour une saison
 spécifique, en analysant les données de matchs à partir de fichiers CSV.
 """
 
-from project.src.fonctions.data_loader import charger_csv
+from project.src.fonctions.data_loader import (
+    charger_csv,
+)
 from project.src.fonctions.manipulations import (
     creer_dict,
     filtre_dic,
@@ -20,8 +22,8 @@ def run_q1(saison, championnat):
     Affiche le classement d'un championnat donné pour une saison spécifique.
 
     Args:
-        saison (str): Saison sous forme de chaîne, ex. "2014/2015"
-        championnat (str): Nom du championnat, ex. "England Premier League"
+        saison (str): Saison sous forme de chaîne, ex. "2014/2015" championnat
+        (str): Nom du championnat, ex. "England Premier League"
     """
     print("==================================================================")
     print(f"    Classement de {championnat} pour la saison {saison}")
@@ -61,10 +63,12 @@ def run_q1(saison, championnat):
     )
 
     # En-tête
-    print(f"{'Équipe':<30} {'Pts':<5} {'DB':<5} {'BM':<5}")
+    print(f"{'Rang':<5} {'Équipe':<30} {'Pts':<5} {'DB':<5} {'BM':<5}")
 
-    # Affichage
-    for team_id, (points, scored, conceded) in classement:
+    # Affichage avec rang
+    for i, (team_id, (points, scored, conceded)) in enumerate(
+        classement, start=1
+    ):
         nom = name_team_dic(team_names, team_id)
         db = scored - conceded
-        print(f"{nom:<30} {points:<5} {db:<5} {scored:<5}")
+        print(f"{i:<5} {nom:<30} {points:<5} {db:<5} {scored:<5}")

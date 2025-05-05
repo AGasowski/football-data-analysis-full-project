@@ -5,14 +5,18 @@ résultats de manière lisible.
 """
 
 from project.src.fonctions.data_loader import charger_csv
-from project.src.fonctions.manipulations import filtrer_df, id_en_nom
+from project.src.fonctions.manipulations import (
+    filtrer_df,
+    id_en_nom,
+    id_championnat,
+)
 from project.src.fonctions.statistiques import resume_colonne
 from project.src.fonctions.utils import (
     afficher,
 )
 
 
-def run_q2(saison):
+def run_q2(saison, championnat):
     """
     Affiche le match avec le plus grand écart de buts pour une saison donnée.
 
@@ -24,12 +28,17 @@ def run_q2(saison):
     print(
         f"    Matchs avec la plus grande différence de buts"
         f"{f' ({saison})' if saison != '0' else ''}"
+        f"{f' ({championnat})' if championnat != "Tous les championnats réunis"
+           else ''}"
     )
     print("==================================================================")
 
     match = charger_csv("data/Match.csv")
     if saison != "0":
         match = filtrer_df(match, "season", saison)
+    id_champ = id_championnat(championnat)
+    if id_champ != 0:
+        match = filtrer_df(match, "league_id", int(id_champ))
     team = charger_csv("data/Team.csv")
 
     id_en_nom(match, team)

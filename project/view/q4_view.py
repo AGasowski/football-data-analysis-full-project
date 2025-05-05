@@ -1,5 +1,6 @@
 from project.view.abstract_view import AbstractView
 from InquirerPy import prompt
+from project.src.fonctions.save import capture_et_enregistrer_png
 
 
 class Q4View(AbstractView):
@@ -39,6 +40,27 @@ class Q4View(AbstractView):
                 ],
             }
         ]
+        self.question_championnat = [
+            {
+                "type": "list",
+                "name": "question championnat",
+                "message": "Pour quel championnat souhaitez-vous répondre "
+                "à la question ?",
+                "choices": [
+                    "Tous les championnats réunis",
+                    "Ligue 1 (France)",
+                    "Premier League (Angleterre)",
+                    "Bundesliga (Allemagne)",
+                    "Serie A (Italie)",
+                    "Liga BBVA (Espagne)",
+                    "Eredivisie (Pays-Bas)",
+                    "Liga ZON Sagres (Portugal)",
+                    "Ekstraklasa (Pologne)",
+                    "Jupiler League (Belgique)",
+                    "Super League (Suisse)",
+                ],
+            }
+        ]
 
     def make_choice(self):
         answers = prompt(self.questions)
@@ -46,33 +68,65 @@ class Q4View(AbstractView):
         if answers["Menu Q4"] == "Q4: Classement des cartons jaunes":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.q4_cartons_jaunes import run_q4a
+            saison_clean = saison.replace("/", "_")
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
-            run_q4a(saison)
+            capture_et_enregistrer_png(
+                run_q4,
+                saison,
+                champ,
+                "jaune",
+                chemin=f"output/classement_jaunes_{saison_clean}.png",
+            )
             next_view = Q4View()  # On revient au menu
 
         elif answers["Menu Q4"] == "Q4: Classement des cartons rouges":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.q4_cartons_rouges import run_q4b
+            saison_clean = saison.replace("/", "_")
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
-            run_q4b(saison)
+            capture_et_enregistrer_png(
+                run_q4,
+                saison,
+                champ,
+                "rouge",
+                chemin=f"output/classement_rouges_{saison_clean}.png",
+            )
             next_view = Q4View()  # On revient au menu
 
         elif answers["Menu Q4"] == "Q4: Classement des buteurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.q4_meilleurs_buteurs import run_q4c
+            saison_clean = saison.replace("/", "_")
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
-            run_q4c(saison)
+            capture_et_enregistrer_png(
+                run_q4,
+                saison,
+                champ,
+                "but",
+                chemin=f"output/classement_buteurs_{saison_clean}.png",
+            )
             next_view = Q4View()  # On revient au menu
 
         elif answers["Menu Q4"] == "Q4: Classement des passeurs":
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
-            from project.src.q4_meilleurs_passeurs import run_q4d
+            saison_clean = saison.replace("/", "_")
+            champ = prompt(self.question_championnat)["question championnat"]
+            from project.src.q4_stats import run_q4
 
-            run_q4d(saison)
+            capture_et_enregistrer_png(
+                run_q4,
+                saison,
+                champ,
+                "passe",
+                chemin=f"output/classement_passeurs_{saison_clean}.png",
+            )
             next_view = Q4View()  # On revient au menu
 
         elif answers["Menu Q4"] == "Retourner au menu principal":

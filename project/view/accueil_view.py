@@ -7,6 +7,7 @@ l'affichage du menu principal et la gestion des choix de l'utilisateur.
 
 from project.view.abstract_view import AbstractView
 from InquirerPy import prompt
+from project.src.fonctions.save import capture_et_enregistrer_png
 
 
 class AccueilView(AbstractView):
@@ -138,12 +139,18 @@ class AccueilView(AbstractView):
             == "Q1 - Afficher le classement d'un championnat"
         ):
             saison = prompt(self.question_saison_unique)["question saison"]
+            saison_clean = saison.replace("/", "_")
             champ = prompt(self.question_championnat_unique)[
                 "question championnat"
             ]
             from project.src.q1_classement import run_q1
 
-            run_q1(saison, champ)
+            capture_et_enregistrer_png(
+                run_q1,
+                saison,
+                champ,
+                chemin=f"output/classement_{champ}_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -153,11 +160,18 @@ class AccueilView(AbstractView):
         ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
+            champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q2_diff_buts_max import run_q2
 
-            run_q2(saison)
+            capture_et_enregistrer_png(
+                run_q2,
+                saison,
+                champ,
+                chemin=f"output/diff_buts_{champ}_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -165,11 +179,16 @@ class AccueilView(AbstractView):
             == "Q3 - Afficher la taille moyenne des buteurs de tête"
         ):
             saison = prompt(self.question_saison)["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             from project.src.q3_taille_moyenne import run_q3
 
-            run_q3(saison)
+            capture_et_enregistrer_png(
+                run_q3,
+                saison,
+                chemin=f"output/taille_buts_tete_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -187,11 +206,16 @@ class AccueilView(AbstractView):
         ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             from project.src.q5_meilleur_formation import run_q5
 
-            run_q5(saison)
+            capture_et_enregistrer_png(
+                run_q5,
+                saison,
+                chemin=f"output/formations_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -200,11 +224,16 @@ class AccueilView(AbstractView):
         ):
             answersaison = prompt(self.question_saison)
             saison = answersaison["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             from project.src.q6_jour_matchs_nuls import run_q6
 
-            run_q6(saison)
+            capture_et_enregistrer_png(
+                run_q6,
+                saison,
+                chemin=f"output/matchs_nuls_max_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Q7 - Afficher l'équipe type":
@@ -218,7 +247,10 @@ class AccueilView(AbstractView):
         ):
             from project.src.q8_variance_11 import run_q8
 
-            run_q8()
+            capture_et_enregistrer_png(
+                run_q8,
+                chemin="output/coherence.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -227,11 +259,16 @@ class AccueilView(AbstractView):
             "l'extérieur"
         ):
             saison = prompt(self.question_saison)["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             from project.src.q9_equipe_but_exterieur import run_q9
 
-            run_q9(saison)
+            capture_et_enregistrer_png(
+                run_q9,
+                saison,
+                chemin=f"output/equipes_exterieur_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -249,12 +286,18 @@ class AccueilView(AbstractView):
             "cadrés"
         ):
             saison = prompt(self.question_saison)["question saison"]
+            saison_clean = saison.replace("/", "_")
             if saison == "Toutes les saisons réunies":
                 saison = "0"
             champ = prompt(self.question_championnat)["question championnat"]
             from project.src.q11_pire_ratio_tirs import run_q11
 
-            run_q11(saison, champ)
+            capture_et_enregistrer_png(
+                run_q11,
+                saison,
+                champ,
+                chemin=f"output/pire_ratio_{champ}_{saison_clean}.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif (
@@ -263,7 +306,10 @@ class AccueilView(AbstractView):
         ):
             from project.src.q12_imprevisible import run_q12
 
-            run_q12()
+            capture_et_enregistrer_png(
+                run_q12,
+                chemin="output/imprevisible.png",
+            )
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Quitter l'appli":

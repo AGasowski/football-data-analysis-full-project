@@ -71,6 +71,8 @@ def run_q5(saison):
 
     classement = trier(d, par=1, type_data="dict", reverse=True)
 
+    print(f"{'Rang':<5}{'Formation':<20}{'Occurrences'}")
+
     for rank, (formation1, nb_occurrences) in enumerate(
         classement.items(), start=1
     ):
