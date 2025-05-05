@@ -301,11 +301,6 @@ def id_en_nom_2(classement, team):
     classement.rename(columns={"team_api_id": "team"}, inplace=True)
 
 
-def id_to_nom(id):
-    for i in range(len(id_team)):
-        if id_team[i] == id:
-            return nom_team[i]
-
 
 def fusionner(df1, df2, col1, col2):
     return pd.merge(
