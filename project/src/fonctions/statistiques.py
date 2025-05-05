@@ -128,9 +128,9 @@ def compter_buts_matchs(dic, goals, ind_team, ind_goal):
 
         if team in goals:
             goals[team][0] += goal
+            goals[team][1] += 1
         else:
-            goals[team] = [goal, 0]
-        goals[team][1] += 1
+            goals[team] = [goal, 1]
     return goals
 
 
