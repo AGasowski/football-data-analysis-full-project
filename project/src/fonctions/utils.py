@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches  # Importation de patches
 from project.src.fonctions.manipulations import filtrer_df
+from operator import itemgetter
+
 
 # Fonctions plus spécifiques
 
@@ -568,3 +570,8 @@ def afficher_top_clubs_regularite(df, top_n=10):
     print(
         df[["Equipe", "Moyenne des écarts-types des performances"]].head(top_n)
     )
+
+
+def tri_bet(df):
+    df_new = sorted(df, key=itemgetter("Cote_VainqueurB365"), reverse=True)
+    return df_new

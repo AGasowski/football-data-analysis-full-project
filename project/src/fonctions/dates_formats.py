@@ -1,6 +1,7 @@
 import pandas as pd
 import locale
 import platform
+from datetime import datetime
 
 
 # Gérer les conversions de dates et l’affichage selon la locale française.
@@ -69,18 +70,31 @@ def convertir_col_date(df, colonne):
 # Gestion de la langue
 def date_francais():
     """
-    Configure la locale en français, compatible Windows, Linux et macOS. Ne pas
-    ajouter au code car elle est déjà incluse dans la fonction convertir_date()
+    Configure la locale pour afficher les dates en français.
     """
     systeme = platform.system()
-
     try:
         if systeme == "Windows":
             locale.setlocale(locale.LC_TIME, "French_France.1252")
-        else:  # Linux ou macOS
+        else:
             locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     except locale.Error:
-        print(
-            "Impossible de définir la locale française. Elle n’est "
-            "peut-être pas installée sur ce système."
-        )
+        print("⚠️ Locale française non disponible sur ce système.")
+
+
+def formater_date_fr(date_str):
+    """
+    Convertit une chaîne de date en datetime et la formate joliment en
+    français.
+
+    Args:
+        date_str (str): Une chaîne de date ISO.
+
+    Returns:
+        str: Une date formatée du type 'samedi 13 septembre 2014'.
+    """
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+        return date_obj.strftime("%A %d %B %Y")
+    except ValueError:
+        return date_str  # Retourne la chaîne brute si erreur
