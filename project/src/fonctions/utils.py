@@ -547,8 +547,8 @@ def visualisation(age_group_avg):
     plt.xlabel("Tranche d'âge")
     plt.xticks(rotation=0)
     plt.tight_layout()
-    plt.savefig("output/aptitudes_age.png", bbox_inches="tight", dpi=300)
-    print("Graphique enregistré dans 'output/aptitudes_age.png' ")
+    plt.savefig("output/q10/aptitudes_age.png", bbox_inches="tight", dpi=300)
+    print("Graphique enregistré dans 'output/q10/aptitudes_age.png' ")
     plt.show()
 
 

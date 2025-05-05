@@ -26,8 +26,8 @@ class Q4View(AbstractView):
             {
                 "type": "list",
                 "name": "question saison",
-                "message": """Pour quelle saison souhaitez-vous afficher le
-                "classement ?""",
+                "message": "Pour quelle saison souhaitez-vous afficher le "
+                "classement ?",
                 "choices": [
                     "2008/2009",
                     "2009/2010",
@@ -77,7 +77,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "jaune",
-                chemin=f"output/classement_jaunes_{saison_clean}.png",
+                chemin=f"output/q4/classement_jaunes_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -93,7 +93,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "rouge",
-                chemin=f"output/classement_rouges_{saison_clean}.png",
+                chemin=f"output/q4/classement_rouges_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -109,7 +109,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "but",
-                chemin=f"output/classement_buteurs_{saison_clean}.png",
+                chemin=f"output/q4/classement_buteurs_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -125,7 +125,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "passe",
-                chemin=f"output/classement_passeurs_{saison_clean}.png",
+                chemin=f"output/q4/classement_passeurs_{saison_clean}.png",
             )
             next_view = Q4View()  # On revient au menu
 
