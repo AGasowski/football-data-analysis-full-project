@@ -1,3 +1,10 @@
+"""
+Module : accueil_view
+
+Ce module contient la classe AccueilView qui gère
+l'affichage du menu principal et la gestion des choix de l'utilisateur.
+"""
+
 from project.view.abstract_view import AbstractView
 from InquirerPy import prompt
 
@@ -5,6 +12,15 @@ from InquirerPy import prompt
 class AccueilView(AbstractView):
 
     def __init__(self):
+        """
+        Classe représentant la vue du menu principal (Accueil) de
+        l'application.
+
+        Cette classe permet à l'utilisateur de choisir entre plusieurs options
+        disponibles, telles que l'affichage de classements, des matchs, ou des
+        statistiques, en fonction de la saison et du championnat sélectionnés.
+        Chaque choix mène à l'exécution d'une fonction spécifique.
+        """
         super().__init__()
         self.questions = [
             {
@@ -29,6 +45,8 @@ class AccueilView(AbstractView):
                     "d'âge",
                     "Q11 - Afficher l'équipe ayant le pire ratio de buts/tirs "
                     "cadrés",
+                    "Q12 - Afficher le classement des matchs les plus "
+                    "imprévisibles",
                     "Quitter l'appli",
                 ],
             }
@@ -75,7 +93,7 @@ class AccueilView(AbstractView):
                 "type": "list",
                 "name": "question championnat",
                 "message": "Pour quel championnat souhaitez-vous répondre "
-                + "à la question ?",
+                "à la question ?",
                 "choices": [
                     "Tous les championnats réunis",
                     "Ligue 1 (France)",
@@ -96,7 +114,7 @@ class AccueilView(AbstractView):
                 "type": "list",
                 "name": "question championnat",
                 "message": "Pour quel championnat souhaitez-vous répondre "
-                + "à la question ?",
+                "à la question ?",
                 "choices": [
                     "Ligue 1 (France)",
                     "Premier League (Angleterre)",
@@ -237,6 +255,15 @@ class AccueilView(AbstractView):
             from project.src.q11_pire_ratio_tirs import run_q11
 
             run_q11(saison, champ)
+            next_view = AccueilView()  # On revient au menu
+
+        elif (
+            answers["Menu principal"]
+            == "Q12 - Afficher le classement des matchs les plus imprévisibles"
+        ):
+            from project.src.q12_imprevisible import run_q12
+
+            run_q12()
             next_view = AccueilView()  # On revient au menu
 
         elif answers["Menu principal"] == "Quitter l'appli":
