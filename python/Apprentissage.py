@@ -137,7 +137,7 @@ for _, row in df_2014.iterrows():
     if X_input.empty:
         continue  # Skip if match not found (shouldn’t happen here)
 
-    X_scaled = (X_input - moyennes) / ecarts_type
+    X_scaled = X_input 
     pred = model.predict(X_scaled)[0]
     home_goals, away_goals = pred
     home_goals = round(home_goals, 0)
