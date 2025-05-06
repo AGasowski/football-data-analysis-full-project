@@ -14,11 +14,11 @@ saison 2015/2016 ?}
 \vskip 10pt
 
 Pour réaliser cette question, nous avons codé en Python pur, c'est-à-dire sans
-l'aide du module pandas. Nous avons utilisé les règles officielles pour le
-classement de la Premier League. Les critères, par ordre d'importance, sont les
-suivants: le nombre de points, puis la différence de buts, puis le nombre de
-buts marqués. Nous avons voulu laisser la possibilité à l'utilisateur de
-choisir une autre saison que 2015/2016. De plus, il a la possibilité de
+l'aide du module \texttt{pandas}. Nous avons utilisé les règles officielles
+pour le classement de la Premier League. Les critères, par ordre d'importance,
+sont les suivants: le nombre de points, puis la différence de buts, puis le
+nombre de buts marqués. Nous avons voulu laisser la possibilité à l'utilisateur
+de choisir une autre saison que 2015/2016. De plus, il a la possibilité de
 demander le classement d'un autre championnat. Ce dernier point doit être
 précisé, puisque les critères utilisés pour départager deux équipes ayant le
 même nombre de points dépend du championnat. En France par exemple, si la
@@ -47,12 +47,12 @@ buts dans le jeu de données ?}
 
 \vskip 10pt
 
-Nous avons répondu à la question en utilisant le paquet pandas. De plus, nous
-avons ajouté la possibilité pour l'utilisateur de choisir s'il veut obtenir les
-matchs avec la plus grande différence de buts pour toutes les saisons
-confondues, ou bien pour une saison bien particulière. De même, il peut choisir
-de réaliser la recherche pour un championnat en particulier ou pour tous les
-championnats confondus.
+Nous avons répondu à la question en utilisant le paquet \texttt{pandas}. De
+plus, nous avons ajouté la possibilité pour l'utilisateur de choisir s'il veut
+obtenir les matchs avec la plus grande différence de buts pour toutes les
+saisons confondues, ou bien pour une saison bien particulière. De même, il peut
+choisir de réaliser la recherche pour un championnat en particulier ou pour
+tous les championnats confondus.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q2.png}
@@ -79,21 +79,20 @@ trouve pas habituellement. La taille moyenne des joueurs marquant de la tête
 peut sembler anecdotique à première vue, mais nous souhaitions observer si
 cette taille était élevée. Comme pour les questions précédentes, nous avons
 permis à l'utilisateur de choisir une saison en particulier ou non. De plus,
-nous l'avons traitée avec pandas.
+nous l'avons traitée avec \texttt{pandas}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q2.png}
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q3.png}
     \begin{centering}
         \captionsetup{justification=centering}
-    \caption{Match avec la plus grande différence de buts entre 2008 et 2016
-    dans les plus grands championnats européens \\
-    \textit{Note de lecture : Le PSV a gagné 10-0 face à Feyenoord.} \\
+    \caption{Taille moyenne des buteurs de la tête pour la saison 2008/2009 \\
     \textit{Données issues de : European Soccer Database — Hugo Mathien,
     Kaggle}}
     \end{centering}
 \end{figure}
 
 \vskip 10pt
+\newpage
 
 \textbf{Question 4 : Quel est le classement, tous championnats confondus, des
 cartons jaunes, des cartons rouges, des buteurs et des passeurs ?}
@@ -103,13 +102,25 @@ cartons jaunes, des cartons rouges, des buteurs et des passeurs ?}
 Ces quatre questions sont en réalité très similaires, d'où notre volonté de les
 rassembler en une seule question. Ce sont des statistiques très facilement
 accessibles sur les sites spécialisés puisqu'elles sont au cœur des débats
-footballistiques. Elles ont toutes été traitées avec le paquet pandas.
+footballistiques. Elles ont toutes été traitées avec le paquet \texttt{pandas}.
 L'utilisateur peut choisir la saison pour laquelle il veut afficher le
 classement en question. Nous avons remarqué que les statistiques diffèrent
 parfois des classements officiels trouvés sur internet. Nous supposons alors
 que certaines données de notre base de données sont erronées ou manquantes.
 C'est principalement le cas en ce qui concerne les classements concernant les
 cartons reçus.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q4.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Classement des meilleurs buteurs de Ligue 1 en 2014/2015 \\
+    \textit{Note de lecture : Lacazette était le meilleur buteur de cette
+    saison avec 27 buts marqués.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
 
@@ -123,7 +134,19 @@ saison: 4 2 3 1. Nous avons alors eu envie de connaître les autres dispositifs
 les plus utilisés, d'où la création de ce classement. Il est important de
 rappeler que la base de données ne prend pas en compte les éventuels
 changements de dispositif au cours d'un match. La réalisation de cette question
-a été faite en utilisant pandas.
+a été faite en utilisant \texttt{pandas}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q5.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Classement des dispositifs les plus utilisés en 2011/2012 \\
+    \textit{Note de lecture : Le 4 2 3 1 (4 défenseurs, 2 milieux défensifs, 3
+    milieux offensifs, 1 attaquant) a été utilisé 539 fois.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
 
@@ -133,28 +156,59 @@ de matchs nuls ?}
 \vskip 10pt
 
 De nouveau, nous avions envie de chercher un résultat original. Pour cela, nous
-avons utilisé le paquet pandas. Nous cherchions à identifier un jour
+avons utilisé le paquet \texttt{pandas}. Nous cherchions à identifier un jour
 particulièrement notable, et le jour ayant connu le plus de matchs nuls était
 idéal. Il s'agit d'un samedi, ce qui semble logique puisque plus de matchs y
 sont joués. Comme la saison d'un match n'était pas immédiatement accesible dans
 la table nous avons créé une colonne saison qui détermine la saison d'un match
 en fonction de sa date (une saison dure de août à mai). On peut également
-choisir de trouver ce jour pour une saison en particulier. Le paquet pandas
-nous a de nouveau servi ici.
+choisir de trouver ce jour pour une saison en particulier.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q6.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Jour qui a connu le plus de matchs nuls \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
+\newpage
 
 \textbf{Question 7 : Quelle est l'équipe type en 4 4 2 ?}
 
 \vskip 10pt
 
-Chaque weekend, les médias de foot déterminent leur équipe type. La sélection
-et la comparaison des joueurs est presque une obsession pour les fans de foot,
-d'où notre volonté de créer notre propre sélection. Tout d'abord, la
-détermination des critères d'une équipe type est évidemment subjective.
-Ensuite, nous avons choisi un dispositif précis et populaire (le 4 4 2) afin de
-simplifier le choix des critères en fonction des postes. La méthode utilisée
-pour sélectionner un joueur à un poste est la suivante:
+\refstepcounter{figure}
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+L'utilisateur peut ici choisir la saison pour laquelle il souhaite obtenir
+l'équipe type. Pour une visualisation plus agréable, nous avons modélisé un
+terrain de foot afin de placer les joueurs au bon endroit. Toute cette question
+a été réalisée à l'aide du paquet \texttt{pandas}.\\[1em]
+
+{Figure~\thefigure{} - 11 type pour la saison 2013/2014} \\[0.5em]
+\textit{Note de lecture : Manuel Neuer est le meilleur gardien d'Europe, selon
+nos critères.} \\[0.5em]
+\textit{Données : European Soccer Database — Hugo Mathien, Kaggle.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth]{Images/q7.png}
+\end{minipage}
+
+\addcontentsline{lof}{figure}{Figure~\thefigure{} : 11 type pour la saison
+2013/2014}
+
+\vskip 10pt 
+
+\noindent
+La méthode utilisée pour sélectionner un joueur à un poste est la suivante:
 
 \begin{itemize}
     \item \textbf{Sélection des critères les plus importants pour jouer à un
@@ -163,12 +217,12 @@ pour sélectionner un joueur à un poste est la suivante:
     tacles, la détente, la force et le marquage. Nous ne développons pas les
     aptitudes sélectionnées pour chaque poste, mais la sélection a été faite en
     nous renseignant sur celles qui étaient les plus importantes sur des médias
-    de tactique de foot.
+    de tactique de foot. \vskip 10pt
     \item \textbf{Calcul des scores.} Le calcul du score est réalisé en faisant
     la somme des scores de chaque critère sélectionné pour le poste. En effet,
     chaque joueur possède une note pour chaque aptitude. Nous choisissons
     ensuite le joueur qui obtient le meilleur score et qui n'est pas déjà
-    présent dans notre équipe type. 
+    présent dans notre équipe type. \vskip 10pt
     \item \textbf{Choix du pied fort.} Sur un terrain, il est plus probable de
     jouer à droite en étant droitier, et inversement en étant gaucher. Pour
     retrouver une certaine cohérence avec la réalité, nous voulions
@@ -181,7 +235,7 @@ pour sélectionner un joueur à un poste est la suivante:
 L'utilisateur peut ici choisir la saison pour laquelle il souhaite obtenir
 l'équipe type. Pour une visualisation plus agréable, nous avons modélisé un
 terrain de foot afin de placer les joueurs au bon endroit. Toute cette question
-a été réalisée à l'aide du paquet pandas. 
+a été réalisée à l'aide du paquet \texttt{pandas}. 
 
 \vskip 10pt
 
@@ -220,6 +274,19 @@ Une faible valeur de \( \Sigma_e \) indique que les joueurs de l’équipe \( e 
 présentent des performances cohérentes dans le temps. Nous obtenons ainsi un
 classement des équipes selon ce critère.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q8.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Classement de s équipes les plus régulières \\
+    \textit{Note de lecture : Tubize est l'équipe de la base de données dont
+    les attributs des joueurs semblent les plus réguliers.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
+
 \vskip 10pt
 
 \textbf{Question 9 : Quelle équipe marque, en moyenne, plus à l'extérieur qu'à
@@ -238,6 +305,21 @@ l'écart des moyennes pour que la comparaison entre les équipes soit pertinente
 L'utilisateur a la possibilité de choisir les paramètres de saison et de
 championnat. Cette fois, nous avons répondu à la question en Python pur.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q9.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Classement des équipes qui marquent, en moyenne, plus à
+    l'extérieur (Serie A, 2010/2011) \\
+    \textit{Note de lecture : Udinese marque en moyenne 1,42 buts à domicile et
+    2 buts à l'extérieur, ce qui donne en moyenne 0,58 buts de plus à
+    l'extérieur qu'à domicile.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
+
 \vskip 10pt
 
 \textbf{Question 10 : Quelle est l'évolution des attributs physiques des
@@ -253,6 +335,18 @@ attributs sélectionnés pour chaque catégorie d'âge. Le résultat de cette
 question est un graphique affichant clairement la moyenne pour chaque
 catégorie. On y voit facilement l'évolution des attributs, ce qui est plutôt
 intéressant à observer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q10.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Moyenne des attributs physiques en fonction de l'âge \\
+    \textit{Note de lecture : L'accélération (en bleu) diminue avec l'âge.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
 
@@ -279,8 +373,23 @@ l'analyse de données. Certaines cotes, jugées très improbables, auraient pu
 permettre d'empocher d'importants gains lorsqu'un résultat inattendu s'est
 finalement produit. Cette question a pour objectif d'identifier les 10 cotes
 les plus élevées associées à des résultats qui se sont effectivement réalisés.
-L'utilisateur peut choisir d'affciher ces matchs pour une saison particulière.
-L'analyse a été réalisée en Python pur.
+Nous avons concentré notre travail sur les cotes du site Bet365. L'utilisateur
+peut choisir d'affciher ces matchs pour une saison particulière. L'analyse a
+été réalisée en Python pur.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q12.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Matchs dont les résultats étaient les plus imprévisibles entre
+    2008 et 2016\\
+    \textit{Note de lecture : Parier 1€ sur la défaite de Barcelone le 11
+    septembre 2010 aurait pu permettre de remporter 34€ sur le site Bet365.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 25pt 
 
