@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from fonction_commune_chahid import *
 from scipy.stats import norm
 
-def l_predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
+def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     # Chargement des données
     df_equipe = pd.read_excel("stats_equipes.xlsx")
     df_titulaire = pd.read_excel("titulaire.xlsx")
