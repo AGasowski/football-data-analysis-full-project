@@ -50,8 +50,9 @@ def run_q4(saison, championnat, type):
     print("==================================================================")
     print(f"    Classement des {titre} pour la saison {saison}")
     print(
-        f"{f' {championnat}' if championnat != 'Tous les championnats réunis'
-            else ''}"
+        f"    {f' {championnat}' if championnat != 'Tous les championnats '
+               'réunis'
+               else ''}"
     )
     print("==================================================================")
 

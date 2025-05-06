@@ -25,9 +25,9 @@ def run_q1(saison, championnat):
         saison (str): Saison sous forme de chaîne, ex. "2014/2015" championnat
         (str): Nom du championnat, ex. "England Premier League"
     """
-    print("==================================================================")
+    print("=" * 80)
     print(f"    Classement de {championnat} pour la saison {saison}")
-    print("==================================================================")
+    print("=" * 80)
 
     team_names = charger_csv(
         "data/Team.csv", "dict", "team_api_id", "team_long_name"

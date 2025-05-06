@@ -74,7 +74,7 @@ def run_q7(saison):
     )
 
     # Affichage de l'équipe
-    print("Meilleur 11 en 4-4-2 entre 2007 et 2016:")
+    print("Meilleur 11 en 4-4-2:")
     for _, row in df_meilleur_11.iterrows():
         print(f"{row['Poste']}: {row['player_name']}")
 

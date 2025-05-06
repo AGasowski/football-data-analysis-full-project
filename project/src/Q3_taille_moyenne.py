@@ -29,13 +29,12 @@ def run_q3(saison):
 
         championnat (str): Nom du championnat ciblé.
     """
-    print("==============================================================")
+    print("=" * 50)
     print(
         f"    Taille moyenne des buteurs de tête"
         f"{f' ({saison})' if saison != '0' else ''}"
     )
-    print("==============================================================")
-
+    print("=" * 50)
     # On importe la table match
     match = charger_csv("data/Match.csv")
 

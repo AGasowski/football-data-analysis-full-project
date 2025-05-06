@@ -24,14 +24,14 @@ def run_q2(saison, championnat):
         saison (str): Saison ciblée au format "2014/2015". Si "0", utilise
         toutes les saisons.
     """
-    print("==================================================================")
+    print("=" * 56)
     print(
         f"    Matchs avec la plus grande différence de buts"
         f"{f' ({saison})' if saison != '0' else ''}"
         f"{f' ({championnat})' if championnat != "Tous les championnats réunis"
            else ''}"
     )
-    print("==================================================================")
+    print("=" * 56)
 
     match = charger_csv("data/Match.csv")
     if saison != "0":

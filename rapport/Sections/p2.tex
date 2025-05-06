@@ -27,6 +27,18 @@ confrontations directes entre les deux équipes. Cependant, dans un souci de
 temps imparti, nous n'avons pas pu ajuster les critères en fonction des
 championnats et les classements sont réalisés selon les règles de la Premier
 League.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q1.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Classement de Premier League pour la saison 2015/2016 \\
+    \textit{Note de lecture : Leicester a gagné le championnat avec 81 points,
+    une différence de buts de 32 et 68 buts marqués.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
 
@@ -41,6 +53,18 @@ matchs avec la plus grande différence de buts pour toutes les saisons
 confondues, ou bien pour une saison bien particulière. De même, il peut choisir
 de réaliser la recherche pour un championnat en particulier ou pour tous les
 championnats confondus.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q2.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Match avec la plus grande différence de buts entre 2008 et 2016
+    dans les plus grands championnats européens \\
+    \textit{Note de lecture : Le PSV a gagné 10-0 face à Feyenoord.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \subsection{Questions choisies}
 
@@ -53,10 +77,21 @@ Pour trouver l'intitulé de cette question, nous voulions profiter de la libert�
 que nous possédions afin de déterminer une statistique descriptive que l'on ne
 trouve pas habituellement. La taille moyenne des joueurs marquant de la tête
 peut sembler anecdotique à première vue, mais nous souhaitions observer si
-cette taille était élevée, ou bien similaire à la taille moyenne d'une
-population de joueurs de foot. Comme pour les questions précédentes, nous avons
+cette taille était élevée. Comme pour les questions précédentes, nous avons
 permis à l'utilisateur de choisir une saison en particulier ou non. De plus,
 nous l'avons traitée avec pandas.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q2.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Match avec la plus grande différence de buts entre 2008 et 2016
+    dans les plus grands championnats européens \\
+    \textit{Note de lecture : Le PSV a gagné 10-0 face à Feyenoord.} \\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
 
 \vskip 10pt
 
@@ -133,43 +168,7 @@ pour sélectionner un joueur à un poste est la suivante:
     la somme des scores de chaque critère sélectionné pour le poste. En effet,
     chaque joueur possède une note pour chaque aptitude. Nous choisissons
     ensuite le joueur qui obtient le meilleur score et qui n'est pas déjà
-    présent dans notre équipe type. Soit un poste $P$ (par exemple défenseur
-    central), et un ensemble de critères $C_P = \{c_1, c_2, \dots, c_n\}$
-    considérés comme les plus pertinents pour ce poste.
-
-    Chaque joueur $j$ possède une note $s_j(c_k)$ pour chaque critère $c_k \in
-    C_P$.
-
-    Le \textbf{score total} $S_j$ du joueur $j$ pour le poste $P$ est défini
-    comme la somme des notes sur les critères sélectionnés :
-
-    \[
-    S_j = \sum_{k=1}^{n} s_j(c_k)
-    \]
-
-    où :
-    \begin{itemize}
-        \item $S_j$ : score total du joueur $j$ pour le poste $P$,
-        \item $s_j(c_k)$ : note du joueur $j$ pour le critère $c_k$,
-        \item $n$ : nombre de critères considérés pour le poste.
-    \end{itemize}
-
-    Le joueur sélectionné pour le poste $P$ est celui qui maximise $S_j$, tout
-    en respectant la contrainte qu’il ne soit pas déjà présent dans l’équipe
-    type :
-
-    \[
-    j^* = \underset{j \notin \text{équipe}}{\arg\max} \; S_j
-    \]
-
-    Pour les postes où le pied fort est pertinent (latéral, ailier, défenseur
-    central), une contrainte supplémentaire peut être ajoutée pour ne retenir
-    que les joueurs dont le pied fort correspond au côté du terrain :
-
-    \[
-    j^* = \underset{\substack{j \notin \text{équipe} \\ \text{pied}_j = 
-    \text{côté}_P}}{\arg\max} \; S_j
-    \]
+    présent dans notre équipe type. 
     \item \textbf{Choix du pied fort.} Sur un terrain, il est plus probable de
     jouer à droite en étant droitier, et inversement en étant gaucher. Pour
     retrouver une certaine cohérence avec la réalité, nous voulions
@@ -236,7 +235,8 @@ résultats à l'extérieur, et c'est ce que nous avons voulu mettre en avant dan
 cette question. Nous avons réalisé le classement en fonction de l'écart entre
 le nombre moyen de buts marqués à l'extérieur et à domicile. Nous avons étudié
 l'écart des moyennes pour que la comparaison entre les équipes soit pertinente.
-Cette fois, nous avons répondu à la question en Python pur.
+L'utilisateur a la possibilité de choisir les paramètres de saison et de
+championnat. Cette fois, nous avons répondu à la question en Python pur.
 
 \vskip 10pt
 
@@ -279,6 +279,7 @@ l'analyse de données. Certaines cotes, jugées très improbables, auraient pu
 permettre d'empocher d'importants gains lorsqu'un résultat inattendu s'est
 finalement produit. Cette question a pour objectif d'identifier les 10 cotes
 les plus élevées associées à des résultats qui se sont effectivement réalisés.
+L'utilisateur peut choisir d'affciher ces matchs pour une saison particulière.
 L'analyse a été réalisée en Python pur.
 
 \vskip 25pt 

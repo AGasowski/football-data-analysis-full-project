@@ -43,7 +43,5 @@ def run_q6(saison):
     # Trouver le jour avec le plus de matchs nuls
     jour_max, nb_max = max_serie(nb_occurences(matchs_nuls, "date"))
 
-    print(
-        f"Le jour qui a connu le plus de matchs nuls est le "
-        f"{date_format(jour_max)} avec {nb_max} matchs nuls."
-    )
+    print("Le jour qui a connu le plus de matchs nuls est le ")
+    print(f"{date_format(jour_max)} avec {nb_max} matchs nuls.")
