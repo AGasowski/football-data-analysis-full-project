@@ -3,7 +3,7 @@ from fonctions_communes import (
     select_all,
     select_colonnes,name_team_dic,transforme
     )  
-from fonction_commune_elhadji import (element_min_colonne,data_to_dict,moyenne_par_colonne,cle_minimale)  
+from Corbeille.fonction_commune_elhadji import (element_min_colonne,data_to_dict,moyenne_par_colonne,cle_minimale)  
 match = lire_csv("data/Match.csv")
 match = select_all(match, "season", "2014/2015")
 match = select_all(match ,"league_id",21518)

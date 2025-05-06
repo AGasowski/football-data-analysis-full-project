@@ -1,5 +1,5 @@
 
-from fonction_commune_elhadji import (filtrer_match_csv,compter_lignes_par_team,transforme) 
+from Corbeille.fonction_commune_elhadji import (filtrer_match_csv,compter_lignes_par_team,transforme) 
 
 import csv
 

@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import PoissonRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-from change import *
+from Corbeille.change import *
 import numpy as np
 import pandas as pd
 

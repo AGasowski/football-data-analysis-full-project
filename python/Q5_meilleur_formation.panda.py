@@ -5,7 +5,7 @@ from fonctions_communes import (
     formation,
     convertir_list,
 )  
-from fonction_commune_elhadji import (fusionner_colonnes_en_listes,cle_maximale,)
+from Corbeille.fonction_commune_elhadji import (fusionner_colonnes_en_listes,cle_maximale,)
 
 match = lire_csv("data/Match.csv")
 match = select_all(match, "season", "2014/2015")

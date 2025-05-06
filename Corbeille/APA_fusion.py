@@ -1,5 +1,5 @@
 from fonction_commune_chahid import *
-from APA_diversite import *
+from Corbeille.APA_diversite import *
 from Corbeille.APA_Carton_rouge import *
 
 diversite_df = diversite_toute_saison()
