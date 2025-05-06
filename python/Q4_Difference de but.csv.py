@@ -1,5 +1,5 @@
 import csv
-from fonction_commune_chahid import *
+
 def ecart_de_buts(match):
     try:
         return abs(int(match["home_team_goal"]) - int(match["away_team_goal"]))
