@@ -42,7 +42,7 @@ def run_q11(saison, championnat):
     team = charger_csv("data/Team.csv")
     team = filtrer_df(team, None, None, ["team_api_id", "team_long_name"])
 
-    match["but"] = match["home_team_goal"] + match["away_team_goal"]
+    match["but"] = match["home_team_goal"] 
     match["tir_cadre"] = match["shoton"].map(
         lambda x: (len(x) if isinstance(x, (list, str)) and x != "" else 1)
     )
