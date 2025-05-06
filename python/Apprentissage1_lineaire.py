@@ -120,9 +120,21 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     ic_inf = ligne_equipe["points_total"] - 1.96 * erreur_type
     ic_sup = ligne_equipe["points_total"] + 1.96 * erreur_type
     rang = ligne_equipe["rank"]
+    #calcul de RMSE
+    df_match=pd.read_csv("data/Match.csv")
+    df_reel= calculer_classement(df_match, saison, league_id_cible)
+    # Merge classement prédit et réel
+    df_pred = df_ligue[["team_api_id", "rank"]].rename(columns={"rank": "classement_pred"})
+    df_reel["team_api_id"] = df_reel["team_api_id"].apply(id_to_nom)
+
+    df_comparaison = df_pred.merge(df_reel, on="team_api_id")
+
+# Calcul du RMSE
+    rmse = np.sqrt(((df_comparaison["classement_pred"] - df_comparaison["rank"]) ** 2).mean())
+    print(f"RMSE du modèle sur la saison {saison} : {rmse:.2f}")
 
     print(f"En saison {saison}, l'équipe {nom_equipe} sera classée {int(rang)}ᵉ avec un intervalle de confiance approximatif sur les points de [{ic_inf:.2f}, {ic_sup:.2f}].")
     return int(rang), (ic_inf, ic_sup)
 
 # Exemple d'appel :
-predire_classement_avec_confiance("2015/2016", 21518, 10205)
+predire_classement_avec_confiance("2014/2015", 21518, 10205)

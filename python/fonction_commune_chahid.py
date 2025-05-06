@@ -716,3 +716,54 @@ def id_to_nom(id):
     for i in range(len(id_team)):
         if id_team[i] == id:
             return nom_team[i]
+        
+def calculer_classement(df_match, saison, league_id):
+    # Filtrer les matchs de la saison et de la ligue
+    df_filtre = df_match[(df_match["season"] == saison) & (df_match["league_id"] == league_id)].copy()
+
+    # Initialiser la liste des résultats
+    classement = []
+
+    for _, row in df_filtre.iterrows():
+        home_id = row["home_team_api_id"]
+        away_id = row["away_team_api_id"]
+        home_goals = row["home_team_goal"]
+        away_goals = row["away_team_goal"]
+
+        # Attribution des points
+        if home_goals > away_goals:
+            points_home, points_away = 3, 0
+        elif home_goals < away_goals:
+            points_home, points_away = 0, 3
+        else:
+            points_home = points_away = 1
+
+        # Ajouter les deux équipes dans le classement
+        classement.append({
+            "team_api_id": home_id,
+            "points": points_home,
+            "buts_marques": home_goals,
+            "buts_encaisses": away_goals
+        })
+        classement.append({
+            "team_api_id": away_id,
+            "points": points_away,
+            "buts_marques": away_goals,
+            "buts_encaisses": home_goals
+        })
+
+    # Convertir en DataFrame
+    df_resultats = pd.DataFrame(classement)
+
+    # Agréger les résultats par équipe
+    df_resultats = df_resultats.groupby("team_api_id").agg(
+        points_total=("points", "sum"),
+        buts_marques=("buts_marques", "sum"),
+        buts_encaisses=("buts_encaisses", "sum")
+    ).reset_index()
+
+    # Calcul du classement (rang)
+    df_resultats = df_resultats.sort_values(by="points_total", ascending=False)
+    df_resultats["rank"] = df_resultats["points_total"].rank(method="first", ascending=False).astype(int)
+
+    return df_resultats

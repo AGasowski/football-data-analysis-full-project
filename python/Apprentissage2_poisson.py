@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import PoissonRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 from fonction_commune_chahid import *
@@ -168,9 +168,13 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     df_rank=match[match["season"] == saison]
     df_rank1, _ = extraire_caracteristiques_mi_saison(df_rank)
     rang_mi_saison = df_rank1[df_rank1["equipe"] == team_id_cible]["rank"].values[0]
-    # Modèle de régression
-    model = LinearRegression()
+   # Modèle de régression de Poisson
+    model = PoissonRegressor()
+
+# Entraînement du modèle
     model.fit(X_train_scaled, y_train)
+
+# Prédiction avec le modèle de Poisson
     y_pred = model.predict(X_test_scaled)
     # Trouver l'index de l'équipe dans df_test
     index_team = df_test[df_test['equipe'] == team_id_cible].index[0]
@@ -181,7 +185,7 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     print(f"En saison {saison}, l'équipe {id_to_nom(team_id_cible)} qui etait {rang_mi_saison} a la mi_saison ,sera classée {predicted_rank.round().astype(int)} en fin de saison ")
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"RMSE : {rmse:.2f}")
-predire_classement_avec_confiance("2015/2016", 21518, 8634)
+predire_classement_avec_confiance("2014/2015", 21518, 8633)
 '''
 # Comparaison des prédictions
 df_comparaison = pd.DataFrame({
