@@ -28,12 +28,12 @@ def run_q9(saison, championnat):
     Args:
         saison (str): Saison ciblée championnat (str): Nom du championnat ciblé
     """
-    print("==================================================================")
+    print("=" * 100)
     print(
         f"       {f' {championnat}' if championnat != "Tous les championnats" 
                   else ''} {f' ({saison})' if saison != "0" else ''}"
     )
-    print("==================================================================")
+    print("=" * 100)
 
     team_names = charger_csv(
         "data/Team.csv", "dict", "team_api_id", ("team_long_name")

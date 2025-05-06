@@ -184,13 +184,14 @@ choisir de trouver ce jour pour une saison en particulier.
 \refstepcounter{figure}
 \noindent
 \begin{minipage}[t]{0.5\textwidth}
+\raggedright
 \vspace{0pt}
 L'utilisateur peut ici choisir la saison pour laquelle il souhaite obtenir
 l'équipe type. Pour une visualisation plus agréable, nous avons modélisé un
 terrain de foot afin de placer les joueurs au bon endroit. Toute cette question
 a été réalisée à l'aide du paquet \texttt{pandas}.\\[1em]
 
-{Figure~\thefigure{} - 11 type pour la saison 2013/2014} \\[0.5em]
+\centerline{Figure~\thefigure{} -- 11 type pour la saison 2013/2014}
 \textit{Note de lecture : Manuel Neuer est le meilleur gardien d'Europe, selon
 nos critères.} \\[0.5em]
 \textit{Données : European Soccer Database — Hugo Mathien, Kaggle.}
@@ -242,6 +243,8 @@ a été réalisée à l'aide du paquet \texttt{pandas}.
 \textbf{Question 8 : Quelles sont les équipes qui sont les plus régulières en
 terme de performances ?}
 
+\vskip 10pt
+
 Il est intéressant de savoir si certaines équipes sont constantes dans leurs
 performances, que ça soit avec de bonnes ou moins bonnes aptitudes. Pour
 répondre à cette question, il est possible de proposer de nombreuses méthodes.
@@ -251,9 +254,9 @@ simplifier notre démarche. Nous utilisons ensuite la table des attributs des
 joueurs afin d'évaluer l'écart-type de ses attributs techniques à différents
 instants.
 
-Soit \( E \) un ensemble d'équipes, et pour chaque équipe \( e \in E \), soit
-\( J_e = \{j_1, j_2, \dots, j_{11}\} \) l'ensemble des 11 joueurs les plus
-souvent alignés.  
+Explication mathématique de la méthode: soit \( E \) un ensemble d'équipes, et
+pour chaque équipe \( e \in E \), soit \( J_e = \{j_1, j_2, \dots, j_{11}\} \)
+l'ensemble des 11 joueurs les plus souvent alignés.  
 Pour chaque joueur \( j \in J_e \), on considère un vecteur d'attributs
 techniques au cours du temps, noté \( A_j(t) \), et on calcule :
 
