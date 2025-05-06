@@ -57,12 +57,12 @@ def save_print_as_png(
 
     if not police_trouvee:
         print(
-            "⚠️ Aucune police Unicode trouvée. Utilisation de la police par "
+            "Aucune police Unicode trouvée. Utilisation de la police par "
             "défaut."
         )
         police = ImageFont.load_default()
     else:
-        print(f"✅ Police utilisée : {police_trouvee}")
+        print(f"Police utilisée : {police_trouvee}")
         police = ImageFont.truetype(police_trouvee, taille_police)
 
     # 3. Gérer le texte
@@ -79,4 +79,4 @@ def save_print_as_png(
         y += taille_police + ligne_spacing
 
     image.save(chemin_sortie, dpi=(300, 300))
-    print(f"✅ Image enregistrée : {chemin_sortie}")
+    print(f"Image enregistrée : {chemin_sortie}")
