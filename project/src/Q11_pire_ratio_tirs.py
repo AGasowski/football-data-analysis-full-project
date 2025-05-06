@@ -50,3 +50,6 @@ def run_q11(saison, championnat):
     d = calculer_moyenne(match, "home_team_api_id", "ratio")
     team_names = data_to_dict(team, "team_api_id", "team_long_name")
     print(name_team_dic(team_names, cle_extreme(d, "min")))
+
+
+run_q11("2012/2014", "Premier League (Angleterre)")
