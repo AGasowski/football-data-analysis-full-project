@@ -20,7 +20,7 @@ le jeu de données ?
 
 5- Quelle est la formation qui a eu le plus de victoire ? 
 
-6- Quelle est l’équipe qui, en moyenne sur ses matchs joués à domicile, présente le plus faible ratio entre le nombre total de buts inscrits dans le match (par les deux équipes) et le nombre total de tirs cadrés (également des deux équipes) ?
+6- Quelle est l’équipe qui, en moyenne sur ses matchs joués à domicile, présente le plus faible ratio entre le nombre de buts inscrits et le nombre total de tirs cadrés ?
 
 Mohamed DOUZI
 
