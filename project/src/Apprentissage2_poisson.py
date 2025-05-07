@@ -1,3 +1,9 @@
+"""
+Ce module utilise un modèle de régression de Poisson pour prédire le classement
+final d'une équipe de football à partir de ses performances à mi-saison, en
+utilisant des données historiques.
+"""
+
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import PoissonRegressor
@@ -9,6 +15,18 @@ from project.src.fonctions.manipulations import id_to_nom
 
 
 def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
+    """
+    Prédit le classement final d'une équipe donnée à partir de ses performances
+    à mi-saison et affiche le rang prédit, le rang à mi-saison et l'erreur
+    RMSE.
+
+    Paramètres : - saison (str) : Saison cible, ex : "2014/2015" -
+    league_id_cible (int) : ID de la ligue à filtrer - team_id_cible (int) : ID
+    de l'équipe cible à prédire
+
+    Retour : - None. Les résultats sont affichés dans la console.
+    """
+
     match = pd.read_csv("data/Match.csv")
     match = match[
         match["league_id"] == league_id_cible
@@ -202,17 +220,17 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
         "matchs_ext",
     ]
 
-    X_train = df_all[features]
+    x_train = df_all[features]
     y_train = df_all["rank_final"]
 
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
+    x_train_scaled = scaler.fit_transform(x_train)
 
     # Tester sur une autre saison
     df_test = preparer_donnees_saison(saison)
-    X_test = df_test[features]
+    x_test = df_test[features]
     y_test = df_test["rank_final"]
-    X_test_scaled = scaler.transform(X_test)
+    x_test_scaled = scaler.transform(x_test)
     # rang mi saison
     df_rank = match[match["season"] == saison]
     df_rank1, _ = extraire_caracteristiques_mi_saison(df_rank)
@@ -223,10 +241,10 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     model = PoissonRegressor()
 
     # Entraînement du modèle
-    model.fit(X_train_scaled, y_train)
+    model.fit(x_train_scaled, y_train)
 
     # Prédiction avec le modèle de Poisson
-    y_pred = model.predict(X_test_scaled)
+    y_pred = model.predict(x_test_scaled)
     # Trouver l'index de l'équipe dans df_test
     index_team = df_test[df_test["equipe"] == team_id_cible].index[0]
 
@@ -240,15 +258,3 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     )
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"RMSE : {rmse:.2f}")
-
-
-"""
-# Comparaison des prédictions
-df_comparaison = pd.DataFrame({
-    "Équipe": df_test["equipe"],
-    "Rang Réel": y_test.values,
-    "Rang Prédit": y_pred.round().astype(int)
-}).sort_values("Rang Réel")
-
-print(df_comparaison.head(10))
-"""

@@ -1,8 +1,12 @@
+"""
+Fonctions utiles et communes pour les différents fichiers
+"""
+
+from operator import itemgetter
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches  # Importation de patches
+from matplotlib import patches
 from project.src.fonctions.manipulations import filtrer_df
-from operator import itemgetter
 
 
 # Fonctions plus spécifiques
@@ -123,11 +127,11 @@ def get_taille_joueurs(player_df, player_api_id):
 
     if not player_row.empty:
         return player_row["height"].values[0]
-    else:
-        return None
+    return None
 
 
 def filtre_cartons(card, type_carton):
+    """Filtre les types de cartons"""
     carton = []
     for df in card:
         if isinstance(df, pd.DataFrame):
@@ -301,14 +305,13 @@ def nom_prenom(df):
         parties = nom_complet.strip().split()
         if len(parties) == 1:
             return pd.Series(["", parties[0]])  # prenom vide, nom = mot unique
-        else:
-            return pd.Series([" ".join(parties[:-1]), parties[-1]])
+        return pd.Series([" ".join(parties[:-1]), parties[-1]])
 
     df[["prenom", "nom"]] = df["player_name"].apply(separer_nom_prenom)
     return df
 
 
-def list_en_df(L, *cols):
+def list_en_df(d, *cols):
     """
     Convertit un dictionnaire en DataFrame avec noms de colonnes personnalisés.
 
@@ -327,7 +330,7 @@ def list_en_df(L, *cols):
     """
     if len(cols) != 2:
         raise ValueError("Tu dois fournir exactement deux noms de colonnes.")
-    df = pd.DataFrame(list(L.items()), columns=list(cols))
+    df = pd.DataFrame(list(d.items()), columns=list(cols))
     return df
 
 
@@ -354,8 +357,7 @@ def filtrer_par_pied(df, poste):
         return df[df["preferred_foot"].str.lower() == "right"]
     elif poste in poste_gauche:
         return df[df["preferred_foot"].str.lower() == "left"]
-    else:
-        return df
+    return df
 
 
 def calcul_scores_postes(df, dic):
@@ -538,6 +540,7 @@ def terrain(df_meilleur_11, chemin_sortie):
 
 
 def visualisation(age_group_avg):
+    """Visualiser"""
     age_group_avg.plot(kind="bar", figsize=(10, 6))
     plt.title(
         "Moyenne des attributs physiques par groupe d'âge "
@@ -580,5 +583,6 @@ def afficher_top_clubs_regularite(df, top_n=10):
 
 
 def tri_bet(df):
+    """Tri les paris"""
     df_new = sorted(df, key=itemgetter("Cote_VainqueurB365"), reverse=True)
     return df_new

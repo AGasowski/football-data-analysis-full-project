@@ -40,7 +40,7 @@ def run_q2(saison, league):
     max_diff = -1
     matchs_max = []
 
-    for match_id, data in matchs.items():
+    for data in matchs.items():
         season_val, league_val, home_id, away_id, home_goal, away_goal = data
 
         if season_val != saison or int(league_val) != int(league_id):

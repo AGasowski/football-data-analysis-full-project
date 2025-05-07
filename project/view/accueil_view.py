@@ -5,12 +5,42 @@ Ce module contient la classe AccueilView qui gère l'affichage du menu principal
 et la gestion des choix de l'utilisateur.
 """
 
-from project.view.abstract_view import AbstractView
 from InquirerPy import prompt
+from project.view.abstract_view import AbstractView
 from project.src.fonctions.save import capture_et_enregistrer_png
 
 
 class AccueilView(AbstractView):
+    """
+    Classe AccueilView - Menu principal de l'application
+
+    La classe AccueilView représente l'interface principale de l'application,
+    permettant à l'utilisateur de naviguer entre les différentes
+    fonctionnalités proposées. Elle offre un menu interactif pour accéder aux
+    classements, statistiques et prédictions sur les équipes de football.
+
+    Attributs :
+    ----------
+    questions : list
+        Liste de dictionnaires contenant les options du menu principal.
+    question_saison : list
+        Liste de dictionnaires permettant de sélectionner la saison.
+    question_saison_unique : list
+        Liste de dictionnaires pour choisir une saison spécifique sans l'option
+        "Toutes les saisons réunies".
+    question_championnat : list
+        Liste de dictionnaires pour sélectionner un championnat.
+    question_championnat_unique : list
+        Liste de dictionnaires pour choisir un championnat spécifique.
+
+    Méthodes :
+    ---------
+    make_choice()
+        Affiche le menu principal et redirige l'utilisateur vers la vue
+        correspondante en fonction de son choix.
+    display_info()
+        Affiche un en-tête centré pour le menu principal.
+    """
 
     def __init__(self):
         """

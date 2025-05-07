@@ -1,10 +1,49 @@
-from project.view.abstract_view import AbstractView
+"""
+Module AppView
+
+Ce module définit la classe `AppView`, une vue interactive permettant de
+prédire le classement final d'une équipe sportive, soit avant le début de la
+saison, soit à la mi-saison, en utilisant des méthodes d'apprentissage
+automatique.
+"""
+
 from InquirerPy import prompt
 import pandas as pd
+from project.view.abstract_view import AbstractView
 from project.src.fonctions.names import championnat, get_equipes_participantes
 
 
 class AppView(AbstractView):
+    """
+    Classe AppView - Interface de prédiction de classements sportifs
+
+    La classe AppView permet à l'utilisateur de prévoir le classement final
+    d'une équipe de football, en choisissant la saison, le championnat,
+    l'équipe et la méthode de prédiction. Les méthodes d'apprentissage
+    automatique disponibles sont la régression linéaire et le modèle de
+    Poisson.
+
+    Attributs :
+    ----------
+    questions : list
+        Liste de dictionnaires contenant les choix du menu principal.
+    question_meth : list
+        Liste de dictionnaires pour sélectionner la méthode de prédiction.
+    question_saison : list
+        Liste de dictionnaires pour sélectionner la saison.
+    question_equipe : list
+        Liste de dictionnaires pour sélectionner l'équipe.
+    question_championnat : list
+        Liste de dictionnaires pour sélectionner le championnat.
+
+    Méthodes :
+    ---------
+    make_choice()
+        Affiche le menu principal et gère les choix de l'utilisateur pour
+        prédire les classements ou revenir au menu principal.
+    display_info()
+        Affiche le titre du menu d'apprentissage automatique.
+    """
 
     def __init__(self):
         super().__init__()
@@ -73,6 +112,7 @@ class AppView(AbstractView):
         ]
 
     def make_choice(self):
+        next_view = None
         answers = prompt(self.questions)
 
         if (
@@ -108,7 +148,7 @@ class AppView(AbstractView):
                 "team_api_id"
             ].values[0]
             if meth == "Méthode linéaire":
-                from project.src.Apprentissage1_lineaire import (
+                from project.src.apprentissage1_lineaire import (
                     predire_classement_avec_confiance,
                 )
 
@@ -116,7 +156,7 @@ class AppView(AbstractView):
 
                 next_view = AppView()
             elif meth == "Méthode de Poisson":
-                from project.src.Apprentissage1_poisson import (
+                from project.src.apprentissage1_poisson import (
                     predire_classement_avec_confiance,
                 )
 
@@ -154,7 +194,7 @@ class AppView(AbstractView):
             id_team = teams_df[teams_df["team_long_name"] == equipe][
                 "team_api_id"
             ].values[0]
-            from project.src.Apprentissage2_poisson import (
+            from project.src.apprentissage2_poisson import (
                 predire_classement_avec_confiance,
             )
 
@@ -165,7 +205,7 @@ class AppView(AbstractView):
         elif answers["Menu Apprentissage"] == "Retourner au menu principal":
             from project.view.accueil_view import AccueilView
 
-            return AccueilView()  # On revient au menu principal
+            next_view = AccueilView()  # On revient au menu principal
 
         elif answers["Menu Apprentissage"] == "Quitter l'appli":
             next_view = None

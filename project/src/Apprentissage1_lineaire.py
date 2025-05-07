@@ -1,3 +1,8 @@
+"""
+Ce module entraîne un modèle de régression linéaire pour prédire le classement
+d'une équipe de football à partir de statistiques de matchs et d'équipes.
+"""
+
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import (
@@ -9,6 +14,19 @@ from project.src.fonctions.statistiques import calculer_classement
 
 
 def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
+    """
+    Prédit le classement d'une équipe pour une saison donnée à l'aide
+    d'un modèle de régression linéaire, et retourne son rang et un intervalle
+    de confiance sur ses points.
+
+    Args:
+        saison (str): Saison cible (ex: "2014/2015")
+        league_id_cible (int): ID de la ligue
+        team_id_cible (int): ID de l'équipe
+
+    Retour : - None. Les résultats sont affichés dans la console.
+    """
+
     # Chargement des données
     df_equipe = pd.read_excel("stats_equipes.xlsx")
     df_titulaire = pd.read_excel("titulaire.xlsx")
@@ -98,15 +116,15 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     train = df_match_clean[df_match_clean["saison"] < "2014/2015"]
     test = df_match_clean[df_match_clean["saison"] == saison]
 
-    X_train = train[features]
+    x_train = train[features]
     y_train_home = train["home_team_goal"]
     y_train_away = train["away_team_goal"]
-    X_test = test[features]
+    x_test = test[features]
 
     # Standardisation
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    x_train_scaled = scaler.fit_transform(x_train)
+    x_test_scaled = scaler.transform(x_test)
 
     # Modèle de régression linéaire
     linear_home = (
@@ -116,12 +134,12 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
         LinearRegression()
     )  # Remplacer PoissonRegressor par LinearRegression
 
-    linear_home.fit(X_train_scaled, y_train_home)
-    linear_away.fit(X_train_scaled, y_train_away)
+    linear_home.fit(x_train_scaled, y_train_home)
+    linear_away.fit(x_train_scaled, y_train_away)
 
     # Prédictions
-    pred_home = linear_home.predict(X_test_scaled)
-    pred_away = linear_away.predict(X_test_scaled)
+    pred_home = linear_home.predict(x_test_scaled)
+    pred_away = linear_away.predict(x_test_scaled)
 
     # Simulation du classement avec points
     df_test = test.copy()

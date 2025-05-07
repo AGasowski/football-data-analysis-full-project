@@ -1,9 +1,49 @@
-from project.view.abstract_view import AbstractView
+"""
+Module Q4View - Interface pour la gestion des classements sportifs
+
+Ce module contient la classe Q4View, qui permet de gérer l'interface
+utilisateur pour la visualisation des classements sportifs, tels que :
+
+- Classement des cartons jaunes
+- Classement des cartons rouges
+- Classement des buteurs
+- Classement des passeurs
+"""
+
 from InquirerPy import prompt
+from project.view.abstract_view import AbstractView
 from project.src.fonctions.save import capture_et_enregistrer_png
 
 
 class Q4View(AbstractView):
+    """
+    Classe Q4View - Interface de visualisation des classements sportifs
+
+    La classe Q4View permet d'interagir avec l'utilisateur pour afficher divers
+    classements liés aux performances sportives, notamment : - Classement des
+    cartons jaunes - Classement des cartons rouges - Classement des buteurs -
+    Classement des passeurs
+
+    Attributs :
+    -----------
+    questions : list
+        Liste de dictionnaires définissant les questions pour le menu
+        principal.
+    question_saison : list
+        Liste de dictionnaires définissant les questions pour le choix de la
+        saison.
+    question_championnat : list
+        Liste de dictionnaires définissant les questions pour le choix du
+        championnat.
+
+    Méthodes :
+    ---------
+    make_choice()
+        Affiche le menu, récupère le choix de l'utilisateur et exécute l'action
+        correspondante (affichage des classements ou retour au menu principal).
+    display_info()
+        Affiche les informations d'introduction pour la section Q4.
+    """
 
     def __init__(self):
         super().__init__()
@@ -132,7 +172,7 @@ class Q4View(AbstractView):
         elif answers["Menu Q4"] == "Retourner au menu principal":
             from project.view.accueil_view import AccueilView
 
-            return AccueilView()  # On revient au menu principal
+            next_view = AccueilView()  # On revient au menu principal
 
         elif answers["Menu Q4"] == "Quitter l'appli":
             next_view = None

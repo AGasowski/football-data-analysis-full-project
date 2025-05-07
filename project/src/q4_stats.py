@@ -14,7 +14,7 @@ from project.src.fonctions.utils import (
 from project.src.fonctions.manipulations import id_championnat, filtrer_df
 
 
-def run_q4(saison, championnat, type):
+def run_q4(saison, championnat, type_action):
     """
     Affiche les 10 joueurs ayant reçu le plus de cartons jaunes pour une saison
     donnée.
@@ -22,27 +22,30 @@ def run_q4(saison, championnat, type):
     Args:
         saison (str): Saison ciblée, ex. "2014/2015"
     """
-
+    couleur = ""
+    joueur = ""
+    nom = ""
+    titre = ""
     # Type de classement
-    if type == "jaune":
-        type = "card"
+    if type_action == "jaune":
+        type_action = "card"
         couleur = "y"
         joueur = "player1"
         nom = "Nombre de cartons jaunes"
         titre = "cartons jaunes"
-    if type == "rouge":
-        type = "card"
+    if type_action == "rouge":
+        type_action = "card"
         joueur = "player1"
         couleur = "r"
         nom = "Nombre de cartons rouges"
         titre = "cartons rouges"
-    if type == "but":
-        type = "goal"
+    if type_action == "but":
+        type_action = "goal"
         joueur = "player1"
         nom = "Nombre de buts"
         titre = "meilleurs buteurs"
-    if type == "passe":
-        type = "goal"
+    if type_action == "passe":
+        type_action = "goal"
         joueur = "player2"
         nom = "Nombre de passes décisives"
         titre = "meilleurs passeurs"
@@ -68,9 +71,9 @@ def run_q4(saison, championnat, type):
         match = filtrer_df(match, "league_id", int(id_champ))
 
     # Transformer les colonnes goal en DataFrames
-    carton_but = [transforme(g) for g in match[type]]
+    carton_but = [transforme(g) for g in match[type_action]]
 
-    if type == "card":
+    if type_action == "card":
         carton_but = filtre_cartons(carton_but, couleur)
 
     # Étape 2 : utiliser la fonction générique

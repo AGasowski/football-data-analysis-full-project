@@ -1,3 +1,13 @@
+"""
+Module : statistiques_football
+
+Ce module contient diverses fonctions pour analyser et traiter des données
+footballistiques issues de fichiers CSV. Les principales fonctionnalités
+incluent des calculs de statistiques simples (moyennes, résumés), des analyses
+de performance d'équipes et de joueurs, ainsi que des classements de
+championnats.
+"""
+
 import pandas as pd
 from project.src.fonctions.manipulations import creer_dict, fusionner
 from project.src.fonctions.data_loader import convertir_colonne
@@ -28,10 +38,9 @@ def calculer_moyenne(source, group_by_col=None, value_col=None):
         if not source:
             raise ValueError("Liste vide")
         return sum(source) / len(source)
-    elif isinstance(source, pd.DataFrame) and group_by_col and value_col:
+    if isinstance(source, pd.DataFrame) and group_by_col and value_col:
         return source.groupby(group_by_col)[value_col].mean().to_dict()
-    else:
-        raise ValueError("Paramètres incorrects pour le calcul de moyenne")
+    raise ValueError("Paramètres incorrects pour le calcul de moyenne")
 
 
 def resume_colonne(df, col_a, col_b=None, operation="max"):
@@ -148,7 +157,7 @@ def saison_equipe(matchs):
                      [points, buts marqués (BM), buts encaissés (BE)]
     """
     stats = creer_dict(3)
-    for match_id, match in matchs.items():
+    for match in matchs.items():
         home_team_id = match[2]
         away_team_id = match[3]
         home_goals = int(match[4])
@@ -178,6 +187,42 @@ def saison_equipe(matchs):
 
 
 def calculer_classement(df_match, saison, league_id):
+    """
+    Calcule le classement des équipes pour une saison et une ligue données à
+    partir des résultats des matchs.
+
+    Paramètres:
+    -----------
+    df_match : pd.DataFrame
+        DataFrame contenant les informations des matchs, y compris les colonnes
+        suivantes : - 'season' : Saison du match - 'league_id' : Identifiant de
+        la ligue - 'home_team_api_id' : Identifiant de l'équipe à domicile -
+        'away_team_api_id' : Identifiant de l'équipe à l'extérieur -
+        'home_team_goal' : Nombre de buts marqués par l'équipe à domicile -
+        'away_team_goal' : Nombre de buts marqués par l'équipe à l'extérieur
+
+    saison : str ou int
+        La saison pour laquelle le classement doit être calculé (par exemple,
+        "2020/2021").
+
+    league_id : int
+        L'identifiant de la ligue pour laquelle le classement doit être
+        calculé.
+
+    Retour:
+    -------
+    pd.DataFrame
+        DataFrame contenant le classement des équipes avec les colonnes
+        suivantes : - 'team_api_id' : Identifiant de l'équipe - 'points_total'
+        : Nombre total de points obtenus - 'buts_marques' : Nombre total de
+        buts marqués - 'buts_encaisses' : Nombre total de buts encaissés -
+        'rank' : Rang de l'équipe dans le classement (ordre décroissant des
+        points)
+
+    Exemple:
+    --------
+    df_classement = calculer_classement(df_match, "2020/2021", 1)
+    """
     # Filtrer les matchs de la saison et de la ligue
     df_filtre = df_match[
         (df_match["season"] == saison) & (df_match["league_id"] == league_id)
@@ -416,6 +461,9 @@ def calculer_consistance_club(df_players, player_std_by_player, teams):
 
 
 def ecart_de_buts(match):
+    """Calcule l'écart de buts entre l'équipe à domicile et l'équipe à
+    l'extérieur dans un match.
+    """
     try:
         return abs(int(match["home_team_goal"]) - int(match["away_team_goal"]))
     except (KeyError, ValueError, TypeError):

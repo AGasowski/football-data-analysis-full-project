@@ -1,8 +1,21 @@
-from project.view.abstract_view import AbstractView
+"""
+Module Q7View - Interface pour la création du 11 type
+
+Ce module contient la classe Q7View, qui permet de gérer l'interface
+utilisateur pour la visualisation du 11 type
+"""
+
 from InquirerPy import prompt
+from project.view.abstract_view import AbstractView
 
 
 class Q7View(AbstractView):
+    """
+    Classe Q7View - Interface de visualisation du 11 type
+
+    La classe Q7View permet d'interagir avec l'utilisateur pour afficher divers
+    11 types liés aux performances sportives.
+    """
 
     def __init__(self):
         super().__init__()

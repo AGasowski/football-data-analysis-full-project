@@ -27,7 +27,7 @@ def run_q5(saison):
         match = filtrer_df(match, "season", saison)
     match = filtrer_df(match, "league_id", 21518)
 
-    Coordonée_home_joueur = fusionner_colonnes_en_listes(
+    coordonee_home_joueur = fusionner_colonnes_en_listes(
         match,
         [
             "home_player_Y2",
@@ -42,7 +42,7 @@ def run_q5(saison):
             "home_player_Y11",
         ],
     )
-    Coordonée_away_joueur = fusionner_colonnes_en_listes(
+    coordonnee_away_joueur = fusionner_colonnes_en_listes(
         match,
         [
             "away_player_Y2",
@@ -59,15 +59,19 @@ def run_q5(saison):
     )
 
     d = {}
-    for i in range(len(Coordonée_home_joueur)):
-        if tuple(formation(Coordonée_home_joueur[i])) not in d:
-            d[tuple(formation(Coordonée_home_joueur[i]))] = 1
+    for home, away in zip(coordonee_home_joueur, coordonnee_away_joueur):
+        home_tuple = tuple(formation(home))
+        away_tuple = tuple(formation(away))
+
+        if home_tuple not in d:
+            d[home_tuple] = 1
         else:
-            d[tuple(formation(Coordonée_home_joueur[i]))] += 1
-        if tuple(formation(Coordonée_away_joueur[i])) not in d:
-            d[tuple(formation(Coordonée_away_joueur[i]))] = 1
+            d[home_tuple] += 1
+
+        if away_tuple not in d:
+            d[away_tuple] = 1
         else:
-            d[tuple(formation(Coordonée_away_joueur[i]))] += 1
+            d[away_tuple] += 1
 
     classement = trier(d, par=1, type_data="dict", reverse=True)
 

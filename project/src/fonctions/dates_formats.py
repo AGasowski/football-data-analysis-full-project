@@ -1,7 +1,16 @@
-import pandas as pd
+"""
+Module de gestion des dates avec formatage en français.
+
+Ce module fournit des fonctions pour gérer les conversions et le formatage
+de dates selon les conventions françaises. Il utilise le module `locale`
+pour configurer l'affichage des dates en français, ainsi que le module
+`datetime` pour la manipulation des dates.
+"""
+
 import locale
 import platform
 from datetime import datetime
+import pandas as pd
 
 
 # Gérer les conversions de dates et l’affichage selon la locale française.

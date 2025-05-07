@@ -1,9 +1,10 @@
-import pandas as pd
-import xml.etree.ElementTree as ET
-import csv
+"""Module pour charger des données (CSV/XML) et les convertir en formats utiles
+(DataFrame, dict, list, etc.)
+"""
 
-# Charger des données (CSV/XML) et les convertir en formats utiles (DataFrame,
-# dict, list, etc.).
+import csv
+import xml.etree.ElementTree as ET
+import pandas as pd
 
 
 # Chargement des données
@@ -30,7 +31,7 @@ def charger_csv(chemin, mode="dataframe", cle_id=None, *noms_champs):
     if mode == "dataframe":
         df = pd.read_csv(chemin)
         return df
-    elif mode == "dict" and cle_id:
+    if mode == "dict" and cle_id:
         data_dict = {}
         with open(chemin, mode="r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
@@ -41,17 +42,16 @@ def charger_csv(chemin, mode="dataframe", cle_id=None, *noms_champs):
                     valeurs[0] if len(valeurs) == 1 else valeurs
                 )
         return data_dict
-    else:
-        raise ValueError("Mode invalide ou paramètres manquants.")
+    raise ValueError("Mode invalide ou paramètres manquants.")
 
 
-def transforme(X):
+def transforme(x):
     """
     Convertit un code XML en DataFrame pandas.
 
     Paramètres:
     -----------
-    X : str
+    x : str
         Une chaîne de caractères contenant un document XML.
 
     Retourne:
@@ -79,7 +79,7 @@ def transforme(X):
        name age  stats_height  stats_weight
     0  John  30          180            75 1  Jane  28          165 60 ```
     """
-    root = ET.fromstring(X)
+    root = ET.fromstring(x)
     data = []
     for value in root.findall("value"):
         entry = {
@@ -149,11 +149,10 @@ def convertir_colonne(df, col, type_cible):
     list si type_cible == 'list', sinon None (conversion in-place).
     """
     if type_cible == "int":
-        df[col] = df[col].astype(int)
+        return df[col].astype(int)
     elif type_cible == "list":
         return df[col].tolist()
-    else:
-        raise ValueError("Type de conversion non supporté.")
+    raise ValueError("Type de conversion non supporté.")
 
 
 def fusionner_colonnes_en_listes(df, colonnes):

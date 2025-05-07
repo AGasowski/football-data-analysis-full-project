@@ -1,7 +1,16 @@
+"""
+Module : fonctions.capture
+
+Ce module fournit des fonctions pour capturer la sortie d'une fonction sous
+forme de texte et l'enregistrer dans un fichier image PNG. Il est
+principalement utilisé pour sauvegarder des résultats d'exécution sous une
+forme visuelle.
+"""
+
 import io
 import sys
-from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
 
 
 def capture_et_enregistrer_png(
@@ -40,6 +49,23 @@ def save_print_as_png(
     marge: int = 30,
     ligne_spacing: int = 15,
 ):
+    """
+    Sauvegarde un texte sous forme d'image PNG avec des paramètres de mise en
+    forme.
+
+    Args:
+        texte (str): Le texte à enregistrer sous forme d'image. chemin_sortie
+        (str): Le chemin de l'image PNG de sortie (par défaut "output.png").
+        couleur_fond (str): La couleur de fond de l'image (par défaut "white").
+        couleur_texte (str): La couleur du texte (par défaut "black").
+        taille_police (int): La taille de la police en pixels (par défaut 40).
+        marge (int): La marge autour du texte en pixels (par défaut 30).
+        ligne_spacing (int): L'espacement entre les lignes en pixels (par
+        défaut 15).
+
+    Returns:
+        None
+    """
     # 1. Définir un chemin vers une police Unicode fiable
     police_candidates = [
         "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",  # Linux

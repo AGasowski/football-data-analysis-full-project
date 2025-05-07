@@ -1,7 +1,25 @@
+"""
+Module : fonctions.names
+
+Ce module fournit des fonctions utilitaires pour récupérer l'ID d'un
+championnat à partir de son nom et pour obtenir la liste des équipes
+participantes pour une saison donnée dans un championnat spécifique.
+"""
+
 import pandas as pd
 
 
 def championnat(nom_championnat):
+    """
+    Renvoie l'ID d'un championnat en fonction de son nom.
+
+    Args:
+        nom_championnat (str): Le nom du championnat (par exemple, "Ligue 1
+        (France)").
+
+    Returns:
+        int: L'ID du championnat si trouvé, sinon None.
+    """
     championnats = {
         "Ligue 1 (France)": 4769,
         "Premier League (Angleterre)": 1729,
@@ -18,6 +36,18 @@ def championnat(nom_championnat):
 
 
 def get_equipes_participantes(championnat_nom, saison):
+    """
+    Renvoie la liste des équipes participant à un championnat pour une saison
+    donnée.
+
+    Args:
+        championnat_nom (str): Le nom du championnat (par exemple, "Ligue 1
+        (France)"). saison (str): La saison sous la forme "AAAA/AAAA" (par
+        exemple, "2014/2015").
+
+    Returns:
+        list: Une liste triée des noms des équipes participantes.
+    """
     # Obtenir l'ID du championnat
     id_league = championnat(championnat_nom)
     if id_league is None:
@@ -28,14 +58,14 @@ def get_equipes_participantes(championnat_nom, saison):
     teams_df = pd.read_csv("data/Team.csv")
 
     # Filtrer les matchs
-    matches_filtrés = matches_df[
+    matches_filtres = matches_df[
         (matches_df["league_id"] == id_league)
         & (matches_df["season"] == saison)
     ]
 
     # Obtenir les IDs uniques
     equipes_ids = pd.unique(
-        matches_filtrés[
+        matches_filtres[
             ["home_team_api_id", "away_team_api_id"]
         ].values.ravel()
     )

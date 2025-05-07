@@ -30,7 +30,7 @@ def run_q9(saison, championnat):
     """
     print("=" * 100)
     print(
-        f"       {f' {championnat}' if championnat != "Tous les championnats" 
+        f"       {f' {championnat}' if championnat != "Tous les championnats"
                   else ''} {f' ({saison})' if saison != "0" else ''}"
     )
     print("=" * 100)

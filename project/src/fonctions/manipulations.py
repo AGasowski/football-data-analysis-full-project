@@ -1,8 +1,14 @@
-import pandas as pd
-from collections import defaultdict
+"""
+Module d'opérations sur DataFrames et dictionnaires pour l'analyse de données.
 
-# Gérer des opérations générales sur DataFrame et dict, notamment le filtrage,
-# les jointures et les conversions.
+Ce module regroupe des fonctions permettant de manipuler et d'analyser des
+données stockées dans des DataFrames et des dictionnaires. Il comprend des
+outils pour le filtrage, les jointures et la conversion de données, ainsi que
+des opérations spécifiques sur les dictionnaires.
+"""
+
+from collections import defaultdict
+import pandas as pd
 
 
 # Opérations sur les DataFrames
@@ -101,47 +107,86 @@ def id_en_nom(match, team):
     match.rename(columns={"away_team_api_id": "away_team"}, inplace=True)
 
 
-def id_to_nom(id):
+def id_to_nom(id_entree):
+    """
+    Renvoie le nom d'une équipe à partir de son identifiant.
+
+    Paramètres
+    ----------
+    id : int
+        Identifiant de l'équipe.
+
+    Retourne
+    -------
+    str
+        Nom de l'équipe correspondant à l'identifiant, ou None si l'identifiant
+        n'est pas trouvé.
+    """
     team = pd.read_csv("data/Team.csv")
-    id_team = [g for g in team["team_api_id"]]
-    nom_team = [g for g in team["team_long_name"]]
-    for i in range(len(id_team)):
-        if id_team[i] == id:
+    id_team = list(team["team_api_id"])
+    nom_team = list(team["team_long_name"])
+    for i, id_val in enumerate(id_team):
+        if id_val == id_entree:
             return nom_team[i]
+    return None
 
 
 def id_championnat(nom):
-    if nom == "Tous les championnats réunis":
-        return 0
-    elif nom == "Ligue 1 (France)":
-        return 4769
-    elif nom == "Premier League (Angleterre)":
-        return 1729
-    elif nom == "Bundesliga (Allemagne)":
-        return 7809
-    elif nom == "Serie A (Italie)":
-        return 10257
-    elif nom == "Liga BBVA (Espagne)":
-        return 21518
-    elif nom == "Eredivisie (Pays-Bas)":
-        return 13274
-    elif nom == "Liga ZON Sagres (Portugal)":
-        return 17642
-    elif nom == "Ekstraklasa (Pologne)":
-        return 15722
-    elif nom == "Jupiler League (Belgique)":
-        return 1
-    elif nom == "Super League (Suisse)":
-        return 24558
+    """
+    Renvoie l'identifiant d'un championnat en fonction de son nom.
+
+    Paramètres
+    ----------
+    nom : str
+        Nom du championnat (ex. : "Ligue 1 (France)").
+
+    Retourne
+    -------
+    int
+        Identifiant unique du championnat, ou None si le nom n'est pas trouvé.
+    """
+    championnats = {
+        "Tous les championnats réunis": 0,
+        "Ligue 1 (France)": 4769,
+        "Premier League (Angleterre)": 1729,
+        "Bundesliga (Allemagne)": 7809,
+        "Serie A (Italie)": 10257,
+        "Liga BBVA (Espagne)": 21518,
+        "Eredivisie (Pays-Bas)": 13274,
+        "Liga ZON Sagres (Portugal)": 17642,
+        "Ekstraklasa (Pologne)": 15722,
+        "Jupiler League (Belgique)": 1,
+        "Super League (Suisse)": 24558,
+    }
+    return championnats.get(nom)
 
 
 def get_saison(df):
+    """
+    Ajoute une colonne 'saison' à un DataFrame en fonction des dates.
+
+    La fonction crée une colonne 'saison' en déterminant l'année de début et
+    l'année de fin d'une saison sportive à partir de la colonne 'date'. Une
+    saison commence en août (mois 8) et se termine en juillet de l'année
+    suivante.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        DataFrame contenant une colonne 'date' de type datetime.
+
+    Retourne
+    -------
+    pandas.DataFrame
+        Le DataFrame d'origine avec une colonne supplémentaire 'saison' sous la
+        forme "AAAA/AAAA+1".
+    """
+
     def saison_par_date(date):
         annee = date.year
         if date.month >= 8:
             return f"{annee}/{annee + 1}"
-        else:
-            return f"{annee - 1}/{annee}"
+        return f"{annee - 1}/{annee}"
 
     df["saison"] = df["date"].apply(saison_par_date)
     return df
@@ -178,6 +223,23 @@ def creer_colonne_age_au_moment(df, colonne_anniv, colonne_eval):
 
 
 def creer_tranche_age(df, col_age):
+    """
+    Crée une colonne de tranches d'âge dans un DataFrame en fonction de la
+    colonne d'âge spécifiée.
+
+    Paramètres
+    ----------
+    df : pandas.DataFrame
+        Le DataFrame contenant les données d'âge.
+    col_age : str
+        Le nom de la colonne contenant les âges à regrouper.
+
+    Retourne
+    -------
+    pandas.DataFrame
+        Le DataFrame avec une nouvelle colonne 'age_group' indiquant la tranche
+        d'âge.
+    """
     bins = [0, 22, 27, 32, 37, 100]
     labels = ["18-22", "23-27", "28-32", "33-37", "38+"]
     df["age_group"] = pd.cut(
@@ -202,8 +264,8 @@ def creer_dict(nb_val):
     defaultdict
         Dictionnaire avec des listes de zéros comme valeur par défaut.
     """
-    dict = defaultdict(lambda: [0] * nb_val)
-    return dict
+    dict_data = defaultdict(lambda: [0] * nb_val)
+    return dict_data
 
 
 def name_team_dic(team_names, team_id):
@@ -251,7 +313,7 @@ def filtre_dic(dic, ind_col, val_col):
     return dic
 
 
-def ratio_dic(dic, id, ind_val1, ind_val2):
+def ratio_dic(dic, id_entree, ind_val1, ind_val2):
     """
     Calcule le ratio entre deux valeurs d'une entrée du dictionnaire,
     identifiée par une clé.
@@ -266,7 +328,9 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     division par zéro).
     """
     ratio = (
-        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+        dic[id_entree][ind_val1] / dic[id_entree][ind_val2]
+        if dic[id_entree][ind_val2] > 0
+        else 0
     )
     return ratio
 
@@ -290,10 +354,9 @@ def cle_extreme(dic, type_extremum="max"):
         raise ValueError("Dictionnaire vide")
     if type_extremum == "max":
         return max(dic, key=dic.get)
-    elif type_extremum == "min":
+    if type_extremum == "min":
         return min(dic, key=dic.get)
-    else:
-        raise ValueError("Type non supporté")
+    raise ValueError("Type non supporté")
 
 
 def appliquer_fonction_aux_valeurs(d, f):
