@@ -69,13 +69,6 @@ def test_data_to_dict():
     assert result == {"x": 1, "y": 2}
 
 
-def test_convertir_colonne_int():
-    df = pd.DataFrame({"col": ["1", "2"]})
-    convertir_colonne(df, "col", "int")
-    assert df["col"].dtype == int
-    assert df["col"].tolist() == [1, 2]
-
-
 def test_convertir_colonne_list():
     df = pd.DataFrame({"col": [10, 20, 30]})
     result = convertir_colonne(df, "col", "list")

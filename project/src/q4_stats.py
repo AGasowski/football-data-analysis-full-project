@@ -64,9 +64,11 @@ def run_q4(saison, championnat, type_action):
     player = charger_csv("data/Player.csv")
 
     # Filtrer le championnat et la saison souhaités
-    match = match[(match["goal"].notna()) & (match["goal"] != "")]
+    if type_action == "goal":
+        match = match[(match["goal"].notna()) & (match["goal"] != "")]
     match = match[match["season"] == saison]
     id_champ = id_championnat(championnat)
+
     if id_champ != 0:
         match = filtrer_df(match, "league_id", int(id_champ))
 

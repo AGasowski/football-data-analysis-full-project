@@ -157,25 +157,28 @@ def saison_equipe(matchs):
                      [points, buts marqués (BM), buts encaissés (BE)]
     """
     stats = creer_dict(3)
-    for match in matchs.items():
+    for _, match in matchs.items():
         home_team_id = match[2]
         away_team_id = match[3]
         home_goals = int(match[4])
         away_goals = int(match[5])
 
+        # Initialisation si les équipes ne sont pas encore dans stats
         for team_id in [home_team_id, away_team_id]:
             if team_id not in stats:
                 stats[team_id] = [
                     0,
                     0,
                     0,
-                ]  # [points, goals_scored, goals_conceded]
+                ]  # [points, buts marqués, buts encaissés]
 
+        # Mise à jour buts marqués et encaissés
         stats[home_team_id][1] += home_goals
         stats[home_team_id][2] += away_goals
         stats[away_team_id][1] += away_goals
         stats[away_team_id][2] += home_goals
 
+        # Attribution des points
         if home_goals > away_goals:
             stats[home_team_id][0] += 3
         elif home_goals < away_goals:
@@ -183,6 +186,7 @@ def saison_equipe(matchs):
         else:
             stats[home_team_id][0] += 1
             stats[away_team_id][0] += 1
+
     return stats
 
 

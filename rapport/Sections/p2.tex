@@ -94,8 +94,8 @@ nous l'avons traitée avec \texttt{pandas}.
 \vskip 10pt
 \newpage
 
-\textbf{Question 4 : Quel est le classement, tous championnats confondus, des
-cartons jaunes, des cartons rouges, des buteurs et des passeurs ?}
+\textbf{Question 4 : Quel est le classement, des cartons jaunes, des cartons
+rouges, des buteurs et des passeurs ?}
 
 \vskip 10pt
 
@@ -108,7 +108,9 @@ classement en question. Nous avons remarqué que les statistiques diffèrent
 parfois des classements officiels trouvés sur internet. Nous supposons alors
 que certaines données de notre base de données sont erronées ou manquantes.
 C'est principalement le cas en ce qui concerne les classements concernant les
-cartons reçus.
+cartons reçus, mais surtout pour les saison antérieures à 2013/2014. D'où notre
+choix de ne proposer à l'utilisateur que les classements à partir de cette
+saison-là.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q4.png}
@@ -161,7 +163,7 @@ particulièrement notable, et le jour ayant connu le plus de matchs nuls était
 idéal. Il s'agit d'un samedi, ce qui semble logique puisque plus de matchs y
 sont joués. Comme la saison d'un match n'était pas immédiatement accesible dans
 la table nous avons créé une colonne saison qui détermine la saison d'un match
-en fonction de sa date (une saison dure de août à mai). On peut également
+en fonction de sa date (une saison dure de août à juin). On peut également
 choisir de trouver ce jour pour une saison en particulier.
 \begin{figure}[H]
     \centering
@@ -192,8 +194,8 @@ terrain de foot afin de placer les joueurs au bon endroit. Toute cette question
 a été réalisée à l'aide du paquet \texttt{pandas}.\\[1em]
 
 \centerline{Figure~\thefigure{} -- 11 type pour la saison 2013/2014}
-\textit{Note de lecture : Manuel Neuer est le meilleur gardien d'Europe, selon
-nos critères.} \\[0.5em]
+\textit{Note de lecture : Manuel Neuer est le meilleur gardien d'Europe (en
+2013/2014), selon nos critères.} \\[0.5em]
 \textit{Données : European Soccer Database — Hugo Mathien, Kaggle.}
 \end{minipage}%
 \hfill
@@ -240,19 +242,19 @@ a été réalisée à l'aide du paquet \texttt{pandas}.
 
 \vskip 10pt
 
-\textbf{Question 8 : Quelles sont les équipes qui sont les plus régulières en
-terme de performances ?}
+\textbf{Question 8 : Quelles sont les équipes aux joueurs les plus réguliers
+techniquement ?}
 
 \vskip 10pt
 
-Il est intéressant de savoir si certaines équipes sont constantes dans leurs
-performances, que ça soit avec de bonnes ou moins bonnes aptitudes. Pour
-répondre à cette question, il est possible de proposer de nombreuses méthodes.
-Nous allons donc détailler la nôtre. Nous utilisons d'abord la table Matchs
-afin de connaître les 11 joueurs les plus souvent alignés pour chaque équipe et
-simplifier notre démarche. Nous utilisons ensuite la table des attributs des
-joueurs afin d'évaluer l'écart-type de ses attributs techniques à différents
-instants.
+Il est intéressant de savoir si certaines équipes sont cohérentes en ce qui
+concerne les capacités techniques de leurs joueurs, que ça soit avec de bonnes
+ou moins bonnes aptitudes. Pour répondre à cette question, il est possible de
+proposer de nombreuses méthodes. Nous allons donc détailler la nôtre. Nous
+utilisons d'abord la table Matchs afin de connaître les 11 joueurs les plus
+souvent alignés pour chaque équipe et simplifier notre démarche. Nous utilisons
+ensuite la table des attributs des joueurs afin d'évaluer l'écart-type de ses
+attributs techniques à différents instants.
 
 Explication mathématique de la méthode: soit \( E \) un ensemble d'équipes, et
 pour chaque équipe \( e \in E \), soit \( J_e = \{j_1, j_2, \dots, j_{11}\} \)
@@ -282,7 +284,7 @@ classement des équipes selon ce critère.
     \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q8.png}
     \begin{centering}
         \captionsetup{justification=centering}
-    \caption{Classement de s équipes les plus régulières \\
+    \caption{Classement des équipes aux joueurs les plus réguliers \\
     \textit{Note de lecture : Tubize est l'équipe de la base de données dont
     les attributs des joueurs semblent les plus réguliers.} \\
     \textit{Données issues de : European Soccer Database — Hugo Mathien,

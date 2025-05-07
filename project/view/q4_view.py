@@ -69,11 +69,6 @@ class Q4View(AbstractView):
                 "message": "Pour quelle saison souhaitez-vous afficher le "
                 "classement ?",
                 "choices": [
-                    "2008/2009",
-                    "2009/2010",
-                    "2010/2011",
-                    "2011/2012",
-                    "2012/2013",
                     "2013/2014",
                     "2014/2015",
                     "2015/2016",
@@ -88,11 +83,11 @@ class Q4View(AbstractView):
                 "à la question ?",
                 "choices": [
                     "Tous les championnats réunis",
+                    "Ligue 1 (France)",
                     "Premier League (Angleterre)",
                     "Bundesliga (Allemagne)",
                     "Serie A (Italie)",
                     "Liga BBVA (Espagne)",
-                    "Eredivisie (Pays-Bas)",
                 ],
             }
         ]
@@ -112,7 +107,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "jaune",
-                chemin=f"output/q4/classement_jaunes_{saison_clean}.png",
+                chemin=f"output/q4/class_jaunes_{saison_clean}_{champ}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -128,7 +123,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "rouge",
-                chemin=f"output/q4/classement_rouges_{saison_clean}.png",
+                chemin=f"output/q4/class_rouges_{saison_clean}_{champ}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -144,7 +139,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "but",
-                chemin=f"output/q4/classement_buteurs_{saison_clean}.png",
+                chemin=f"output/q4/class_buteurs_{saison_clean}_{champ}.png",
             )
             next_view = Q4View()  # On revient au menu
 
@@ -160,7 +155,7 @@ class Q4View(AbstractView):
                 saison,
                 champ,
                 "passe",
-                chemin=f"output/q4/classement_passeurs_{saison_clean}.png",
+                chemin=f"output/q4/class_passeurs_{saison_clean}_{champ}.png",
             )
             next_view = Q4View()  # On revient au menu
 
