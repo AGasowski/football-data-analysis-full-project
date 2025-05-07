@@ -301,7 +301,6 @@ def id_en_nom_2(classement, team):
     classement.rename(columns={"team_api_id": "team"}, inplace=True)
 
 
-
 def fusionner(df1, df2, col1, col2):
     return pd.merge(
         df1,
@@ -463,7 +462,9 @@ def ratio_dic(dic, id, ind_val1, ind_val2):
     Retour : - float : Résultat de la division si possible, sinon 0 (en cas de
     division par zéro).
     """
-    ratio = dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    ratio = (
+        dic[id][ind_val1] / dic[id][ind_val2] if dic[id][ind_val2] > 0 else 0
+    )
     return ratio
 
 
@@ -689,7 +690,10 @@ def trier_joueurs_par_actions(compteur, player_df, top_n=10):
     - DataFrame : Classement des joueurs
     """
     # Convertir le dictionnaire en DataFrame
-    data = [{"player_api_id": pid, "nb_actions": nb} for pid, nb in compteur.items()]
+    data = [
+        {"player_api_id": pid, "nb_actions": nb}
+        for pid, nb in compteur.items()
+    ]
     df = pd.DataFrame(data)
 
     # Utiliser la fonction fusionner pour ajouter les noms des joueurs
@@ -701,9 +705,12 @@ def trier_joueurs_par_actions(compteur, player_df, top_n=10):
     )
 
     # Trier par nombre d’actions décroissant
-    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(drop=True)
+    result = fusion.sort_values(by="nb_actions", ascending=False).reset_index(
+        drop=True
+    )
 
     return result.head(top_n)
+
 
 import pandas as pd
 
@@ -713,13 +720,19 @@ nom_team = [g for g in team["team_long_name"]]
 
 
 def id_to_nom(id):
+    team = pd.read_csv("data/Team.csv")
+    id_team = [g for g in team["team_api_id"]]
+    nom_team = [g for g in team["team_long_name"]]
     for i in range(len(id_team)):
         if id_team[i] == id:
             return nom_team[i]
-        
+
+
 def calculer_classement(df_match, saison, league_id):
     # Filtrer les matchs de la saison et de la ligue
-    df_filtre = df_match[(df_match["season"] == saison) & (df_match["league_id"] == league_id)].copy()
+    df_filtre = df_match[
+        (df_match["season"] == saison) & (df_match["league_id"] == league_id)
+    ].copy()
 
     # Initialiser la liste des résultats
     classement = []
@@ -739,31 +752,43 @@ def calculer_classement(df_match, saison, league_id):
             points_home = points_away = 1
 
         # Ajouter les deux équipes dans le classement
-        classement.append({
-            "team_api_id": home_id,
-            "points": points_home,
-            "buts_marques": home_goals,
-            "buts_encaisses": away_goals
-        })
-        classement.append({
-            "team_api_id": away_id,
-            "points": points_away,
-            "buts_marques": away_goals,
-            "buts_encaisses": home_goals
-        })
+        classement.append(
+            {
+                "team_api_id": home_id,
+                "points": points_home,
+                "buts_marques": home_goals,
+                "buts_encaisses": away_goals,
+            }
+        )
+        classement.append(
+            {
+                "team_api_id": away_id,
+                "points": points_away,
+                "buts_marques": away_goals,
+                "buts_encaisses": home_goals,
+            }
+        )
 
     # Convertir en DataFrame
     df_resultats = pd.DataFrame(classement)
 
     # Agréger les résultats par équipe
-    df_resultats = df_resultats.groupby("team_api_id").agg(
-        points_total=("points", "sum"),
-        buts_marques=("buts_marques", "sum"),
-        buts_encaisses=("buts_encaisses", "sum")
-    ).reset_index()
+    df_resultats = (
+        df_resultats.groupby("team_api_id")
+        .agg(
+            points_total=("points", "sum"),
+            buts_marques=("buts_marques", "sum"),
+            buts_encaisses=("buts_encaisses", "sum"),
+        )
+        .reset_index()
+    )
 
     # Calcul du classement (rang)
     df_resultats = df_resultats.sort_values(by="points_total", ascending=False)
-    df_resultats["rank"] = df_resultats["points_total"].rank(method="first", ascending=False).astype(int)
+    df_resultats["rank"] = (
+        df_resultats["points_total"]
+        .rank(method="first", ascending=False)
+        .astype(int)
+    )
 
     return df_resultats

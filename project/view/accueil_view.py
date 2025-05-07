@@ -48,6 +48,8 @@ class AccueilView(AbstractView):
                     "cadrés",
                     "Q12 - Afficher le classement des matchs les plus "
                     "imprévisibles",
+                    "Apprentissage automatique: prévoir le classement d'un "
+                    "club en fin de saison",
                     "Quitter l'appli",
                 ],
             }
@@ -319,6 +321,15 @@ class AccueilView(AbstractView):
                 chemin=f"output/q12/imprevisible_{saison_clean}.png",
             )
             next_view = AccueilView()  # On revient au menu
+
+        elif (
+            answers["Menu principal"]
+            == "Apprentissage automatique: prévoir le classement d'un "
+            "club en fin de saison"
+        ):
+            from project.view.apprentissage_view import AppView
+
+            next_view = AppView()
 
         elif answers["Menu principal"] == "Quitter l'appli":
             next_view = None

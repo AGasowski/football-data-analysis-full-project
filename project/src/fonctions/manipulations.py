@@ -101,6 +101,15 @@ def id_en_nom(match, team):
     match.rename(columns={"away_team_api_id": "away_team"}, inplace=True)
 
 
+def id_to_nom(id):
+    team = pd.read_csv("data/Team.csv")
+    id_team = [g for g in team["team_api_id"]]
+    nom_team = [g for g in team["team_long_name"]]
+    for i in range(len(id_team)):
+        if id_team[i] == id:
+            return nom_team[i]
+
+
 def id_championnat(nom):
     if nom == "Tous les championnats réunis":
         return 0

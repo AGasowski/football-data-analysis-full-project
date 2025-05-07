@@ -1,6 +1,6 @@
 """
-Script pour dentifier l'équipe avec le pire ratio entre les buts marqués et
-les tirs cadrés dans une saison donnée.
+Script pour dentifier l'équipe avec le pire ratio entre les buts marqués et les
+tirs cadrés à domicile dans une saison donnée.
 """
 
 from project.src.fonctions.data_loader import charger_csv, data_to_dict
@@ -17,13 +17,14 @@ from project.src.fonctions.statistiques import (
 
 def run_q11(saison, championnat):
     """
-    Affiche l’équipe avec le pire ratio entre buts marqués et tirs cadrés.
+    Affiche l’équipe avec le pire ratio entre buts marqués et tirs cadrés à
+    domicile.
 
     Args:
         saison (str): Saison ciblée, par exemple "2014/2015". championnat
         (str): Nom du championnat
     """
-    print("Equipe avec le pire ratio buts marqués/tirs cadrés")
+    print("Equipe avec le pire ratio buts marqués/tirs cadrés à domicile")
     print(f"en {championnat} ({saison}):")
 
     match = charger_csv("data/Match.csv")
