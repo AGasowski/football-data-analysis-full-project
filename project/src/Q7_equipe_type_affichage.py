@@ -33,7 +33,10 @@ def run_q7(saison):
         sont pris en compte.
     """
     print("==================================================================")
-    print(f"          Equipe type de la saison {saison}")
+    print(
+        f"          Equipe type "
+        f"{f'de la saison {saison}' if saison != "0" else 'générale'}"
+    )
     print("==================================================================")
 
     # Charger le fichier CSV

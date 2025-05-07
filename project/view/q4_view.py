@@ -88,16 +88,11 @@ class Q4View(AbstractView):
                 "à la question ?",
                 "choices": [
                     "Tous les championnats réunis",
-                    "Ligue 1 (France)",
                     "Premier League (Angleterre)",
                     "Bundesliga (Allemagne)",
                     "Serie A (Italie)",
                     "Liga BBVA (Espagne)",
                     "Eredivisie (Pays-Bas)",
-                    "Liga ZON Sagres (Portugal)",
-                    "Ekstraklasa (Pologne)",
-                    "Jupiler League (Belgique)",
-                    "Super League (Suisse)",
                 ],
             }
         ]
