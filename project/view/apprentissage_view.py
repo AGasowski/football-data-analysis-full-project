@@ -18,6 +18,8 @@ class AppView(AbstractView):
                     "début de la saison",
                     "Prévoir le classement final d'une équipe à la "
                     "mi-saison",
+                    "Retourner au menu principal",
+                    "Quitter l'appli",
                 ],
             }
         ]
@@ -79,35 +81,42 @@ class AppView(AbstractView):
             "la saison"
         ):
             meth = prompt(self.question_meth)["question méthode"]
+            saison = prompt(self.question_saison)["question saison"]
+            champ = prompt(self.question_championnat)["question champ"]
+            id_champ = championnat(champ)
+
+            # Obtenir la liste des équipes participantes
+            equipes = get_equipes_participantes(champ, saison)
+
+            # Poser la question à l'utilisateur
+            question_equipe = [
+                {
+                    "type": "list",
+                    "name": "question_equipe",
+                    "message": "Quelle équipe souhaitez-vous "
+                    "sélectionner ?",
+                    "choices": equipes,
+                }
+            ]
+            equipe = prompt(question_equipe)["question_equipe"]
+
+            # Charger les données des équipes
+            teams_df = pd.read_csv("data/Team.csv")
+
+            # Obtenir l'ID de l'équipe sélectionnée
+            id_team = teams_df[teams_df["team_long_name"] == equipe][
+                "team_api_id"
+            ].values[0]
             if meth == "Méthode linéaire":
-                saison = prompt(self.question_saison)["question saison"]
-                champ = prompt(self.question_championnat)["question champ"]
-                id_champ = championnat(champ)
-
-                # Obtenir la liste des équipes participantes
-                equipes = get_equipes_participantes(champ, saison)
-
-                # Poser la question à l'utilisateur
-                question_equipe = [
-                    {
-                        "type": "list",
-                        "name": "question_equipe",
-                        "message": "Quelle équipe souhaitez-vous "
-                        "sélectionner ?",
-                        "choices": equipes,
-                    }
-                ]
-                equipe = prompt(question_equipe)["question_equipe"]
-
-                # Charger les données des équipes
-                teams_df = pd.read_csv("data/Team.csv")
-
-                # Obtenir l'ID de l'équipe sélectionnée
-                id_team = teams_df[teams_df["team_long_name"] == equipe][
-                    "team_api_id"
-                ].values[0]
-
                 from project.src.Apprentissage1_lineaire import (
+                    predire_classement_avec_confiance,
+                )
+
+                predire_classement_avec_confiance(saison, id_champ, id_team)
+
+                next_view = AppView()
+            elif meth == "Méthode de Poisson":
+                from project.src.Apprentissage1_poisson import (
                     predire_classement_avec_confiance,
                 )
 
@@ -119,7 +128,37 @@ class AppView(AbstractView):
             answers["Menu Apprentissage"]
             == "Prévoir le classement final d'une équipe à la mi-saison"
         ):
-            from apprentissage_view import AppView
+            saison = prompt(self.question_saison)["question saison"]
+            champ = prompt(self.question_championnat)["question champ"]
+            id_champ = championnat(champ)
+
+            # Obtenir la liste des équipes participantes
+            equipes = get_equipes_participantes(champ, saison)
+
+            # Poser la question à l'utilisateur
+            question_equipe = [
+                {
+                    "type": "list",
+                    "name": "question_equipe",
+                    "message": "Quelle équipe souhaitez-vous "
+                    "sélectionner ?",
+                    "choices": equipes,
+                }
+            ]
+            equipe = prompt(question_equipe)["question_equipe"]
+
+            # Charger les données des équipes
+            teams_df = pd.read_csv("data/Team.csv")
+
+            # Obtenir l'ID de l'équipe sélectionnée
+            id_team = teams_df[teams_df["team_long_name"] == equipe][
+                "team_api_id"
+            ].values[0]
+            from project.src.Apprentissage2_poisson import (
+                predire_classement_avec_confiance,
+            )
+
+            predire_classement_avec_confiance(saison, id_champ, id_team)
 
             next_view = AppView()  # On revient au menu principal
 
@@ -134,4 +173,4 @@ class AppView(AbstractView):
         return next_view
 
     def display_info(self):
-        print(" MENU Apprentissage automatique".center(100, "="))
+        print(" MENU Apprentissage automatique ".center(100, "="))

@@ -242,7 +242,6 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     print(f"RMSE : {rmse:.2f}")
 
 
-predire_classement_avec_confiance("2014/2015", 21518, 8633)
 """
 # Comparaison des prédictions
 df_comparaison = pd.DataFrame({

@@ -227,7 +227,3 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
         f"points de [{ic_inf:.2f}, {ic_sup:.2f}]."
     )
     return int(rang), (ic_inf, ic_sup)
-
-
-# Exemple d'appel :
-predire_classement_avec_confiance("2014/2015", 21518, 10205)

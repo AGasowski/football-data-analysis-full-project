@@ -189,8 +189,6 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
     # Nom de l'équipe cible
     nom_equipe = id_to_nom(team_id_cible)
 
-    print(nom_equipe)
-
     # Vérifie si l'équipe est dans le classement de la ligue
     if nom_equipe not in df_ligue["team_api_id"].values:
         print(
@@ -236,7 +234,3 @@ def predire_classement_avec_confiance(saison, league_id_cible, team_id_cible):
         f"points de [{ic_inf:.2f}, {ic_sup:.2f}]."
     )
     return int(rang), (ic_inf, ic_sup)
-
-
-# Exemple d'appel :
-predire_classement_avec_confiance("2014/2015", 21518, 10205)
