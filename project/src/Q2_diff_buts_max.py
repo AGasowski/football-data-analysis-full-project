@@ -1,3 +1,8 @@
+"""
+Script pour afficher le match avec le plus grand écart de buts pour une
+saison donnée.
+"""
+
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.manipulations import (
     id_championnat,
