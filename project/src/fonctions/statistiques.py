@@ -413,3 +413,10 @@ def calculer_consistance_club(df_players, player_std_by_player, teams):
         teams[["team_api_id", "team_long_name"]], on="team_api_id"
     )
     return club_consistency.sort_values("tech_std")
+
+
+def ecart_de_buts(match):
+    try:
+        return abs(int(match["home_team_goal"]) - int(match["away_team_goal"]))
+    except (KeyError, ValueError, TypeError):
+        return -1

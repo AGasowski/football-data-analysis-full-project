@@ -24,8 +24,10 @@ def run_q11(saison, championnat):
         saison (str): Saison ciblée, par exemple "2014/2015". championnat
         (str): Nom du championnat
     """
-    print("Equipe avec le pire ratio buts marqués/tirs cadrés à domicile")
-    print(f"en {championnat} ({saison}):")
+    print("=" * 80)
+    print("     Equipe avec le pire ratio buts marqués/tirs cadrés à domicile")
+    print(f"          en {championnat} ({saison}):")
+    print("=" * 80)
 
     match = charger_csv("data/Match.csv")
     if saison != "0":
@@ -39,11 +41,10 @@ def run_q11(saison, championnat):
         None,
         ["home_team_api_id", "home_team_goal", "away_team_goal", "shoton"],
     )
-    print(match)
     team = charger_csv("data/Team.csv")
     team = filtrer_df(team, None, None, ["team_api_id", "team_long_name"])
 
-    match["but"] = match["home_team_goal"] 
+    match["but"] = match["home_team_goal"]
     match["tir_cadre"] = match["shoton"].map(
         lambda x: (len(x) if isinstance(x, (list, str)) and x != "" else 1)
     )
@@ -51,6 +52,3 @@ def run_q11(saison, championnat):
     d = calculer_moyenne(match, "home_team_api_id", "ratio")
     team_names = data_to_dict(team, "team_api_id", "team_long_name")
     print(name_team_dic(team_names, cle_extreme(d, "min")))
-
-
-run_q11("2012/2014", "Premier League (Angleterre)")

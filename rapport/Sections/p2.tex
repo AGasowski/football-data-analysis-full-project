@@ -13,20 +13,20 @@ saison 2015/2016 ?}
 
 \vskip 10pt
 
-Pour réaliser cette question, nous avons codé en Python pur, c'est-à-dire sans
-l'aide du module \texttt{pandas}. Nous avons utilisé les règles officielles
-pour le classement de la Premier League. Les critères, par ordre d'importance,
-sont les suivants: le nombre de points, puis la différence de buts, puis le
-nombre de buts marqués. Nous avons voulu laisser la possibilité à l'utilisateur
-de choisir une autre saison que 2015/2016. De plus, il a la possibilité de
-demander le classement d'un autre championnat. Ce dernier point doit être
-précisé, puisque les critères utilisés pour départager deux équipes ayant le
-même nombre de points dépend du championnat. En France par exemple, si la
-différence de buts est la même, nous regardons les points obtenus lors des
-confrontations directes entre les deux équipes. Cependant, dans un souci de
-temps imparti, nous n'avons pas pu ajuster les critères en fonction des
-championnats et les classements sont réalisés selon les règles de la Premier
-League.
+Pour réaliser cette question, nous avons codé en \texttt{Python} pur,
+c'est-à-dire sans l'aide du module \texttt{pandas}. Nous avons utilisé les
+règles officielles pour le classement de la Premier League. Les critères, par
+ordre d'importance, sont les suivants: le nombre de points, puis la différence
+de buts, puis le nombre de buts marqués. Nous avons voulu laisser la
+possibilité à l'utilisateur de choisir une autre saison que 2015/2016. De plus,
+il a la possibilité de demander le classement d'un autre championnat. Ce
+dernier point doit être précisé, puisque les critères utilisés pour départager
+deux équipes ayant le même nombre de points dépend du championnat. En France
+par exemple, si la différence de buts est la même, nous regardons les points
+obtenus lors des confrontations directes entre les deux équipes. Cependant,
+dans un souci de temps imparti, nous n'avons pas pu ajuster les critères en
+fonction des championnats et les classements sont réalisés selon les règles de
+la Premier League.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q1.png}
@@ -47,8 +47,8 @@ buts dans le jeu de données ?}
 
 \vskip 10pt
 
-Nous avons répondu à la question en utilisant le paquet \texttt{pandas}. De
-plus, nous avons ajouté la possibilité pour l'utilisateur de choisir s'il veut
+Nous avons répondu à la question en codant en \texttt{Python} pur. De plus,
+nous avons ajouté la possibilité pour l'utilisateur de choisir s'il veut
 obtenir les matchs avec la plus grande différence de buts pour toutes les
 saisons confondues, ou bien pour une saison bien particulière. De même, il peut
 choisir de réaliser la recherche pour un championnat en particulier ou pour
@@ -306,7 +306,8 @@ cette question. Nous avons réalisé le classement en fonction de l'écart entre
 le nombre moyen de buts marqués à l'extérieur et à domicile. Nous avons étudié
 l'écart des moyennes pour que la comparaison entre les équipes soit pertinente.
 L'utilisateur a la possibilité de choisir les paramètres de saison et de
-championnat. Cette fois, nous avons répondu à la question en Python pur.
+championnat. Cette fois, nous avons répondu à la question en \texttt{Python}
+pur.
 
 \begin{figure}[H]
     \centering
@@ -364,6 +365,18 @@ gardiens très efficaces ? L'utilisateur a de nouveau la possibilité de choisir
 la saison pour laquelle il souhaite consulter cette statistique. Cette question
 a été réalisée avec \texttt{pandas}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, keepaspectratio]{Images/q11.png}
+    \begin{centering}
+        \captionsetup{justification=centering}
+    \caption{Equipe avec le pire ratio buts marqués / tirs cadrés en 2012/2013
+    en Liga BBVA\\
+    \textit{Données issues de : European Soccer Database — Hugo Mathien,
+    Kaggle}}
+    \end{centering}
+\end{figure}
+
 \vskip 10pt
 
 \textbf{Question 12 : Quels résultats de matchs ont été les plus imprévisibles
@@ -378,7 +391,7 @@ finalement produit. Cette question a pour objectif d'identifier les 10 cotes
 les plus élevées associées à des résultats qui se sont effectivement réalisés.
 Nous avons concentré notre travail sur les cotes du site Bet365. L'utilisateur
 peut choisir d'affciher ces matchs pour une saison particulière. L'analyse a
-été réalisée en Python pur.
+été réalisée en \texttt{Python} pur.
 
 \begin{figure}[H]
     \centering

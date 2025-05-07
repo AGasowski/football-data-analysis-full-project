@@ -1,22 +1,10 @@
-"""
-Script pour identifier le match avec l'écart de buts le plus important dans une
-saison donnée. Utilise les données de match et d'équipes pour afficher les
-résultats de manière lisible.
-"""
-
 from project.src.fonctions.data_loader import charger_csv
 from project.src.fonctions.manipulations import (
-    filtrer_df,
-    id_en_nom,
     id_championnat,
 )
-from project.src.fonctions.statistiques import resume_colonne
-from project.src.fonctions.utils import (
-    afficher,
-)
 
 
-def run_q2(saison, championnat):
+def run_q2(saison, league):
     """
     Affiche le match avec le plus grand écart de buts pour une saison donnée.
 
@@ -25,34 +13,53 @@ def run_q2(saison, championnat):
         toutes les saisons.
     """
     print("=" * 56)
-    print(
-        f"    Matchs avec la plus grande différence de buts"
-        f"{f' ({saison})' if saison != '0' else ''}"
-        f"{f' ({championnat})' if championnat != "Tous les championnats réunis"
-           else ''}"
-    )
+    print("    Matchs avec la plus grande différence de buts")
     print("=" * 56)
-
-    match = charger_csv("data/Match.csv")
-    if saison != "0":
-        match = filtrer_df(match, "season", saison)
-    id_champ = id_championnat(championnat)
-    if id_champ != 0:
-        match = filtrer_df(match, "league_id", int(id_champ))
-    team = charger_csv("data/Team.csv")
-
-    id_en_nom(match, team)
-
-    match["ecart"] = resume_colonne(
-        match, "home_team_goal", "away_team_goal", "diff_abs"
+    teams = charger_csv(
+        "data/Team.csv", "dict", "team_api_id", "team_long_name"
+    )
+    matchs = charger_csv(
+        "data/Match.csv",
+        "dict",
+        "id",
+        "season",
+        "league_id",
+        "home_team_api_id",
+        "away_team_api_id",
+        "home_team_goal",
+        "away_team_goal",
     )
 
-    afficher(
-        filtrer_df(
-            match,
-            "ecart",
-            resume_colonne(match, "ecart", None, "max"),
-            ["home_team", "home_team_goal", "away_team_goal", "away_team"],
-        ),
-        False,
+    league_id = id_championnat(league)
+
+    max_diff = -1
+    matchs_max = []
+
+    for match_id, data in matchs.items():
+        season_val, league_val, home_id, away_id, home_goal, away_goal = data
+
+        if season_val != saison or int(league_val) != int(league_id):
+            continue
+
+        try:
+            diff = abs(int(home_goal) - int(away_goal))
+        except (ValueError, TypeError):
+            continue
+
+        if diff > max_diff:
+            max_diff = diff
+            matchs_max = [(home_id, away_id, home_goal, away_goal)]
+        elif diff == max_diff:
+            matchs_max.append((home_id, away_id, home_goal, away_goal))
+
+    print(
+        f"{f'Lors de la saison : {saison}' if saison != '0' else 'Entre 2008'
+            ' et 2016'}"
     )
+    print(f"{f'en {league}' if league_id != 0 else ''}")
+    print(f"l'écart maximal de buts était de {max_diff}\n")
+
+    for home_id, away_id, home_goal, away_goal in matchs_max:
+        home_name = teams.get(int(home_id), "Inconnu")
+        away_name = teams.get(int(away_id), "Inconnu")
+        print(f"{home_name} {home_goal} - {away_goal} {away_name}")
