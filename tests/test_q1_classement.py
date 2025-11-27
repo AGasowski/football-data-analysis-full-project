@@ -2,7 +2,7 @@ import re
 
 
 def test20122013_run_q1(monkeypatch, capsys):
-    from project.src.q1_classement import run_q1
+    from src.q1_classement import run_q1
 
     run_q1("2012/2013", "Premier League (Angleterre)")
     output = capsys.readouterr().out

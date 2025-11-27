@@ -1,5 +1,5 @@
 import pandas as pd
-from project.src.fonctions.utils import (
+from src.fonctions.utils import (
     trier,
     formation,
     get_taille_joueurs,

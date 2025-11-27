@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from collections import defaultdict
-from project.src.fonctions.manipulations import (
+from src.fonctions.manipulations import (
     filtrer_df,
     fusionner,
     id_championnat,

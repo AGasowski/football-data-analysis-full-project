@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from project.src.fonctions.data_loader import (
+from src.fonctions.data_loader import (
     charger_csv,
     transforme,
     data_to_dict,

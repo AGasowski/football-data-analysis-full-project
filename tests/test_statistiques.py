@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from project.src.fonctions.statistiques import (
+from src.fonctions.statistiques import (
     calculer_moyenne,
     resume_colonne,
     nb_occurences,

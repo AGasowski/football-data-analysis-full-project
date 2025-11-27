@@ -3,7 +3,7 @@ import datetime
 import locale
 import platform
 import pytest
-from project.src.fonctions.dates_formats import (
+from src.fonctions.dates_formats import (
     convertir_date,
     date_format,
     convertir_col_date,
