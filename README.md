@@ -36,9 +36,6 @@ Source: https://www.kaggle.com/datasets/hugomathien/soccer
 ## Group Work
 
 This repository reflects the **entire group project**.  
-My individual contribution, with my personal scripts and analysis, is available here:
-
-[My contribution repository](https://github.com/AGasowski/football-data-analysis-my-contribution)
 
 
 ## License
