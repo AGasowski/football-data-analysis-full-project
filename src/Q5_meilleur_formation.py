@@ -1,0 +1,84 @@
+"""
+Script pour générer le classement des dispositifs les plus utilisés pour une
+saison spécifique, en analysant les données de matchs à partir de fichiers CSV.
+"""
+
+from src.fonctions.data_loader import (
+    charger_csv,
+    fusionner_colonnes_en_listes,
+)
+from src.fonctions.manipulations import filtrer_df
+from src.fonctions.utils import formation, trier
+
+
+def run_q5(saison):
+    """
+    Affiche le classement des dispositifs pour une saison spécifique.
+
+    Args:
+        saison (str): Saison sous forme de chaîne, ex. "2014/2015"
+    """
+    print("==================================================================")
+    print(f"    Classement des dispositifs les plus utilisés ({saison})")
+    print("==================================================================")
+
+    match = charger_csv("data/Match.csv")
+    if saison != "0":
+        match = filtrer_df(match, "season", saison)
+    match = filtrer_df(match, "league_id", 21518)
+
+    coordonee_home_joueur = fusionner_colonnes_en_listes(
+        match,
+        [
+            "home_player_Y2",
+            "home_player_Y3",
+            "home_player_Y4",
+            "home_player_Y5",
+            "home_player_Y6",
+            "home_player_Y7",
+            "home_player_Y8",
+            "home_player_Y9",
+            "home_player_Y10",
+            "home_player_Y11",
+        ],
+    )
+    coordonnee_away_joueur = fusionner_colonnes_en_listes(
+        match,
+        [
+            "away_player_Y2",
+            "away_player_Y3",
+            "away_player_Y4",
+            "away_player_Y5",
+            "away_player_Y6",
+            "away_player_Y7",
+            "away_player_Y8",
+            "away_player_Y9",
+            "away_player_Y10",
+            "away_player_Y11",
+        ],
+    )
+
+    d = {}
+    for home, away in zip(coordonee_home_joueur, coordonnee_away_joueur):
+        home_tuple = tuple(formation(home))
+        away_tuple = tuple(formation(away))
+
+        if home_tuple not in d:
+            d[home_tuple] = 1
+        else:
+            d[home_tuple] += 1
+
+        if away_tuple not in d:
+            d[away_tuple] = 1
+        else:
+            d[away_tuple] += 1
+
+    classement = trier(d, par=1, type_data="dict", reverse=True)
+
+    print(f"{'Rang':<5}{'Formation':<20}{'Occurrences'}")
+
+    for rank, (formation1, nb_occurrences) in enumerate(
+        classement.items(), start=1
+    ):
+        formation1 = " ".join(str(x) for x in formation1)
+        print(f"{rank:<5}{formation1:<20}{nb_occurrences} fois")
